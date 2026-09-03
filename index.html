@@ -26,7 +26,7 @@
       font-family: var(--site-font) !important;
     }
 
-    /* 1. Global smooth color transition when switching Light/Dark modes */
+    /* Global smooth color transition when switching Light/Dark modes */
     body,
     .sidebar,
     .markdown-section,
@@ -45,7 +45,7 @@
                   box-shadow 0.5s ease !important;
     }
 
-    /* Remove the site name header from the sidebar */
+    /* Remove site title from sidebar */
     .app-name,
     .sidebar > h1 {
       display: none !important;
@@ -230,7 +230,7 @@
       stroke-width: 2.5;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: transform 0.4s ease;
+      transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .comments-toggle-btn.open svg {
@@ -244,14 +244,14 @@
       border-color: rgba(0, 0, 0, 0.1);
     }
 
-    /* 2. Fluid Height & Opacity Easing for Comments */
+    /* Extended delay & easing on panel open/close */
     .comments-collapsible-content {
       width: 100%;
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-                  opacity 0.4s ease,
-                  margin-top 0.4s ease;
+      transition: grid-template-rows 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.65s ease,
+                  margin-top 0.65s ease;
       opacity: 0;
       margin-top: 0;
     }
@@ -287,6 +287,15 @@
   </div>
 
   <script>
+    // Set global dictionary values for Cusdis
+    window.CUSDIS_LOCALE = {
+      post: 'Post',
+      comment: 'Post',
+      nickname: 'Nickname',
+      replyContent: 'Comment',
+      reply: 'Comment'
+    };
+
     window.CUSDIS_CONFIG = {
       fields: ['nickname']
     };
@@ -340,11 +349,23 @@
             var container = document.getElementById('cusdis_thread');
             if (!container) return;
             var theme = currentSiteTheme();
+
             if (container.getAttribute('data-theme') !== theme) {
               container.setAttribute('data-theme', theme);
-              if (window.CUSDIS) {
-                window.CUSDIS.renderTo(container);
-              }
+            }
+
+            // Sync theme dynamically whether panel is open, closed, or loaded via postMessage
+            var iframe = document.querySelector('#cusdis_thread iframe');
+            if (iframe && iframe.contentWindow) {
+              iframe.contentWindow.postMessage(
+                JSON.stringify({ from: 'cusdis', event: 'setTheme', data: theme }),
+                '*'
+              );
+            }
+
+            if (window.CUSDIS) {
+              window.CUSDIS.renderTo(container);
+              cleanCusdisIframe();
             }
           }
 
@@ -352,33 +373,51 @@
             var iframe = document.querySelector('#cusdis_thread iframe');
             if (!iframe) return;
 
-            function stripEmail() {
+            function modifyIframe() {
               try {
                 var doc = iframe.contentDocument || iframe.contentWindow.document;
-                if (!doc || doc.getElementById('cusdis-clean-styles')) return;
+                if (!doc) return;
 
-                var style = doc.createElement('style');
-                style.id = 'cusdis-clean-styles';
-                style.textContent = `
-                  input[name="email"],
-                  input[type="email"],
-                  label[for="email"],
-                  div:has(> input[name="email"]),
-                  div:has(> input[type="email"]) {
-                    display: none !important;
+                if (!doc.getElementById('cusdis-custom-styles')) {
+                  var style = doc.createElement('style');
+                  style.id = 'cusdis-custom-styles';
+                  style.textContent = `
+                    /* Hide Email input & row */
+                    input[name="email"],
+                    input[type="email"],
+                    label[for="email"],
+                    div:has(> input[name="email"]),
+                    div:has(> input[type="email"]) {
+                      display: none !important;
+                    }
+                    /* Stretch nickname across row */
+                    input[name="nickname"],
+                    div:has(> input[name="nickname"]) {
+                      width: 100% !important;
+                      flex: 1 1 100% !important;
+                    }
+                  `;
+                  doc.head.appendChild(style);
+                }
+
+                // Replace placeholder "Reply..." with "Comment"
+                var textarea = doc.querySelector('textarea[name="reply_content"], textarea');
+                if (textarea && (textarea.placeholder === 'Reply...' || textarea.placeholder === 'Reply')) {
+                  textarea.placeholder = 'Comment';
+                }
+
+                // Replace button label with "Post"
+                var btns = doc.querySelectorAll('button');
+                btns.forEach(function (btn) {
+                  if (btn.innerText.trim() === 'Comment') {
+                    btn.innerText = 'Post';
                   }
-                  input[name="nickname"],
-                  div:has(> input[name="nickname"]) {
-                    width: 100% !important;
-                    flex: 1 1 100% !important;
-                  }
-                `;
-                doc.head.appendChild(style);
+                });
               } catch (e) {}
             }
 
-            iframe.addEventListener('load', stripEmail);
-            stripEmail();
+            iframe.addEventListener('load', modifyIframe);
+            modifyIframe();
           }
 
           hook.doneEach(function () {
@@ -410,15 +449,6 @@
             wrapper.appendChild(collContent);
             contentElem.appendChild(wrapper);
 
-            toggleBtn.addEventListener('click', function () {
-              var isOpen = collContent.classList.toggle('show');
-              toggleBtn.classList.toggle('open', isOpen);
-              if (isOpen && window.CUSDIS) {
-                window.CUSDIS.renderTo(container);
-                cleanCusdisIframe();
-              }
-            });
-
             container.setAttribute('data-host', 'https://cusdis.com');
             container.setAttribute('data-app-id', 'c340a0ca-72a7-41cb-b1fe-4df40bd78033');
             container.setAttribute('data-page-id', vm.route.file || 'home');
@@ -429,11 +459,26 @@
             container.setAttribute('data-config', JSON.stringify({
               fields: ['nickname'],
               i18n: {
-                comment: 'Comment',
-                nickname: 'Nickname',
-                reply: 'Reply'
+                comment: 'Post',
+                reply: 'Comment',
+                replyContent: 'Comment',
+                nickname: 'Nickname'
               }
             }));
+
+            // Pre-render immediately so iframe initializes in the background with the correct initial theme
+            if (window.CUSDIS) {
+              window.CUSDIS.renderTo(container);
+              cleanCusdisIframe();
+            }
+
+            toggleBtn.addEventListener('click', function () {
+              var isOpen = collContent.classList.toggle('show');
+              toggleBtn.classList.toggle('open', isOpen);
+              if (isOpen) {
+                syncCusdisTheme();
+              }
+            });
 
             if (!window.__cusdisThemeObserver) {
               window.__cusdisThemeObserver = new MutationObserver(syncCusdisTheme);

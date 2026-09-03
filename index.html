@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Limitless - The Open Academic Archive</title>
+  <title>Limitless - The Open Academic Archive | Degree College Notes</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="The free and open source archive of high quality notes and academic resources for degree college in India">
@@ -26,7 +26,7 @@
       font-family: var(--site-font) !important;
     }
 
-    /* Remove the site name header from the sidebar completely */
+    /* Remove the site name header from the sidebar */
     .app-name,
     .sidebar > h1 {
       display: none !important;
@@ -171,17 +171,75 @@
       stroke: #0f172a !important;
     }
 
-    /* Centered, adaptive comment container */
-    #cusdis_thread {
-      margin: 50px auto 30px auto !important;
-      padding: 24px 0 0 0;
+    /* Collapsible Comments Section Wrapper */
+    .comments-collapsible-wrapper {
+      margin: 50px auto 30px auto;
+      max-width: 640px;
+      width: 100%;
       border-top: 1px solid rgba(128, 128, 128, 0.2);
-      width: 100% !important;
-      max-width: 640px !important;
-      box-sizing: border-box;
+      padding-top: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+
+    /* Collapsible Header Button */
+    .comments-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+      background-color: #1e293b; /* Dark in Light Mode */
+      color: #ffffff;
+      outline: none;
+    }
+    .comments-toggle-btn:hover {
+      transform: translateY(-1px);
+    }
+    .comments-toggle-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.3s ease;
+    }
+
+    /* Chevron rotation when expanded */
+    .comments-toggle-btn.open svg {
+      transform: rotate(180deg);
+    }
+
+    /* Dynamic background flip in Dark Mode */
+    body.dark .comments-toggle-btn,
+    [data-theme="dark"] .comments-toggle-btn {
+      background-color: #ffffff; /* White in Dark Mode */
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Collapsible container body */
+    .comments-collapsible-content {
+      width: 100%;
+      display: none;
+      margin-top: 16px;
+    }
+    .comments-collapsible-content.show {
+      display: block;
+    }
+
+    #cusdis_thread {
+      width: 100% !important;
+      box-sizing: border-box;
     }
     #cusdis_thread iframe {
       width: 100% !important;
@@ -201,13 +259,12 @@
   </div>
 
   <script>
-    // Custom Cusdis configuration removing email and preserving 'Comment' button text
     window.CUSDIS_CONFIG = {
       fields: ['nickname']
     };
 
     window.$docsify = {
-      name: '', // Cleared site title
+      name: '',
       repo: '',
       homepage: 'README.md',
       loadSidebar: true,
@@ -263,7 +320,6 @@
             }
           }
 
-          // Injects custom CSS directly into the Cusdis iframe to remove the Email field row
           function cleanCusdisIframe() {
             var iframe = document.querySelector('#cusdis_thread iframe');
             if (!iframe) return;
@@ -276,7 +332,6 @@
                 var style = doc.createElement('style');
                 style.id = 'cusdis-clean-styles';
                 style.textContent = `
-                  /* Hide the email label, input field, and its container */
                   input[name="email"],
                   input[type="email"],
                   label[for="email"],
@@ -284,7 +339,6 @@
                   div:has(> input[type="email"]) {
                     display: none !important;
                   }
-                  /* Make nickname occupy full width */
                   input[name="nickname"],
                   div:has(> input[name="nickname"]) {
                     width: 100% !important;
@@ -292,9 +346,7 @@
                   }
                 `;
                 doc.head.appendChild(style);
-              } catch (e) {
-                // Cross-origin fallback handled via data-fields
-              }
+              } catch (e) {}
             }
 
             iframe.addEventListener('load', stripEmail);
@@ -302,39 +354,58 @@
           }
 
           hook.doneEach(function () {
-            var container = document.getElementById('cusdis_thread');
-            if (!container) {
-              container = document.createElement('div');
-              container.id = 'cusdis_thread';
-              var contentElem = document.querySelector('.content');
-              if (contentElem) {
-                contentElem.appendChild(container);
-              }
-            }
+            var contentElem = document.querySelector('.content');
+            if (!contentElem) return;
 
+            // Remove existing container instance across page navigation
+            var oldWrapper = document.querySelector('.comments-collapsible-wrapper');
+            if (oldWrapper) oldWrapper.remove();
+
+            // Build Collapsible Wrapper
+            var wrapper = document.createElement('div');
+            wrapper.className = 'comments-collapsible-wrapper';
+
+            var toggleBtn = document.createElement('button');
+            toggleBtn.className = 'comments-toggle-btn';
+            toggleBtn.innerHTML = '<span>Discussion & Comments</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+
+            var collContent = document.createElement('div');
+            collContent.className = 'comments-collapsible-content';
+
+            var container = document.createElement('div');
+            container.id = 'cusdis_thread';
+
+            collContent.appendChild(container);
+            wrapper.appendChild(toggleBtn);
+            wrapper.appendChild(collContent);
+            contentElem.appendChild(wrapper);
+
+            // Toggle Behavior
+            toggleBtn.addEventListener('click', function () {
+              var isOpen = collContent.classList.toggle('show');
+              toggleBtn.classList.toggle('open', isOpen);
+              if (isOpen && window.CUSDIS) {
+                window.CUSDIS.renderTo(container);
+                cleanCusdisIframe();
+              }
+            });
+
+            // Bind attributes for Cusdis
             container.setAttribute('data-host', 'https://cusdis.com');
             container.setAttribute('data-app-id', 'c340a0ca-72a7-41cb-b1fe-4df40bd78033');
             container.setAttribute('data-page-id', vm.route.file || 'home');
             container.setAttribute('data-page-url', window.location.href);
             container.setAttribute('data-page-title', vm.route.file || 'Home');
             container.setAttribute('data-theme', currentSiteTheme());
-
-            // Set single field and default button text
             container.setAttribute('data-fields', 'nickname');
             container.setAttribute('data-config', JSON.stringify({
               fields: ['nickname'],
               i18n: {
-                comment: 'Post',
+                comment: 'Comment',
                 nickname: 'Nickname',
-                reply: 'Comment'
+                reply: 'Reply'
               }
             }));
-
-            if (window.CUSDIS) {
-              window.CUSDIS.renderTo(container);
-            }
-
-            cleanCusdisIframe();
 
             if (!window.__cusdisThemeObserver) {
               window.__cusdisThemeObserver = new MutationObserver(syncCusdisTheme);

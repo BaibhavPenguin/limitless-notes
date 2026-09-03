@@ -21,8 +21,7 @@
     body,
     .sidebar,
     .markdown-section,
-    .search input,
-    #cusdis_thread {
+    .search input {
       font-family: var(--site-font) !important;
     }
 
@@ -37,8 +36,7 @@
     input,
     button,
     .sidebar-toggle,
-    #docsify-darklight-theme,
-    .comments-toggle-btn {
+    #docsify-darklight-theme {
       transition: background-color 0.5s ease,
                   color 0.5s ease,
                   border-color 0.5s ease,
@@ -190,113 +188,6 @@
       fill: #0f172a !important;
       stroke: #0f172a !important;
     }
-
-    /* Collapsible Comments Section Wrapper */
-    .comments-collapsible-wrapper {
-      margin: 50px auto 30px auto;
-      max-width: 680px;
-      width: 100%;
-      border-top: 1px solid rgba(128, 128, 128, 0.2);
-      padding-top: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: transparent !important;
-    }
-
-    /* Collapsible Header Button */
-    .comments-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-      background-color: #1e293b;
-      color: #ffffff;
-      outline: none;
-    }
-    .comments-toggle-btn:hover {
-      transform: translateY(-1px);
-    }
-    .comments-toggle-btn svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .comments-toggle-btn.open svg {
-      transform: rotate(180deg);
-    }
-
-    body.dark .comments-toggle-btn,
-    [data-theme="dark"] .comments-toggle-btn {
-      background-color: #ffffff;
-      color: #0f172a;
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-
-    /* Smooth Height Easing for Panel */
-    .comments-collapsible-content {
-      width: 100%;
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.65s ease,
-                  margin-top 0.65s ease;
-      opacity: 0;
-      margin-top: 0;
-      background: transparent !important;
-    }
-    .comments-collapsible-content.show {
-      grid-template-rows: 1fr;
-      opacity: 1;
-      margin-top: 16px;
-    }
-
-    .comments-inner {
-      overflow: hidden;
-      width: 100%;
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-
-    #cusdis_thread {
-      width: 100% !important;
-      background: transparent !important;
-      box-sizing: border-box;
-    }
-
-    /* THE PARENT-LEVEL BACKGROUND MIRROR FIX:
-       In Light Mode, mix-blend-mode: multiply burns away the white background cleanly.
-       In Dark Mode, mix-blend-mode: screen burns away the dark background completely. */
-    #cusdis_thread iframe {
-      width: 100% !important;
-      min-height: 480px;
-      border: none !important;
-      display: block;
-      margin: 0 auto;
-      background: transparent !important;
-      mix-blend-mode: multiply !important;
-      transition: opacity 0.3s ease;
-    }
-
-    body.dark #cusdis_thread iframe,
-    [data-theme="dark"] #cusdis_thread iframe {
-      mix-blend-mode: screen !important;
-      filter: contrast(1.1);
-    }
   </style>
 </head>
 <body>
@@ -308,14 +199,6 @@
   </div>
 
   <script>
-    window.CUSDIS_LOCALE = {
-      post: 'Post',
-      comment: 'Post',
-      nickname: 'Nickname',
-      replyContent: 'Comment',
-      reply: 'Comment'
-    };
-
     window.$docsify = {
       name: '',
       repo: '',
@@ -348,123 +231,7 @@
         placeholder: 'Search notes...',
         noData: 'No results found',
         depth: 3
-      },
-
-      plugins: [
-        function (hook, vm) {
-          function currentSiteTheme() {
-            var bg = getComputedStyle(document.body).backgroundColor;
-            var match = bg.match(/\d+/g);
-            if (!match) return 'light';
-            var r = +match[0], g = +match[1], b = +match[2];
-            var luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            return luminance < 0.5 ? 'dark' : 'light';
-          }
-
-          function forceRebuildCusdis() {
-            var container = document.getElementById('cusdis_thread');
-            if (!container) return;
-            var theme = currentSiteTheme();
-
-            // Destroy and re-mount container so Cusdis rebuilds with 100% accurate theme
-            container.innerHTML = '';
-            container.setAttribute('data-theme', theme);
-            container.setAttribute('data-fields', 'nickname');
-            container.setAttribute('data-config', JSON.stringify({
-              fields: ['nickname'],
-              i18n: {
-                comment: 'Post',
-                reply: 'Comment',
-                replyContent: 'Comment',
-                nickname: 'Nickname'
-              }
-            }));
-
-            if (window.CUSDIS) {
-              window.CUSDIS.renderTo(container);
-            }
-          }
-
-          hook.doneEach(function () {
-            var contentElem = document.querySelector('.content');
-            if (!contentElem) return;
-
-            var oldWrapper = document.querySelector('.comments-collapsible-wrapper');
-            if (oldWrapper) oldWrapper.remove();
-
-            var wrapper = document.createElement('div');
-            wrapper.className = 'comments-collapsible-wrapper';
-
-            var toggleBtn = document.createElement('button');
-            toggleBtn.className = 'comments-toggle-btn';
-            toggleBtn.innerHTML = '<span>Discussion & Comments</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-
-            var collContent = document.createElement('div');
-            collContent.className = 'comments-collapsible-content';
-
-            var innerContainer = document.createElement('div');
-            innerContainer.className = 'comments-inner';
-
-            var container = document.createElement('div');
-            container.id = 'cusdis_thread';
-
-            innerContainer.appendChild(container);
-            collContent.appendChild(innerContainer);
-            wrapper.appendChild(toggleBtn);
-            wrapper.appendChild(collContent);
-            contentElem.appendChild(wrapper);
-
-            container.setAttribute('data-host', 'https://cusdis.com');
-            container.setAttribute('data-app-id', 'c340a0ca-72a7-41cb-b1fe-4df40bd78033');
-            container.setAttribute('data-page-id', vm.route.file || 'home');
-            container.setAttribute('data-page-url', window.location.href);
-            container.setAttribute('data-page-title', vm.route.file || 'Home');
-            container.setAttribute('data-theme', currentSiteTheme());
-            container.setAttribute('data-fields', 'nickname');
-            container.setAttribute('data-config', JSON.stringify({
-              fields: ['nickname'],
-              i18n: {
-                comment: 'Post',
-                reply: 'Comment',
-                replyContent: 'Comment',
-                nickname: 'Nickname'
-              }
-            }));
-
-            var renderedOnce = false;
-
-            toggleBtn.addEventListener('click', function () {
-              var isOpen = collContent.classList.toggle('show');
-              toggleBtn.classList.toggle('open', isOpen);
-              if (isOpen && !renderedOnce) {
-                forceRebuildCusdis();
-                renderedOnce = true;
-              }
-            });
-
-            // Watch for class/theme switches and re-sync instantaneously
-            if (!window.__cusdisThemeObserver) {
-              window.__cusdisThemeObserver = new MutationObserver(function () {
-                var isOpen = collContent.classList.contains('show');
-                if (isOpen) {
-                  forceRebuildCusdis();
-                } else {
-                  renderedOnce = false; // Trigger clean reload next time opened
-                }
-              });
-
-              window.__cusdisThemeObserver.observe(document.body, {
-                attributes: true,
-                attributeFilter: ['class', 'style', 'data-theme']
-              });
-              window.__cusdisThemeObserver.observe(document.documentElement, {
-                attributes: true,
-                attributeFilter: ['class', 'style', 'data-theme']
-              });
-            }
-          });
-        }
-      ]
+      }
     }
   </script>
 
@@ -472,8 +239,7 @@
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-4/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="https://cusdis.com/js/cusdis.umd.js" async defer></script>
 </body>
 </html>

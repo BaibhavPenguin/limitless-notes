@@ -26,6 +26,14 @@
       font-family: var(--site-font) !important;
     }
 
+    /* Smooth sidebar transition */
+    .sidebar,
+    .content {
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                  left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                  padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    }
+
     /* Responsive container for YouTube embeds */
     .video-wrapper {
       position: relative;
@@ -105,11 +113,11 @@
       z-index: 1000 !important;
       padding: 0 !important;
       transition: background-color 0.25s ease, color 0.25s ease;
-      background-color: #1e293b !important; /* Dark background in Light Theme */
+      background-color: #1e293b !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
     }
     .sidebar-toggle span {
-      background-color: #ffffff !important; /* Light bars in Light Theme */
+      background-color: #ffffff !important;
       height: 2px !important;
       width: 18px !important;
       margin: 2px 0 !important;
@@ -117,7 +125,7 @@
       transition: background-color 0.25s ease;
     }
 
-    /* In Dark Mode: Hamburger flips to White background with Dark bars */
+    /* Dark Mode Hamburger styles */
     body.dark .sidebar-toggle,
     [data-theme="dark"] .sidebar-toggle {
       background-color: #ffffff !important;
@@ -139,7 +147,7 @@
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
       border-radius: 50% !important;
       transition: background-color 0.25s ease, color 0.25s ease !important;
-      background-color: #1e293b !important; /* Dark background in Light Theme */
+      background-color: #1e293b !important;
       color: #ffffff !important;
     }
     #docsify-darklight-theme svg {
@@ -147,7 +155,7 @@
       stroke: #ffffff !important;
     }
 
-    /* In Dark Mode: Theme Toggle flips to White background with Dark icons */
+    /* Dark Mode Theme Switcher styles */
     body.dark #docsify-darklight-theme,
     [data-theme="dark"] #docsify-darklight-theme {
       background-color: #ffffff !important;
@@ -159,20 +167,24 @@
       stroke: #0f172a !important;
     }
 
-    /* Prettier, adaptive comment thread */
+    /* Centered, adaptive comment container */
     #cusdis_thread {
-      margin-top: 48px;
-      padding: 24px 0;
+      margin: 50px auto 30px auto !important;
+      padding: 24px 0 0 0;
       border-top: 1px solid rgba(128, 128, 128, 0.2);
-      width: 100%;
-      max-width: 680px;
+      width: 100% !important;
+      max-width: 640px !important;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #cusdis_thread iframe {
       width: 100% !important;
-      min-height: 440px;
+      min-height: 480px;
       border: none !important;
       display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -185,6 +197,13 @@
   </div>
 
   <script>
+    // Global Cusdis configuration object ensures email is removed before iframe generates
+    window.CUSDIS_LOCALE = {
+      comment: 'Post',
+      nickname: 'Nickname',
+      reply: 'Reply'
+    };
+
     window.$docsify = {
       name: 'College Notes Hub',
       repo: '',
@@ -260,11 +279,14 @@
             container.setAttribute('data-page-title', vm.route.file || 'Home');
             container.setAttribute('data-theme', currentSiteTheme());
 
-            // Remove email input & re-label submit button to "Post"
+            // Exclude email from fields array and set button label
+            container.setAttribute('data-fields', 'nickname');
             container.setAttribute('data-config', JSON.stringify({
               fields: ['nickname'],
               i18n: {
-                comment: 'Post'
+                comment: 'Post',
+                nickname: 'Nickname',
+                reply: 'Reply'
               }
             }));
 

@@ -5,8 +5,8 @@
 > A free and open platform for accessing notes and academic resources without any data logging and pay walls. 
 
 <!-- Licenses -->
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE-MIT)
-[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)](LICENSE-CC-BY-NC-4.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/BaibhavPenguin/limitless-notes/blob/main/LICENSE-MIT)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)]([LICENSE-CC-BY-NC-4.0](https://github.com/BaibhavPenguin/limitless-notes/blob/main/LICENSE-CC-BY-NC-4.0))
 
 <!-- Collaborators -->
 [![Maintainer: Baibhav Bhattacharya](https://img.shields.io/badge/Developer-Baibhav_Bhattacharya-10b981.svg)](#)
@@ -180,8 +180,8 @@ This platform operates under a dual-licensing structure to protect open educatio
 
 ### 1. Dual-Licensing Framework
 
-* **Academic Notes, Documentation, and Visual Media:** All written notes, module summaries, examination solutions, and watermarked diagrams are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](LICENSE-CC-BY-NC-4.0).
-* **Source Code and Practical Scripts:** All executable software, lab code implementations, scripts, and build configurations are licensed under the [MIT License](LICENSE-MIT).
+* **Academic Notes, Documentation, and Visual Media:** All written notes, module summaries, examination solutions, and watermarked diagrams are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://github.com/BaibhavPenguin/limitless-notes/blob/main/LICENSE-CC-BY-NC-4.0).
+* **Source Code and Practical Scripts:** All executable software, lab code implementations, scripts, and build configurations are licensed under the [MIT License](https://github.com/BaibhavPenguin/limitless-notes/blob/main/LICENSE-MIT).
 
 ### 2. Permitted Uses
 
@@ -206,7 +206,8 @@ All original materials are copyrighted by the project maintainers:
 
 For inquiries regarding permissions beyond the scope of these licenses, open an issue in the official GitHub repository.
 
-To report unauthorized commercial use or file an infringement notice, refer to our [DMCA Notice & Policy](#/DMCA).
+To report unauthorized commercial use or file an infringement notice, refer to our [DMCA Notice & Policy](DMCA.md).
 
+To view our copyright notice, refer to our [Copyright Notice](https://github.com/BaibhavPenguin/limitless-notes/blob/main/NOTICE)
 ## Credits
 **Limitless** was developed by a group of college friends **Baibhav Bhattacharya**, **Ankush Yadav** and **Prem Vishvakarma** studying in **Shree L.R. Tiwari Degree College** as a way to effeiciently share notes and academic resources among all students.

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Limitless - The Open Academic Archive</title>  
+  <meta charset="UTF-8">
+  <title>Degree College Notes</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Free Degree College Notes, Syllabus, and Lectures">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Base Theme Stylesheet -->
+  <!-- Modern Theme with Built-in Light/Dark Switch -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
+
+  <!-- Collapsible Sidebar Stylesheet -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+
+  <style>
+    /* Responsive container for YouTube embeds on mobile */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .app-loader {
+			display: flex;
+  		flex-direction: column;
+  		justify-content: center;
+  		align-items: center;
+  		height: 85vh;
+  		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+		}
+
+		.loader-spinner {
+ 			 width: 44px;
+ 			 height: 44px;
+ 			 border: 3.5px solid #e5e7eb;
+ 			 border-top-color: #42b983; /* Vue/Docsify green accent */
+ 			 border-radius: 50%;
+ 			 animation: 
+			 	spin 0.85s linear infinite,
+    		dynamicHue 8s ease-in-out infinite;
+ 			 margin-bottom: 16px;
+		}
+
+		.loader-text {
+  	font-size: 15px;
+  	font-weight: 500;
+  	letter-spacing: 0.3px;
+  	animation: dynamicTextColor 8s ease-in-out infinite;
+	}
+
+	@keyframes spin {
+  	to {
+    	transform: rotate(360deg);
+  	}
+	}
+
+	@keyframes dynamicHue {
+ 		0%   { border-top-color: #000000; border-right-color: #000000; } /* Blue */
+  	25%  { border-top-color: #7c3aed; border-right-color: #7c3aed; } /* Purple */
+  	50%  { border-top-color: #db2777; border-right-color: #db2777; } /* Rose */
+  	75%  { border-top-color: #059669; border-right-color: #059669; } /* Emerald */
+  	100% { border-top-color: #000000; border-right-color: #000000; } /* Blue */
+	}
+
+	@keyframes dynamicTextColor {
+  	0%   { color: #000000; }
+  	25%  { color: #7c3aed; }
+  	50%  { color: #db2777; }
+  	75%  { color: #059669; }
+  	100% { color: #000000; }
+	}
+
+    /* Cusdis comment thread spacing */
+    #cusdis_thread {
+      margin-top: 50px;
+      padding-top: 25px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+		/*Make links and active sidebar tabs cycle dynamically as well */
+		.markdown-section a,
+		.sidebar ul li.active > a {
+  	animation: dynamicTextColor 12s ease-in-out infinite;	
+		}
+
+		/* Move Docsify hamburger toggle to the top-left */
+		.sidebar-toggle {
+  		top: 10px !important;
+  		bottom: auto !important;
+  		left: 10px !important;
+		}
+
+		/* Adjust button hit area so it doesn't overlap header content */
+		body.close .sidebar-toggle {
+  		background-color: rgba(255, 255, 255, 0.8);
+  		border-radius: 6px;
+		}
+  </style>
+</head>
+<body>
+  <!-- Docsify mounts the content here -->
+  <div id="app">
+  	<div class="app-loader">
+    	<div class="loader-spinner"></div>
+    	<div class="loader-text">Loading Limitless Archive</div>
+ 	 </div>
+	</div>
+
+  <script>
+    window.$docsify = {
+      name: 'College Notes Hub',
+      repo: '', // Optional: Add your public GitHub URL here
+      homepage: 'README.md', // Explicitly loads the root README as the homepage
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+
+			//Theme Configuration
+			darklightTheme: {
+    		siteFont: 'inherit',
+    		defaultTheme: 'light', // 'light' or 'dark'
+   		 	codeFontFamily: 'Roboto Mono, Monaco, courier, monospace',
+   	 		dark: {
+      		accent: '#38bdf8', // Light blue accent in dark mode
+      		background: '#0f172a', // Deep slate navy
+      		textColor: '#f1f5f9',
+      		codeBackgroundColor: '#1e293b'
+    		},
+    		light: {
+      		accent: '#2563eb', // Royal blue accent in light mode
+      		background: '#ffffff',
+      		textColor: '#1e293b',
+      		codeBackgroundColor: '#f8fafc'
+    		}
+  		},
+
+      // Search configuration
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Search notes...',
+        noData: 'No results found',
+        depth: 3
+      },
+
+      // Custom plugin hooks for Dynamic Per-Page Cusdis Comments
+      plugins: [
+        function (hook, vm) {
+          hook.doneEach(function () {
+            // Find or create the comments container at the end of the markdown content
+            var container = document.getElementById('cusdis_thread');
+            if (!container) {
+              container = document.createElement('div');
+              container.id = 'cusdis_thread';
+              var contentElem = document.querySelector('.content');
+              if (contentElem) {
+                contentElem.appendChild(container);
+              }
+            }
+
+            // Bind Cusdis to the specific note's path
+            container.setAttribute('data-host', 'https://cusdis.com');
+            container.setAttribute('data-app-id', 'YOUR_CUSDIS_APP_ID_HERE'); // <-- Replace with your real ID from cusdis.com
+            container.setAttribute('data-page-id', vm.route.file || 'home');
+            container.setAttribute('data-page-url', window.location.href);
+            container.setAttribute('data-page-title', vm.route.file || 'Home');
+
+            // Render or refresh comments when changing pages
+            if (window.CUSDIS) {
+              window.CUSDIS.renderTo(container);
+            }
+          });
+        }
+      ]
+    }
+  </script>
+
+  <!-- Core Docsify Engine -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+	<script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
+
+  <!-- Collapsible Sidebar Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+
+  <!-- Full-Text Search Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- One-Click Code Copy Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
+  <!-- Cusdis Anonymous Comment Engine -->
+  <script src="https://cusdis.com/js/cusdis.umd.js" async defer></script>
+</body>
+</html>

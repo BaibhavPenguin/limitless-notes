@@ -38,8 +38,7 @@
     button,
     .sidebar-toggle,
     #docsify-darklight-theme,
-    .comments-toggle-btn,
-    .comments-inner {
+    .comments-toggle-btn {
       transition: background-color 0.5s ease,
                   color 0.5s ease,
                   border-color 0.5s ease,
@@ -202,6 +201,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      background: transparent !important;
     }
 
     /* Collapsible Header Button */
@@ -255,6 +255,7 @@
                   margin-top 0.65s ease;
       opacity: 0;
       margin-top: 0;
+      background: transparent !important;
     }
     .comments-collapsible-content.show {
       grid-template-rows: 1fr;
@@ -262,28 +263,20 @@
       margin-top: 16px;
     }
 
-    /* Dynamic background container for the comments */
+    /* Transparent panel container that directly adopts document background */
     .comments-inner {
       overflow: hidden;
       width: 100%;
-      border-radius: 12px;
-      padding: 18px 22px;
-      box-sizing: border-box;
-      background-color: #f8fafc;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    body.dark .comments-inner,
-    [data-theme="dark"] .comments-inner {
-      background-color: #1e293b;
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 4px 0 0 0;
     }
 
     #cusdis_thread {
       width: 100% !important;
       box-sizing: border-box;
+      background: transparent !important;
     }
     #cusdis_thread iframe {
       width: 100% !important;
@@ -291,6 +284,7 @@
       border: none !important;
       display: block;
       margin: 0 auto;
+      background: transparent !important;
     }
   </style>
 </head>
@@ -368,7 +362,6 @@
               var doc = iframe.contentDocument || iframe.contentWindow.document;
               if (!doc) return;
 
-              // Synchronize dark class onto iframe root
               if (theme === 'dark') {
                 doc.documentElement.classList.add('dark');
                 doc.body.classList.add('dark');
@@ -378,10 +371,9 @@
               }
 
               var isDark = theme === 'dark';
-              var dynamicBg = isDark ? '#1e293b' : '#f8fafc';
               var textColor = isDark ? '#f1f5f9' : '#1e293b';
-              var borderColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)';
-              var inputBg = isDark ? '#0f172a' : '#ffffff';
+              var borderColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)';
+              var inputBg = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)';
 
               var style = doc.getElementById('cusdis-custom-styles');
               if (!style) {
@@ -391,12 +383,13 @@
               }
 
               style.textContent = `
-                body {
-                  background-color: ${dynamicBg} !important;
+                html, body {
+                  background: transparent !important;
+                  background-color: transparent !important;
                   color: ${textColor} !important;
-                  transition: background-color 0.5s ease, color 0.5s ease;
+                  transition: color 0.5s ease;
                 }
-                /* Hide Email input row completely */
+                /* Hide Email row entirely */
                 input[name="email"],
                 input[type="email"],
                 label[for="email"],
@@ -404,24 +397,27 @@
                 div:has(> input[type="email"]) {
                   display: none !important;
                 }
-                /* Adapt Nickname row to full width */
+                /* Make Nickname full width */
                 input[name="nickname"],
                 div:has(> input[name="nickname"]) {
                   width: 100% !important;
                   flex: 1 1 100% !important;
                 }
-                /* Form elements coloring */
+                /* Form fields with subtle backdrop rather than solid blocks */
                 input, textarea {
                   background-color: ${inputBg} !important;
                   color: ${textColor} !important;
-                  border-color: ${borderColor} !important;
+                  border: 1px solid ${borderColor} !important;
+                  border-radius: 6px !important;
+                  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
                 }
                 label {
                   color: ${textColor} !important;
+                  font-weight: 500 !important;
                 }
               `;
 
-              // Replace label text "Reply..." or "Reply" above the field with "Comment"
+              // Replace label text "Reply..." or "Reply" with "Comment"
               var labels = doc.querySelectorAll('label');
               labels.forEach(function (label) {
                 var txt = label.innerText.trim();

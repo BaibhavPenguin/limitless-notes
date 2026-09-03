@@ -245,7 +245,7 @@
       border-color: rgba(0, 0, 0, 0.1);
     }
 
-    /* Panel Animation */
+    /* Smooth Height Easing for Panel */
     .comments-collapsible-content {
       width: 100%;
       display: grid;
@@ -263,21 +263,24 @@
       margin-top: 16px;
     }
 
-    /* Transparent panel container that directly adopts document background */
     .comments-inner {
       overflow: hidden;
       width: 100%;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 4px 0 0 0;
+      padding: 0 !important;
     }
 
     #cusdis_thread {
       width: 100% !important;
-      box-sizing: border-box;
       background: transparent !important;
+      box-sizing: border-box;
     }
+
+    /* THE PARENT-LEVEL BACKGROUND MIRROR FIX:
+       In Light Mode, mix-blend-mode: multiply burns away the white background cleanly.
+       In Dark Mode, mix-blend-mode: screen burns away the dark background completely. */
     #cusdis_thread iframe {
       width: 100% !important;
       min-height: 480px;
@@ -285,6 +288,14 @@
       display: block;
       margin: 0 auto;
       background: transparent !important;
+      mix-blend-mode: multiply !important;
+      transition: opacity 0.3s ease;
+    }
+
+    body.dark #cusdis_thread iframe,
+    [data-theme="dark"] #cusdis_thread iframe {
+      mix-blend-mode: screen !important;
+      filter: contrast(1.1);
     }
   </style>
 </head>
@@ -303,10 +314,6 @@
       nickname: 'Nickname',
       replyContent: 'Comment',
       reply: 'Comment'
-    };
-
-    window.CUSDIS_CONFIG = {
-      fields: ['nickname']
     };
 
     window.$docsify = {
@@ -354,112 +361,28 @@
             return luminance < 0.5 ? 'dark' : 'light';
           }
 
-          function applyIframeStyles(theme) {
-            var iframe = document.querySelector('#cusdis_thread iframe');
-            if (!iframe) return;
-
-            try {
-              var doc = iframe.contentDocument || iframe.contentWindow.document;
-              if (!doc) return;
-
-              if (theme === 'dark') {
-                doc.documentElement.classList.add('dark');
-                doc.body.classList.add('dark');
-              } else {
-                doc.documentElement.classList.remove('dark');
-                doc.body.classList.remove('dark');
-              }
-
-              var isDark = theme === 'dark';
-              var textColor = isDark ? '#f1f5f9' : '#1e293b';
-              var borderColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)';
-              var inputBg = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)';
-
-              var style = doc.getElementById('cusdis-custom-styles');
-              if (!style) {
-                style = doc.createElement('style');
-                style.id = 'cusdis-custom-styles';
-                doc.head.appendChild(style);
-              }
-
-              style.textContent = `
-                html, body {
-                  background: transparent !important;
-                  background-color: transparent !important;
-                  color: ${textColor} !important;
-                  transition: color 0.5s ease;
-                }
-                /* Hide Email row entirely */
-                input[name="email"],
-                input[type="email"],
-                label[for="email"],
-                div:has(> input[name="email"]),
-                div:has(> input[type="email"]) {
-                  display: none !important;
-                }
-                /* Make Nickname full width */
-                input[name="nickname"],
-                div:has(> input[name="nickname"]) {
-                  width: 100% !important;
-                  flex: 1 1 100% !important;
-                }
-                /* Form fields with subtle backdrop rather than solid blocks */
-                input, textarea {
-                  background-color: ${inputBg} !important;
-                  color: ${textColor} !important;
-                  border: 1px solid ${borderColor} !important;
-                  border-radius: 6px !important;
-                  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
-                }
-                label {
-                  color: ${textColor} !important;
-                  font-weight: 500 !important;
-                }
-              `;
-
-              // Replace label text "Reply..." or "Reply" with "Comment"
-              var labels = doc.querySelectorAll('label');
-              labels.forEach(function (label) {
-                var txt = label.innerText.trim();
-                if (txt === 'Reply...' || txt === 'Reply' || txt.indexOf('Reply') !== -1) {
-                  label.innerText = 'Comment';
-                }
-              });
-
-              // Replace placeholder "Reply..." with "Comment"
-              var textarea = doc.querySelector('textarea[name="reply_content"], textarea');
-              if (textarea && (textarea.placeholder === 'Reply...' || textarea.placeholder === 'Reply')) {
-                textarea.placeholder = 'Comment';
-              }
-
-              // Replace submit button text with "Post"
-              var btns = doc.querySelectorAll('button');
-              btns.forEach(function (btn) {
-                if (btn.innerText.trim() === 'Comment') {
-                  btn.innerText = 'Post';
-                }
-              });
-            } catch (e) {}
-          }
-
-          function syncCusdisTheme() {
+          function forceRebuildCusdis() {
             var container = document.getElementById('cusdis_thread');
             if (!container) return;
             var theme = currentSiteTheme();
 
-            if (container.getAttribute('data-theme') !== theme) {
-              container.setAttribute('data-theme', theme);
-            }
+            // Destroy and re-mount container so Cusdis rebuilds with 100% accurate theme
+            container.innerHTML = '';
+            container.setAttribute('data-theme', theme);
+            container.setAttribute('data-fields', 'nickname');
+            container.setAttribute('data-config', JSON.stringify({
+              fields: ['nickname'],
+              i18n: {
+                comment: 'Post',
+                reply: 'Comment',
+                replyContent: 'Comment',
+                nickname: 'Nickname'
+              }
+            }));
 
-            var iframe = document.querySelector('#cusdis_thread iframe');
-            if (iframe && iframe.contentWindow) {
-              iframe.contentWindow.postMessage(
-                JSON.stringify({ from: 'cusdis', event: 'setTheme', data: theme }),
-                '*'
-              );
+            if (window.CUSDIS) {
+              window.CUSDIS.renderTo(container);
             }
-
-            applyIframeStyles(theme);
           }
 
           hook.doneEach(function () {
@@ -508,26 +431,28 @@
               }
             }));
 
-            if (window.CUSDIS) {
-              window.CUSDIS.renderTo(container);
-              var iframe = container.querySelector('iframe');
-              if (iframe) {
-                iframe.addEventListener('load', function () {
-                  applyIframeStyles(currentSiteTheme());
-                });
-              }
-            }
+            var renderedOnce = false;
 
             toggleBtn.addEventListener('click', function () {
               var isOpen = collContent.classList.toggle('show');
               toggleBtn.classList.toggle('open', isOpen);
-              if (isOpen) {
-                syncCusdisTheme();
+              if (isOpen && !renderedOnce) {
+                forceRebuildCusdis();
+                renderedOnce = true;
               }
             });
 
+            // Watch for class/theme switches and re-sync instantaneously
             if (!window.__cusdisThemeObserver) {
-              window.__cusdisThemeObserver = new MutationObserver(syncCusdisTheme);
+              window.__cusdisThemeObserver = new MutationObserver(function () {
+                var isOpen = collContent.classList.contains('show');
+                if (isOpen) {
+                  forceRebuildCusdis();
+                } else {
+                  renderedOnce = false; // Trigger clean reload next time opened
+                }
+              });
+
               window.__cusdisThemeObserver.observe(document.body, {
                 attributes: true,
                 attributeFilter: ['class', 'style', 'data-theme']
@@ -547,7 +472,7 @@
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="https://cusdis.com/js/cusdis.umd.js" async defer></script>
 </body>

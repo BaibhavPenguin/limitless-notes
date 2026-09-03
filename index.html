@@ -8,14 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
   <!-- Base Theme Stylesheet -->
-  <!-- Modern Theme with Built-in Light/Dark Switch -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
 
   <!-- Collapsible Sidebar Stylesheet -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 
   <style>
-    /* Default site font — Arial everywhere except code blocks */
+    /* Default site font */
     :root {
       --site-font: Arial, Helvetica, "Segoe UI", sans-serif;
     }
@@ -27,7 +26,7 @@
       font-family: var(--site-font) !important;
     }
 
-    /* Responsive container for YouTube embeds on mobile */
+    /* Responsive container for YouTube embeds */
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%;
@@ -46,159 +45,152 @@
       border: 0;
     }
 
+    /* App Loader */
     .app-loader {
-			display: flex;
-  		flex-direction: column;
-  		justify-content: center;
-  		align-items: center;
-  		height: 85vh;
-  		font-family: var(--site-font);
-		}
-
-		.loader-spinner {
- 			 width: 44px;
- 			 height: 44px;
- 			 border: 3.5px solid #e5e7eb;
- 			 border-top-color: #42b983; /* Vue/Docsify green accent */
- 			 border-radius: 50%;
- 			 animation: 
-			 	spin 0.85s linear infinite,
-    		dynamicHue 8s ease-in-out infinite;
- 			 margin-bottom: 16px;
-		}
-
-		.loader-text {
-  	font-size: 15px;
-  	font-weight: 500;
-  	letter-spacing: 0.3px;
-  	animation: dynamicTextColor 8s ease-in-out infinite;
-	}
-
-	@keyframes spin {
-  	to {
-    	transform: rotate(360deg);
-  	}
-	}
-
-	@keyframes dynamicHue {
- 		0%   { border-top-color: #000000; border-right-color: #000000; } /* Blue */
-  	25%  { border-top-color: #7c3aed; border-right-color: #7c3aed; } /* Purple */
-  	50%  { border-top-color: #db2777; border-right-color: #db2777; } /* Rose */
-  	75%  { border-top-color: #059669; border-right-color: #059669; } /* Emerald */
-  	100% { border-top-color: #000000; border-right-color: #000000; } /* Blue */
-	}
-
-	@keyframes dynamicTextColor {
-  	0%   { color: #000000; }
-  	25%  { color: #7c3aed; }
-  	50%  { color: #db2777; }
-  	75%  { color: #059669; }
-  	100% { color: #000000; }
-	}
-
-    /* Cusdis comment thread — theme-aware wrapper, kept compact on all sizes */
-    #cusdis_thread {
-      margin-top: 50px;
-      padding: 20px 4px 4px;
-      border-top: 1px solid rgba(128, 128, 128, 0.25);
-      max-width: 100%;
-      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 85vh;
+      font-family: var(--site-font);
     }
-    #cusdis_thread iframe {
-      max-width: 100% !important;
-      width: 100% !important;
-      border: none !important;
+
+    .loader-spinner {
+      width: 44px;
+      height: 44px;
+      border: 3.5px solid #e5e7eb;
+      border-top-color: #42b983;
+      border-radius: 50%;
+      animation: 
+        spin 0.85s linear infinite,
+        dynamicHue 8s ease-in-out infinite;
+      margin-bottom: 16px;
     }
-    @media (max-width: 600px) {
-      #cusdis_thread {
-        margin-top: 32px;
-        padding: 16px 0 0;
+
+    .loader-text {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
     }
 
-		/*Make links and active sidebar tabs cycle dynamically as well */
-		.markdown-section a,
-		.sidebar ul li.active > a {
-  	animation: dynamicTextColor 12s ease-in-out infinite;	
-		}
+    @keyframes dynamicHue {
+      0%   { border-top-color: #000000; border-right-color: #000000; }
+      25%  { border-top-color: #7c3aed; border-right-color: #7c3aed; }
+      50%  { border-top-color: #db2777; border-right-color: #db2777; }
+      75%  { border-top-color: #059669; border-right-color: #059669; }
+      100% { border-top-color: #000000; border-right-color: #000000; }
+    }
 
-		/* Docsify hamburger toggle — top-right, circular, never overlaps the
-		   darklight theme switch (which lives inside the sidebar/search area) */
-		.sidebar-toggle {
-			position: fixed;
-			top: 12px;
-			right: 12px;
-			left: auto !important;
-			bottom: auto !important;
-			width: 34px;
-			height: 34px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: rgba(128, 128, 128, 0.15);
-			border-radius: 50%;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-			z-index: 105;
-			transition: background-color 0.2s ease;
-		}
-		.sidebar-toggle:hover {
-			background-color: rgba(128, 128, 128, 0.28);
-		}
+    /* Fix 2: Move Dark/Light toggle to bottom right */
+    #docsify-darklight-theme {
+      position: fixed !important;
+      right: 20px !important;
+      bottom: 20px !important;
+      top: auto !important;
+      left: auto !important;
+      z-index: 9999 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      border-radius: 50% !important;
+    }
 
-		/* On desktop the sidebar is always visible, so the hamburger just adds
-		   clutter next to the theme switch — hide it there */
-		@media (min-width: 768px) {
-			.sidebar-toggle {
-				display: none;
-			}
-		}
+    /* Fix 3: Standardize hamburger menu & enable on desktop */
+    .sidebar-toggle {
+      position: fixed !important;
+      top: 14px !important;
+      left: 14px !important;
+      right: auto !important;
+      bottom: auto !important;
+      width: 38px !important;
+      height: 38px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(6px);
+      border-radius: 8px !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+      border: 1px solid rgba(128, 128, 128, 0.2) !important;
+      cursor: pointer;
+      z-index: 1000 !important;
+      padding: 0 !important;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .sidebar-toggle:hover {
+      background-color: rgba(240, 240, 240, 0.95) !important;
+    }
+    .sidebar-toggle span {
+      background-color: #333 !important;
+      height: 2px !important;
+      width: 18px !important;
+      margin: 2px 0 !important;
+      border-radius: 2px;
+    }
+    body.dark .sidebar-toggle {
+      background: rgba(30, 41, 59, 0.85) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    body.dark .sidebar-toggle span {
+      background-color: #f1f5f9 !important;
+    }
 
-		/* On mobile, keep page content clear of the fixed top-right toggle */
-		@media (max-width: 767px) {
-			.sidebar {
-				padding-top: 46px;
-			}
-		}
+    /* Fix 4: Prettier, responsive comment section */
+    #cusdis_thread {
+      margin-top: 48px;
+      padding: 24px 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.2);
+      width: 100%;
+      max-width: 680px;
+      box-sizing: border-box;
+    }
+    #cusdis_thread iframe {
+      width: 100% !important;
+      min-height: 480px;
+      border: none !important;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <!-- Docsify mounts the content here -->
   <div id="app">
-  	<div class="app-loader">
-    	<div class="loader-spinner"></div>
-    	<div class="loader-text">Loading Limitless Archive</div>
- 	 </div>
-	</div>
+    <div class="app-loader">
+      <div class="loader-spinner"></div>
+      <div class="loader-text">Loading Limitless Archive</div>
+    </div>
+  </div>
 
   <script>
     window.$docsify = {
       name: 'College Notes Hub',
-      repo: '', // Optional: Add your public GitHub URL here
-      homepage: 'README.md', // Explicitly loads the root README as the homepage
+      repo: '',
+      homepage: 'README.md',
       loadSidebar: true,
       subMaxLevel: 3,
       auto2top: true,
 
-			//Theme Configuration
-			darklightTheme: {
-    		siteFont: 'Arial, Helvetica, sans-serif',
-    		defaultTheme: 'light', // 'light' or 'dark'
-   		 	codeFontFamily: 'Roboto Mono, Monaco, courier, monospace',
-   	 		dark: {
-      		accent: '#38bdf8', // Light blue accent in dark mode
-      		background: '#0f172a', // Deep slate navy
-      		textColor: '#f1f5f9',
-      		codeBackgroundColor: '#1e293b'
-    		},
-    		light: {
-      		accent: '#2563eb', // Royal blue accent in light mode
-      		background: '#ffffff',
-      		textColor: '#1e293b',
-      		codeBackgroundColor: '#f8fafc'
-    		}
-  		},
+      darklightTheme: {
+        siteFont: 'Arial, Helvetica, sans-serif',
+        defaultTheme: 'light',
+        codeFontFamily: 'Roboto Mono, Monaco, courier, monospace',
+        dark: {
+          accent: '#38bdf8',
+          background: '#0f172a',
+          textColor: '#f1f5f9',
+          codeBackgroundColor: '#1e293b'
+        },
+        light: {
+          accent: '#2563eb',
+          background: '#ffffff',
+          textColor: '#1e293b',
+          codeBackgroundColor: '#f8fafc'
+        }
+      },
 
-      // Search configuration
       search: {
         maxAge: 86400000,
         paths: 'auto',
@@ -207,12 +199,8 @@
         depth: 3
       },
 
-      // Custom plugin hooks for Dynamic Per-Page Cusdis Comments
       plugins: [
         function (hook, vm) {
-          // Detect whether the page is currently in dark or light mode by
-          // reading the *actual* rendered background color, so this works
-          // no matter how the darklight-theme switch applies its styles.
           function currentSiteTheme() {
             var bg = getComputedStyle(document.body).backgroundColor;
             var match = bg.match(/\d+/g);
@@ -235,7 +223,6 @@
           }
 
           hook.doneEach(function () {
-            // Find or create the comments container at the end of the markdown content
             var container = document.getElementById('cusdis_thread');
             if (!container) {
               container = document.createElement('div');
@@ -246,21 +233,17 @@
               }
             }
 
-            // Bind Cusdis to the specific note's path
             container.setAttribute('data-host', 'https://cusdis.com');
-            container.setAttribute('data-app-id', 'c340a0ca-72a7-41cb-b1fe-4df40bd78033'); // <-- Replace with your real ID from cusdis.com
+            container.setAttribute('data-app-id', 'c340a0ca-72a7-41cb-b1fe-4df40bd78033');
             container.setAttribute('data-page-id', vm.route.file || 'home');
             container.setAttribute('data-page-url', window.location.href);
             container.setAttribute('data-page-title', vm.route.file || 'Home');
             container.setAttribute('data-theme', currentSiteTheme());
 
-            // Render or refresh comments when changing pages
             if (window.CUSDIS) {
               window.CUSDIS.renderTo(container);
             }
 
-            // Keep the widget theme in sync if the user flips the
-            // light/dark switch after comments have already rendered
             if (!window.__cusdisThemeObserver) {
               window.__cusdisThemeObserver = new MutationObserver(syncCusdisTheme);
               window.__cusdisThemeObserver.observe(document.body, {
@@ -280,18 +263,10 @@
 
   <!-- Core Docsify Engine -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-	<script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
-
-  <!-- Collapsible Sidebar Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-
-  <!-- Full-Text Search Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-
-  <!-- One-Click Code Copy Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-
-  <!-- Cusdis Anonymous Comment Engine -->
   <script src="https://cusdis.com/js/cusdis.umd.js" async defer></script>
 </body>
 </html>

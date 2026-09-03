@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Limitless - The Open Academic Archive | Degree College Notes</title>
+  <title>Limitless - The Open Academic Archive</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="The free and open source archive of high quality notes and academic resources for degree college in India">
@@ -24,6 +24,12 @@
     .search input,
     #cusdis_thread {
       font-family: var(--site-font) !important;
+    }
+
+    /* Remove the site name header from the sidebar completely */
+    .app-name,
+    .sidebar > h1 {
+      display: none !important;
     }
 
     /* Smooth sidebar transition */
@@ -125,7 +131,6 @@
       transition: background-color 0.25s ease;
     }
 
-    /* Dark Mode Hamburger styles */
     body.dark .sidebar-toggle,
     [data-theme="dark"] .sidebar-toggle {
       background-color: #ffffff !important;
@@ -155,7 +160,6 @@
       stroke: #ffffff !important;
     }
 
-    /* Dark Mode Theme Switcher styles */
     body.dark #docsify-darklight-theme,
     [data-theme="dark"] #docsify-darklight-theme {
       background-color: #ffffff !important;
@@ -197,15 +201,13 @@
   </div>
 
   <script>
-    // Global Cusdis configuration object ensures email is removed before iframe generates
-    window.CUSDIS_LOCALE = {
-      comment: 'Post',
-      nickname: 'Nickname',
-      reply: 'Reply'
+    // Custom Cusdis configuration removing email and preserving 'Comment' button text
+    window.CUSDIS_CONFIG = {
+      fields: ['nickname']
     };
 
     window.$docsify = {
-      name: 'College Notes Hub',
+      name: '', // Cleared site title
       repo: '',
       homepage: 'README.md',
       loadSidebar: true,
@@ -261,6 +263,44 @@
             }
           }
 
+          // Injects custom CSS directly into the Cusdis iframe to remove the Email field row
+          function cleanCusdisIframe() {
+            var iframe = document.querySelector('#cusdis_thread iframe');
+            if (!iframe) return;
+
+            function stripEmail() {
+              try {
+                var doc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!doc || doc.getElementById('cusdis-clean-styles')) return;
+
+                var style = doc.createElement('style');
+                style.id = 'cusdis-clean-styles';
+                style.textContent = `
+                  /* Hide the email label, input field, and its container */
+                  input[name="email"],
+                  input[type="email"],
+                  label[for="email"],
+                  div:has(> input[name="email"]),
+                  div:has(> input[type="email"]) {
+                    display: none !important;
+                  }
+                  /* Make nickname occupy full width */
+                  input[name="nickname"],
+                  div:has(> input[name="nickname"]) {
+                    width: 100% !important;
+                    flex: 1 1 100% !important;
+                  }
+                `;
+                doc.head.appendChild(style);
+              } catch (e) {
+                // Cross-origin fallback handled via data-fields
+              }
+            }
+
+            iframe.addEventListener('load', stripEmail);
+            stripEmail();
+          }
+
           hook.doneEach(function () {
             var container = document.getElementById('cusdis_thread');
             if (!container) {
@@ -279,12 +319,12 @@
             container.setAttribute('data-page-title', vm.route.file || 'Home');
             container.setAttribute('data-theme', currentSiteTheme());
 
-            // Exclude email from fields array and set button label
+            // Set single field and default button text
             container.setAttribute('data-fields', 'nickname');
             container.setAttribute('data-config', JSON.stringify({
               fields: ['nickname'],
               i18n: {
-                comment: 'Post',
+                comment: 'Comment',
                 nickname: 'Nickname',
                 reply: 'Reply'
               }
@@ -293,6 +333,8 @@
             if (window.CUSDIS) {
               window.CUSDIS.renderTo(container);
             }
+
+            cleanCusdisIframe();
 
             if (!window.__cusdisThemeObserver) {
               window.__cusdisThemeObserver = new MutationObserver(syncCusdisTheme);

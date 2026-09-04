@@ -204,6 +204,22 @@
       display: inline-block;
       margin: 0 2px;
     }
+
+        /* Move collapsible sidebar arrow to the right */
+    .sidebar-nav li > span {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .sidebar-nav .collapse {
+      position: static !important;
+      order: 2;
+      margin-left: auto;
+      margin-right: 15px;
+    }
+
   </style>
 </head>
 <body>
@@ -252,7 +268,7 @@
         function(hook) {
           var footer = [
             '<footer class="site-footer">',
-            'Made with <span class="heart">❤️</span> by Baibhav Bhattacharya',
+            'Made with <span class="heart">❤️</span> by Baibhav Bhattacharya, Prem Vishvakarma & Ankush Yadav',
             '</footer>'
           ].join('');
 

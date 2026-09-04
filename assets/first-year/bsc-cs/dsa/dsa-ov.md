@@ -1,6 +1,6 @@
 # Digital Systems & Architecture
 
-All Notes as per NEP 2020
+Notes of Digital Systems & Architecture , the theory subject are avaliable as per &mdash;
 
 * [Module 1 ](/assets/first-year/bsc-cs/dsa/dsa-ov.md)
     * [Basic Logic Gates](/assets/first-year/bsc-cs/dsa/logic-gates.md)

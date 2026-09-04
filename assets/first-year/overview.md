@@ -3,8 +3,8 @@
 # First Year Overview  
 This is the overview page for the First Year (FY) academic archive. Navigate using the sidebar on the left, or access the courses directly using the table given below
 
-<div align = 'center'>
-<table border="1">
+
+<table border="1" align="center">
 <!--HEADERS -->
 <tr>
 <th>Course
@@ -26,7 +26,7 @@ This is the overview page for the First Year (FY) academic archive. Navigate usi
 
 </table>
 <p align="left">Additional courses will be added later.
-</div>
+
 
 
 

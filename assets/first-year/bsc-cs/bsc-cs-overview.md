@@ -14,7 +14,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 <!-- Courses -->
 <tr>
 <td>Digital Systems & Architecture (DSA)
-<td><a href="">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/dsa/dsa-ov.md">View Notes</a>
 </tr>
 
 <tr>

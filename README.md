@@ -1,9 +1,9 @@
-<div align="center">
+<div>
 
 # Limitless - The Open Academic Archive
 
 > A free and open platform for accessing notes and academic resources without any data logging and pay walls. 
-
+---
 
 
 </div>
@@ -14,7 +14,7 @@ Limitless is an open academic archive built by students, for students. It puts s
 
 There are no accounts, paywalls, tracking scripts, or intrusive ads. Everything renders natively in the browser, so you never have to download massive, blurry scanned PDFs just to check a single concept or formula before an exam.
 
-Alongside regular theory, we also provide reference lab manuals, step-by-step experiment procedures, verified code, and embedded video guides showing exactly how to set up tools and run your practicals without getting stuck. Every page is lightweight and edge-cached to load instantly, even on spotty campus Wi-Fi.
+Alongside regular theory, we also provide reference lab manuals, step-by-step experiment procedures, verified code, and embedded video guides showing exactly how to set up tools and run your practicals without getting stuck. Every page is lightweight and edge-cached to load instantly.
 
 
 
@@ -146,6 +146,7 @@ Alongside regular theory, we also provide reference lab manuals, step-by-step ex
 </style>
 
 <h2>Getting Started</h2>
+<hr>
 <div class="btn-grid">
   <a href="#/assets/first-year/overview" class="animated-btn btn-fy">
     <span class="btn-title">FY</span>
@@ -165,12 +166,13 @@ Alongside regular theory, we also provide reference lab manuals, step-by-step ex
 
 
 ## Legal Information
-
+---
 To view the Terms of use, refer to our [Terms & Conditions](/legal/TERMS-OF-USE.md)
 
 To report unauthorized commercial use or file an infringement notice, refer to our [DMCA Notice & Policy](/legal/DMCA.md).
 
 To view our copyright notice, refer to our [Copyright Notice](/legal/NOTICE.md)
 ## Credits
+---
 **Limitless** was developed by a group of college friends **Baibhav Bhattacharya**, **Ankush Yadav** and **Prem Vishvakarma** studying in **Shree L.R. Tiwari Degree College** as a way to effeiciently share notes and academic resources among all students.
 

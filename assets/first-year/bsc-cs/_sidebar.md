@@ -1,0 +1,13 @@
+* [FY BSc - CS Course Overview]()
+    * [Digital Systems & Architecture]()
+    * [Fundamentals of Database Management Systems]()
+    * [Introduction to Python Programming]()
+    * [Statistics with R Programming]()
+    * [Computer Science Practical 1]()
+    * [Marketting Mix 1]()
+    * [Environmental Management & Sustainable Development]()
+    * [Indian Knowledge System]()
+    * [Case Studies in Management]()
+    * [Introduction to Business Communication in English]()
+    
+* [Go Back](/assets/first-year/overview.md)

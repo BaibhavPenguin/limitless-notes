@@ -66,7 +66,7 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
 The OR GATE is a digital logic gate which outputs high (1) when any one or both inputs are high (1)
 
 <div align='center'>
-<table align='center'>
+<table>
 <tr>
 <th> A
 <th> B

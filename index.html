@@ -317,22 +317,26 @@
 
 
   <script>
-    // Prevent mobile sidebar from auto-closing when toggling folders
-    document.addEventListener('DOMContentLoaded', function () {
-      var sidebar = document.querySelector('.sidebar');
-      if (!sidebar) return;
+  document.addEventListener('DOMContentLoaded', function () {
+    var sidebar = document.querySelector('.sidebar');
+    var content = document.querySelector('.content');
 
-      sidebar.addEventListener('click', function (e) {
-        // Check if the clicked target is the collapse trigger or a dummy anchor
-        var isCollapseTrigger = e.target.closest('.collapse, .folder') ||
-                                (e.target.tagName === 'A' && e.target.getAttribute('href') === '#');
+    if (!sidebar) return;
 
-        if (isCollapseTrigger) {
-          // Stop Docsify's core listener from seeing this click and closing the drawer
-          e.stopPropagation();
-        }
-      }, true); // 'true' runs this during the capture phase before Docsify handles it
+    // 1. Stop any clicks inside the sidebar from reaching Docsify's mobile auto-close listener
+    sidebar.addEventListener('click', function (e) {
+      e.stopPropagation();
     });
+
+    // 2. Only close the sidebar when the user taps outside on the main page content
+    if (content) {
+      content.addEventListener('click', function () {
+        if (window.innerWidth <= 768 && !document.body.classList.contains('close')) {
+          document.body.classList.add('close');
+        }
+      });
+    }
+  });
   </script>
 
 

@@ -20,7 +20,7 @@ There are mainly two types of Logic Gates namely **Basic Logic Gates** and **Uni
 The AND is a digital logic gate which only outputs high (1) when all of the inputs are high (1)
 
 <div align='center'>
-<table>
+<table align='center'>
 <tr>
 <th> A
 <th> B
@@ -53,6 +53,9 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
 
 <caption><strong>Truth Table</strong></caption>
 </table>
-<img src="https://i.postimg.cc/htW9dqzV/AND-GATE.png">
+<figure>
+    <img src="https://i.postimg.cc/htW9dqzV/AND-GATE.png">
+    <figcaption> Circuit Symbol </figcaption>
+</figure>
 </div>
 

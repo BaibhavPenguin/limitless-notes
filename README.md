@@ -147,17 +147,17 @@ Alongside regular theory, we also provide reference lab manuals, step-by-step ex
 
 <h2>Getting Started</h2>
 <div class="btn-grid">
-  <a href="" class="animated-btn btn-fy">
+  <a href="first-year/overview.md" class="animated-btn btn-fy">
     <span class="btn-title">FY</span>
     <span class="btn-sub">First Year</span>
   </a>
 
-  <a href="" class="animated-btn btn-sy">
+  <a href="second-year/overview.md" class="animated-btn btn-sy">
     <span class="btn-title">SY</span>
     <span class="btn-sub">Second Year</span>
   </a>
 
-  <a href="" class="animated-btn btn-ty">
+  <a href="third-year/overview.md" class="animated-btn btn-ty">
     <span class="btn-title">TY</span>
     <span class="btn-sub">Third Year</span>
   </a>

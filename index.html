@@ -205,21 +205,48 @@
       margin: 0 2px;
     }
 
-        /* Move collapsible sidebar arrow to the right */
+    /* Ensure the sidebar item spans the full container width */
+    .sidebar-nav li {
+      position: relative !important;
+    }
+
+    /* Force the line item to flex and push children to opposite edges */
+    .sidebar-nav li > p,
+    .sidebar-nav li > a,
     .sidebar-nav li > span {
       display: flex !important;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
     }
 
-    .sidebar-nav .collapse {
-      position: static !important;
-      order: 2;
-      margin-left: auto;
-      margin-right: 15px;
+    /* 1. If the plugin uses pseudo-elements (::after or ::before) */
+    .sidebar-nav li.collapse::before,
+    .sidebar-nav li.folder::before,
+    .sidebar-nav .folder::before,
+    .sidebar-nav .collapse::before {
+      left: auto !important;
+      right: 18px !important;
+      position: absolute !important;
     }
 
+    /* Clear any left padding reserved for the original arrow position */
+    .sidebar-nav li.collapse > a,
+    .sidebar-nav li.folder > a {
+      padding-left: 0 !important;
+      padding-right: 28px !important;
+    }
+
+    /* 2. If the plugin injects an HTML element/icon */
+    .sidebar-nav .folder,
+    .sidebar-nav .collapse,
+    .sidebar-nav span.folder,
+    .sidebar-nav span.collapse {
+      order: 2 !important;
+      margin-left: auto !important;
+      margin-right: 14px !important;
+      left: auto !important;
+    }
   </style>
 </head>
 <body>

@@ -3,9 +3,9 @@
 
 <!-- Notes -->
 * [View Notes]()
-    * [First Year](/first-year/overview.md)  
-    * [Second Year](/second-year/overview.md)  
-    * [Third Year](/third-year/overview.md)  
+    * [First Year](/assets/first-year/overview.md)  
+    * [Second Year](/assets/second-year/overview.md)  
+    * [Third Year](/assets/third-year/overview.md)  
 
 <!-- Licenses -->
 * [Licences]()

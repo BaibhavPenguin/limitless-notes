@@ -285,8 +285,8 @@ The XOR Gate is a digital logic gate which only outputs high (1) if the inputs a
     <img src="https://i.postimg.cc/CxBTff2H/XOR-CIRCUIT.png">
 </figure>
 
-> **Boolean Exppression : AB&#773; + A&#773;B**
-> **Simplified Exppression : A &oplus; B**
+> **Boolean Exppression : AB&#773; + A&#773;B**  
+> **Simplified Exppression : A &oplus; B**  
 
 ---
 
@@ -339,8 +339,8 @@ It is the inversion of an XOR Gate. It is considered as a special function gate.
     <img src="https://i.postimg.cc/8k7zbsxr/XNOR-CIRCUIT.png">
 </figure>
 
-> **Boolean Exppression : A &middot; B + A&#773; &middot; B&#773;**
-> **Simplified Exppression : A &odot; B**
+> **Boolean Exppression : A &middot; B + A&#773; &middot; B&#773;**  
+> **Simplified Exppression : A &odot; B**  
 
 ---
 

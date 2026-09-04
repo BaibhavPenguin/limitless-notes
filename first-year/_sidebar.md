@@ -1,3 +1,3 @@
-* [First Year Notes](#)
+* [First Year Notes]()
 
 * [Go Back](/)

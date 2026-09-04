@@ -14,7 +14,7 @@ This is the overview page for the First Year (FY) academic archive. Navigate usi
 <!-- Courses -->
 <tr>
 <td>Bachelors of Science - Computer Science (BSc.CS)
-<td><a href="#/assets/first-year/bsc-cs/bsc-cs-overview.md">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/bsc-cs-overview.md">View Archive</a>
 </tr>
 
 <!--

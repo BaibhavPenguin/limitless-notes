@@ -188,6 +188,22 @@
       fill: #0f172a !important;
       stroke: #0f172a !important;
     }
+
+    /* Fixed compact footer */
+    .site-footer {
+      margin-top: 48px;
+      padding: 16px 0 24px;
+      font-size: 0.85rem;
+      text-align: center;
+      opacity: 0.75;
+      border-top: 1px solid rgba(125, 125, 125, 0.2);
+      user-select: none;
+    }
+    .site-footer .heart {
+      color: #ef4444;
+      display: inline-block;
+      margin: 0 2px;
+    }
   </style>
 </head>
 <body>
@@ -230,7 +246,21 @@
         placeholder: 'Search archive...',
         noData: 'No results found',
         depth: 3
-      }
+      },
+
+      plugins: [
+        function(hook) {
+          var footer = [
+            '<footer class="site-footer">',
+            'Made with <span class="heart">❤️</span> by Baibhav Bhattacharya',
+            '</footer>'
+          ].join('');
+
+          hook.afterEach(function(html) {
+            return html + footer;
+          });
+        }
+      ]
     }
   </script>
 

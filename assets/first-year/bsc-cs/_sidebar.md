@@ -6,7 +6,7 @@
     * [Computer Science Practical 1]()
     * [Marketting Mix 1]()
     * [Environmental Management & Sustainable Development]()
-    * [Indian Knowledge System]()
+    * [Indian Knowledge System](/assets/first-year/bsc-cs/iks/iks-ov.md)
     * [Case Studies in Management]()
     * [Introduction to Business Communication in English]()
     

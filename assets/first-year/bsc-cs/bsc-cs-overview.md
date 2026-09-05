@@ -55,7 +55,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 <tr>
 <td>Indian Knowledge System (IKS)
-<td><a href="">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/iks/iks-ov.md">View Notes</a>
 </tr>
 
 

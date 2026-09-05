@@ -1,0 +1,5 @@
+* [Case Studies in Management](/assets/first-year/bsc-cs/csm/csm-ov.md)
+    * [Module 1](/assets/first-year/bsc-cs/csm/csm-ov.md)   
+    * [Module 2](/assets/first-year/bsc-cs/csm/csm-ov.md)  
+    * [Example Case Studies](/assets/first-year/bsc-cs/csm/csm-ov.md) 
+* [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

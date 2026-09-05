@@ -1,6 +1,6 @@
 <div>
 
-# Limitless - The Open Academic Archive
+![LOGO](/LOGO-NO-BG.png)
 
 > A free and open platform for accessing notes and academic resources without any data logging and pay walls. 
 ---

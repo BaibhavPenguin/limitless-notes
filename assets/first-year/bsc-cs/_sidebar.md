@@ -4,10 +4,10 @@
     * [Introduction to Python Programming]()
     * [Statistics with R Programming]()
     * [Computer Science Practical 1]()
-    * [Marketting Mix 1]()
+    * [Marketing Mix 1]()
     * [Environmental Management & Sustainable Development]()
     * [Indian Knowledge System](/assets/first-year/bsc-cs/iks/iks-ov.md)
-    * [Case Studies in Management]()
+    * [Case Studies in Management](/assets/first-year/bsc-cs/csm/csm-ov.md)
     * [Introduction to Business Communication in English]()
     
 * [Go Back](/assets/first-year/overview.md)

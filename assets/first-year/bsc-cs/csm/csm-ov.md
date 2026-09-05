@@ -9,3 +9,6 @@ All Notes as per NEP 2020.
     * [Example Case Studies](/assets/first-year/bsc-cs/csm/csm-ov.md) 
 
 > **Tracked Years :** 2026-2027  
+
+---
+![LIMITLESS LOGO](/LOGO-NO-BG.png)

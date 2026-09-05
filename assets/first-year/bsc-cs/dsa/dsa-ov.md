@@ -12,3 +12,6 @@ Notes of Digital Systems & Architecture , the theory subject are avaliable as pe
     * [Computer Systems](/assets/first-year/bsc-cs/dsa/computer-systems.md)
 
 > **Tracked Years** : 2026-2027
+
+---
+![LIMITLESS LOGO](/LOGO-NO-BG.png)

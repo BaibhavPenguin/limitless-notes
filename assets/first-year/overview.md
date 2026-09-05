@@ -1,5 +1,3 @@
-
-
 # First Year Overview  
 This is the overview page for the First Year (FY) academic archive. Navigate using the sidebar on the left, or access the courses directly using the table given below
 
@@ -32,4 +30,5 @@ This is the overview page for the First Year (FY) academic archive. Navigate usi
 
 
 > **You can also use the search bar located inside the sidebar to find a specific topic or course.**
-
+---
+![LIMITLESS LOGO](/LOGO-NO-BG.png)

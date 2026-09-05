@@ -71,5 +71,8 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 > **You can also use the search bar located in the sidebar to search for a specific topic or subject.**
 
+---
+![LIMITLESS LOGO](/LOGO-NO-BG.png)
+
 
 

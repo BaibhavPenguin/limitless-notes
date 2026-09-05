@@ -5,7 +5,7 @@
     * [Statistics with R Programming]()
     * [Computer Science Practical 1]()
     * [Marketing Mix 1]()
-    * [Environmental Management & Sustainable Development]()
+    * [Environmental Management & Sustainable Development](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
     * [Indian Knowledge System](/assets/first-year/bsc-cs/iks/iks-ov.md)
     * [Case Studies in Management](/assets/first-year/bsc-cs/csm/csm-ov.md)
     * [Introduction to Business Communication in English]()

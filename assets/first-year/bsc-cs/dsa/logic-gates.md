@@ -311,19 +311,19 @@ It is the inversion of an XOR Gate. It is considered as a special function gate.
 <tr>
 <td> 0
 <td> 1
-<td> 1
+<td> 0
 </tr>
 
 <tr>
 <td> 1
 <td> 0
-<td> 1
+<td> 0
 </tr>
 
 <tr>
 <td> 1
 <td> 1
-<td> 0
+<td> 1
 </tr>
 
 <caption><strong>Truth Table</strong></caption>

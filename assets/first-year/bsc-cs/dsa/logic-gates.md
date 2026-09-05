@@ -16,7 +16,7 @@ There are mainly two types of Logic Gates namely **Basic Logic Gates** and **Uni
 
 ## Theory, Truth Table, Circuit Symbol and Boolean Expression
 ---
-### AND GATE
+### <u>AND GATE</U>
 The AND is a digital logic gate which only outputs high (1) when all of the inputs are high (1)
 
 
@@ -63,7 +63,7 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
 > **Boolean Expression : A &middot; B**
 ---
 
-### OR GATE
+### <u>OR GATE</U>
 The OR GATE is a digital logic gate which outputs high (1) when any one or both inputs are high (1)
 
 <div>
@@ -111,7 +111,7 @@ The OR GATE is a digital logic gate which outputs high (1) when any one or both 
 ---
 
 
-### NOT GATE
+### <u>NOT GATE</u>
 The NOT GATE is a digital logic gate which inverts the state of the input i.e. *If A = 0 then Y = 1 and If A = 1 then Y = 0 where A is the input and Y is the output*
 
 
@@ -144,7 +144,7 @@ The NOT GATE is a digital logic gate which inverts the state of the input i.e. *
 > **Boolean Expression : A&#773; = Y**
 ---
 
-### NAND GATE
+### <u>NAND GATE</u>
 The NAND is a digital logic gate which outputs high (1) if any one of the inputs is low (0). It is an inversion of the AND Gate and can also be formed by attaching a NOT Gate to the output of an AND GATE.
 
 
@@ -190,7 +190,7 @@ The NAND is a digital logic gate which outputs high (1) if any one of the inputs
 
 ---
 
-### NOR GATE
+### <u>NOR GATE</u>
 The NOR is a digital logic gate which only outputs high (1) if all the inputs are low (0). It is an inversion of the OR Gate and can also be formed by attaching a NOT Gate to the output of an OR GATE.
 
 
@@ -237,7 +237,7 @@ The NOR is a digital logic gate which only outputs high (1) if all the inputs ar
 ---
 
 
-### XOR GATE
+### <u>XOR GATE</u>
 The XOR Gate is a digital logic gate which only outputs high (1) if the inputs are different I.e. when A &ne; B
 
 
@@ -291,7 +291,7 @@ The XOR Gate is a digital logic gate which only outputs high (1) if the inputs a
 ---
 
 
-### XNOR GATE
+### <u>XNOR GATE</U>
 The XNOR Gate is a digital logic gate which only outputs high (1) if the inputs are same I.e. when A = B
 It is the inversion of an XOR Gate. It is considered as a special function gate.
 

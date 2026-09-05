@@ -24,15 +24,14 @@ This structure determines how energy and nutrients flow within the ecosystem.
 ### <u>Biotic components (Living Things)</u>
 **Biotic components** are the living part of an ecosystem and they play a vital role in maintaining the balance and proper functioning of the environment. These living organisms can be broadly classified into three main groups: **(producer, consumer, decomposer).**
 
-<u><strong>Producers</strong></u><br>
 
-**Producers** are also known as autotrophs—organisms that can prepare their own food using sunlight, water, and carbon dioxide through the process of photosynthesis. They form the foundation of the food chain by supplying energy to all other living beings in the ecosystem.
+- <u>**Producers**</u> are also known as autotrophs—organisms that can prepare their own food using sunlight, water, and carbon dioxide through the process of photosynthesis. They form the foundation of the food chain by supplying energy to all other living beings in the ecosystem.
 
-<u><strong>Consumers</strong></u><br>
-**Consumers** are organisms that depend on other living beings for their food. They cannot produce their own food; they consume plants or other animals for their survival. Consumers are further divided based on their diet. **Primary consumers** are herbivores that feed directly on producers (for example: deer, rabbits, cow). **Secondary consumers** are carnivores that eat primary consumers (for example: snake, frog, fox, and insect-eating birds fall into this category). **Tertiary consumers** are top predators that feed on secondary consumers (for example: lion, eagle).
 
-<u><strong>Decomposers</strong></u><br>
-**Decomposers** are responsible for breaking down dead plants and animals and waste material. They convert complex organic matter into simpler substances, returning valuable nutrients to the soil which producers require to grow again. This nutrient recycling is crucial for sustaining the ecosystem. Common decomposers are mushrooms, bacteria, earthworms, etc.
+- <u>**Consumers**</u> are organisms that depend on other living beings for their food. They cannot produce their own food; they consume plants or other animals for their survival. Consumers are further divided based on their diet. **Primary consumers** are herbivores that feed directly on producers (for example: deer, rabbits, cow). **Secondary consumers** are carnivores that eat primary consumers (for example: snake, frog, fox, and insect-eating birds fall into this category). **Tertiary consumers** are top predators that feed on secondary consumers (for example: lion, eagle).
+
+
+- <u>**Decomposers**</u> are responsible for breaking down dead plants and animals and waste material. They convert complex organic matter into simpler substances, returning valuable nutrients to the soil which producers require to grow again. This nutrient recycling is crucial for sustaining the ecosystem. Common decomposers are mushrooms, bacteria, earthworms, etc.
 
 ### <u>Abiotic components (Non Living Things)</u>
 **Abiotic components** are the non-living physical and chemical elements present in an ecosystem. They play a foundational role by influencing the types of organisms that can live in a particular environment and by shaping the overall functioning of the ecosystem. Unlike biotic components, abiotic factors do not have life; however, they are essential for the survival and growth of living things.

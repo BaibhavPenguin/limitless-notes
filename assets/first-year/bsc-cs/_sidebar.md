@@ -1,6 +1,6 @@
 * [FY BSc - CS Course Overview]()
     * [Digital Systems & Architecture](/assets/first-year/bsc-cs/dsa/dsa-ov.md)
-    * [Fundamentals of Database Management Systems]()
+    * [Fundamentals of Database Management Systems](/assets/first-year/bsc-cs/fdbms/fdbms-ov.md)
     * [Introduction to Python Programming]()
     * [Statistics with R Programming]()
     * [Computer Science Practical 1]()

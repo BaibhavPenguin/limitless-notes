@@ -19,7 +19,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 <tr>
 <td>Fundamentals of Database Management Systems (FDBMS)
-<td><a href="">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/fdbms/fdbms-ov.md">View Notes</a>
 </tr>
 
 <tr>
@@ -38,12 +38,12 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 </tr>
 
 <tr>
-<td>Marketting Mix - 1 (MM-1)
+<td>Marketing Mix - 1 (MM-1)
 <td><a href="">View Notes</a>
 </tr>
 
 <tr>
-<td>Enviornmental Management & Dustainable Development (EMSD)
+<td>Environmental Management & Sustainable Development (EMSD)
 <td><a href="#/assets/first-year/bsc-cs/emsd/emsd-ov.md">View Notes</a>
 </tr>
 

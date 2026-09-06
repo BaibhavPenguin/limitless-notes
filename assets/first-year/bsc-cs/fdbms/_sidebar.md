@@ -1,0 +1,8 @@
+* [Fundamentals of Database Management Systems](/assets/first-year/bsc-cs/fdbms/fdbms-ov.md)
+* [Module 1 ](/assets/first-year/bsc-cs/fdbms/fdbms-ov.md)
+    * [Introduction to DBMS](/assets/first-year/bsc-cs/fdbms/intro.md)
+    * [Data Models](/assets/first-year/bsc-cs/fdbms/dmodel.md)
+    * [ER Model](/assets/first-year/bsc-cs/fdbms/ermodel.md)
+    * [DDL Statements](/assets/first-year/bsc-cs/fdbms/ddl.md)
+    * [DML Statements](/assets/first-year/bsc-cs/fdbms/dml.md)
+* [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

@@ -157,7 +157,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
 > Hence,  
 > **Difference = A &oplus; B &oplus; C**
 
-> **Deriving the boolean expression for Borrow : **  
+> **Deriving the boolean expression for Borrow :**  
 > Borrow = A&#773;B&#773;C + A&#773;BC&#773; + A&#773;BC + ABC  
 > &therefore; A&#773;B&#773;C + ABC  + A&#773;BC&#773; + A&#773;BC  
 > &therefore;  C (A&#773;B&#773; + AB ) + A&#773;B(C + C&#773;)  

@@ -7,8 +7,8 @@ All notes as per NEP 2020
     * [Data Models](/assets/first-year/bsc-cs/fdbms/dmodel.md)
     * [ER Model](/assets/first-year/bsc-cs/fdbms/ermodel.md)
     * [DDL Statements](/assets/first-year/bsc-cs/fdbms/ddl.md)
-    * [DML Statements](/assets/first-year/bsc-cs/fdbms/dml.md)
-   
+    * [DML Statements](/assets/first-year/bsc-cs/fdbms/dml.md)  
+
 > **Tracked Years** : 2026-2027
 
 ---

@@ -2,12 +2,12 @@
 
 ## <u> Definition of a Subtractor </u>
 ---
-An Adder is a combinational digital circuit which performs arithmetic addition on binary bits and generates sum and carry as result.
+A Subtractor is a combinational digital circuit which performs arithmetic subtraction on binary bits and generates difference and borrow as result.
 
 ## <u> Half Subtractor </u>
 ---
-A Half Adder is a combinational digital logic circuit which performs arithmetic addition on two binary bits and generates Sum and Carry as results.  
-It is constructed using an XOR and AND gate, the output at the XOR gate is the **Sum** while the output at the AND gate is the **Carry**.
+A Half Subtractor is a combinational digital logic circuit which performs arithmetic subtraction on two binary bits and generates Difference and Borrow as results.  
+It is constructed using an XOR and AND gate, the output at the XOR gate is the **Difference** while the output at the AND gate is the **Borrow**.
 
 <table>
   <thead>
@@ -31,7 +31,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>A&#773;B</td>
     </tr>
     <tr>
@@ -45,7 +45,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
       <td>1</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
       <td>AB</td>
     </tr>
   </tbody>
@@ -57,22 +57,23 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
 </figure>
 
 > **Boolean Expression**  
-> **Sum :** A &oplus; B   
-> **Carry :** A &middot; B
+> **Difference :** A &oplus; B   
+> **Borrow :** A&#773;B
 
 ## <u> Full Subtractor </u>
 ---
-A Full Adder is a combinational digital logic circuit which performs arithmetic addition on three binary bits and generates Sum and Carry as results.  
-It is constructed using an XOR, AND and OR gates, the output at the XOR gate is the **Sum** while the output at the OR gate is the **Carry**.
+A Full Subtractor is a combinational digital logic circuit which performs arithmetic subtraction on three binary bits and generates Difference and Borrow as results.  
+It is constructed using an XOR, AND and OR gates, the output at the XOR gate is the **Difference** while the output at the OR gate is the **Borrow**.
 
+<blockquote><strong>B<sub>in</sub> is taken as 'C' for convenience and clarity while forming equations. </strong></blockquote> <br>
 <table>
   <thead>
     <tr>
       <th>A</th>
       <th>B</th>
       <th>C</th>
-      <th>Sum</th>
-      <th>Carry</th>
+      <th>Difference</th>
+      <th>Borrow</th>
       <th>Minterms</th>
     </tr>
   </thead>
@@ -90,7 +91,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
       <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>A&#773;B&#773;C</td>
     </tr>
     <tr>
@@ -98,7 +99,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
       <td>1</td>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>A&#773;BC&#773;</td>
     </tr>
     <tr>
@@ -122,7 +123,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
       <td>AB&#773;C</td>
     </tr>
     <tr>
@@ -130,7 +131,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
+      <td>0</td>
       <td>ABC&#773;</td>
     </tr>
     <tr>
@@ -148,19 +149,20 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
     <img src="https://i.postimg.cc/66d4f38h/Full-Subtractor.png">  
 </figure>
 
-> **Deriving the boolean expression for Sum** :  
-> Sum = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  
+> **Deriving the boolean expression for Difference** :  
+> Difference = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  
 > &therefore;  A&#773;B&#773;C + ABC + A&#773;BC&#773; + AB&#773;C&#773;  
 > &therefore;  C(A&#773;B&#773; + AB) +  C&#773;(A&#773;B + AB&#773;)  
 > &therefore;  C(A &odot; B) +  C&#773;(A &oplus; B)  
 > Hence,  
-> **Sum = A &oplus; B &oplus; C**
+> **Difference = A &oplus; B &oplus; C**
 
-> **Deriving the boolean expression for Carry** :  
-> Carry = A&#773;BC + AB&#773;C + ABC&#773; + ABC  
-> &therefore; C (A&#773;B + AB&#773; ) + AB (C + C&#773;)  
-> &therefore; (A &oplus; B) &middot; C  + AB  
+> **Deriving the boolean expression for Borrow** :  
+> Borrow = A&#773;B&#773;C + A&#773;BC&#773; + A&#773;BC + ABC  
+> &therefore; A&#773;B&#773;C + ABC  + A&#773;BC&#773; + A&#773;BC  
+> &therefore;  C (A&#773;B&#773; + AB ) + A&#773;B(C + C&#773;)  
+> &therefore; C (A &odot; B) + A&#773;B  
 > Hence,  
-> **Carry = (A &oplus; B) &middot; C  + AB**  
+<blockquote><strong>Borrow = C &middot; <span style="text-decoration:overline">A &oplus; B</span> + A&#773;B</strong></blockquote>
 
 *&mdash; Edited by Baibhav Bhattacharya*

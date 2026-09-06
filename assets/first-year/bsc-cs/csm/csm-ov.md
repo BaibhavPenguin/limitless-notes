@@ -11,4 +11,4 @@ All Notes as per NEP 2020.
 > **Tracked Years :** 2026-2027  
 
 ---
-![LIMITLESS LOGO](/LOGO-NO-BG.png)
+[![LOGO](https://i.postimg.cc/g2TxC1Rc/LOGO-NO-BG.png)](/)

@@ -71,4 +71,5 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 > **You can also use the search bar located in the sidebar to search for a specific topic or subject.**
 
+---
 [![LOGO](https://i.postimg.cc/g2TxC1Rc/LOGO-NO-BG.png)](/)

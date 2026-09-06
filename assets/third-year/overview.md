@@ -4,4 +4,5 @@ This is the overview page for the Third Year (TY) academic archive. Navigate usi
 
 > **Archive is empty.**
 
+---
 [![LOGO](https://i.postimg.cc/g2TxC1Rc/LOGO-NO-BG.png)](/)

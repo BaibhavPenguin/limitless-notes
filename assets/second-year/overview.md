@@ -5,6 +5,7 @@ This is the overview page for the Second Year (SY) academic archive. Navigate us
 
 > **Archive is empty.**
 
+---
 [![LOGO](https://i.postimg.cc/g2TxC1Rc/LOGO-NO-BG.png)](/)
 
 

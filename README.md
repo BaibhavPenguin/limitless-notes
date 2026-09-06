@@ -12,11 +12,6 @@
 
 Limitless is an open academic archive built by students, for students. It puts syllabus-aligned degree notes, clear diagrams, and practical solutions directly on the web, ready to read the moment you open the page.
 
-There are no accounts, paywalls, tracking scripts, or intrusive ads. Everything renders natively in the browser, so you never have to download massive, blurry scanned PDFs just to check a single concept or formula before an exam.
-
-Alongside regular theory, we also provide reference lab manuals, step-by-step experiment procedures, verified code, and embedded video guides showing exactly how to set up tools and run your practicals without getting stuck. Every page is lightweight and edge-cached to load instantly.
-
-
 
 <style>
 /* Responsive Button Container */
@@ -442,7 +437,7 @@ Alongside regular theory, we also provide reference lab manuals, step-by-step ex
 <hr>
 <div class="btn-grid">
   <!-- FY: Mountain Landscape & Celestial Timelapse (Intact) -->
-  <a href="#/assets/first-year/overview" class="animated-btn">
+  <a href="#/assets/first-year/overview.md" class="animated-btn">
     <div class="btn-bg btn-fy-bg">
       <div class="fy-celestial"></div>
       <div class="fy-mountains"></div>
@@ -484,6 +479,13 @@ Alongside regular theory, we also provide reference lab manuals, step-by-step ex
     <span class="btn-sub">Third Year</span>
   </a>
 </div>
+
+## Some Features  
+---
+Limitless is complete free and open forever, there are no accounts, paywalls, tracking scripts, or intrusive ads. Everything renders natively in the browser, so you never have to download massive, blurry scanned PDFs just to check a single concept or formula before an exam.
+
+Alongside regular theory, we also provide reference lab manuals, step-by-step experiment procedures, verified code, and embedded video guides showing exactly how to set up tools and run your practicals without getting stuck. Every page is lightweight and edge-cached to load instantly.
+
 
 ## Legal Information
 ---

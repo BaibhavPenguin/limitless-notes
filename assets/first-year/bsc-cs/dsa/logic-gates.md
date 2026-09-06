@@ -1,8 +1,8 @@
 # Basic Logic Gates
 ---
 
-## Definition of Logic Gates
-*Logic Gates are the fundamental physical building blocks of digital logic.*
+## <u>Definition of Logic Gates</u>
+**Logic Gates are the fundamental physical building blocks of digital logic.**
 Logic Gates operate in Boolean Logic i.e. they take one or more digital inputs and produce
 a single output corresponding to the underlying predefined logic rules.
 
@@ -14,7 +14,7 @@ There are mainly two types of Logic Gates namely **Basic Logic Gates** and **Uni
 > **Universal Gates :** NAND , NOR  
 > **Special Function Gate :** XOR , XNOR
 
-## Theory, Truth Table, Circuit Symbol and Boolean Expression
+## <u>Theory, Truth Table, Circuit Symbol and Boolean Expression</u>
 ---
 ### <u>AND GATE</U>
 The AND is a digital logic gate which only outputs high (1) when all of the inputs are high (1)

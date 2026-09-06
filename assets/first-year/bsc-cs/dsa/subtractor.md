@@ -149,7 +149,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
     <img src="https://i.postimg.cc/66d4f38h/Full-Subtractor.png">  
 </figure>
 
-> **Deriving the boolean expression for Difference** :  
+> **Deriving the boolean expression for Difference :**    
 > Difference = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  
 > &therefore;  A&#773;B&#773;C + ABC + A&#773;BC&#773; + AB&#773;C&#773;  
 > &therefore;  C(A&#773;B&#773; + AB) +  C&#773;(A&#773;B + AB&#773;)  
@@ -157,7 +157,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
 > Hence,  
 > **Difference = A &oplus; B &oplus; C**
 
-> **Deriving the boolean expression for Borrow** :  
+> **Deriving the boolean expression for Borrow : **  
 > Borrow = A&#773;B&#773;C + A&#773;BC&#773; + A&#773;BC + ABC  
 > &therefore; A&#773;B&#773;C + ABC  + A&#773;BC&#773; + A&#773;BC  
 > &therefore;  C (A&#773;B&#773; + AB ) + A&#773;B(C + C&#773;)  

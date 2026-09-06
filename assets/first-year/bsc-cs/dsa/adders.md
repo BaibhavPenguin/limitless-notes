@@ -56,7 +56,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
     <img src="https://i.postimg.cc/8khfm57H/Half-Adder.png">  
 </figure>
 
-> **Boolean Expression**  
+> **Boolean Expressions**  
 > **Sum :** A &oplus; B   
 > **Carry :** A &middot; B
 
@@ -148,7 +148,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
     <img src="https://i.postimg.cc/PfmvQxCy/Full-Adder.png">  
 </figure>
 
-> **Deriving the boolean expression for Sum** :  
+> **Deriving the boolean expression for Sum :**    
 > Sum = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  
 > &therefore;  A&#773;B&#773;C + ABC + A&#773;BC&#773; + AB&#773;C&#773;  
 > &therefore;  C(A&#773;B&#773; + AB) +  C&#773;(A&#773;B + AB&#773;)  
@@ -156,7 +156,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
 > Hence,  
 > **Sum = A &oplus; B &oplus; C**
 
-> **Deriving the boolean expression for Carry** :  
+> **Deriving the boolean expression for Carry :**  
 > Carry = A&#773;BC + AB&#773;C + ABC&#773; + ABC  
 > &therefore; C (A&#773;B + AB&#773; ) + AB (C + C&#773;)  
 > &therefore; (A &oplus; B) &middot; C  + AB  

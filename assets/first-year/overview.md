@@ -31,3 +31,4 @@ This is the overview page for the First Year (FY) academic archive. Navigate usi
 
 > **You can also use the search bar located inside the sidebar to find a specific topic or course.**
 
+[![LOGO](https://i.postimg.cc/g2TxC1Rc/LOGO-NO-BG.png)](/)

@@ -57,7 +57,6 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
 <figure>
     <figcaption><strong>Circuit Symbol</strong> </figcaption>   
     <img src="https://i.postimg.cc/htW9dqzV/AND-GATE.png">
-    
 </figure>
 </div>
 
@@ -289,7 +288,7 @@ The XOR Gate is a digital logic gate which only outputs high (1) if the inputs a
     <figcaption><strong>XOR Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/CxBTff2H/XOR-CIRCUIT.png">
 </figure>
-<div class="dyntable">
+</div>
 
 > **Boolean Expression : AB&#773; + A&#773;B**  
 > **Simplified Expression : A &oplus; B**  
@@ -345,7 +344,7 @@ It is the inversion of an XOR Gate. It is considered as a special function gate.
     <figcaption><strong>XNOR Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/8k7zbsxr/XNOR-CIRCUIT.png">
 </figure>
-<div class="dyntable">
+</div>
 
 > **Boolean Expression : A &middot; B + A&#773; &middot; B&#773;**  
 > **Simplified Expression : A &odot; B**  

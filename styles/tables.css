@@ -1,89 +1,50 @@
+/* Container: centers block content without altering theme colors */
 .dyntable {
-  max-width: 720px;
   width: 100%;
   margin: 2rem auto;
-  padding: 1rem 0;
-  box-sizing: border-box;
-  background: transparent !important;
   text-align: center;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #1f2937;
+  background: transparent !important;
 }
 
-/* Force table display & true centering */
+/* Force table to behave as a centered block element */
 .dyntable table {
   display: table !important;
-  width: 100% !important;
-  max-width: 650px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  margin-bottom: 2rem !important;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
+  text-align: center !important;
   background: transparent !important;
 }
 
-.dyntable th {
-  background-color: transparent !important;
-  color: #475569;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 0.5rem;
-  border-bottom: 2px solid #e2e8f0;
-  text-align: center;
-}
-
+.dyntable th,
 .dyntable td {
-  padding: 0.75rem 0.5rem;
-  font-size: 0.95rem;
-  text-align: center;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: transparent !important;
-  font-variant-numeric: tabular-nums;
+  text-align: center !important;
+  vertical-align: middle !important;
 }
 
-.dyntable tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* Figure & Image display fixes */
+/* Figure & Image: centered and responsive */
 .dyntable figure {
-  margin: 0 auto;
-  padding: 1.5rem 0 0 0;
-  border-top: 1px solid #e5e7eb;
+  margin: 1.5rem auto 0 auto !important;
+  text-align: center !important;
   background: transparent !important;
-  text-align: center;
-  width: 100%;
 }
 
 .dyntable figcaption {
-  font-size: 1rem;
-  color: #334155;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  text-align: center !important;
 }
 
 .dyntable img {
-  display: block !important;
-  margin: 0 auto !important;
+  display: inline-block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   max-width: 100% !important;
-  width: auto;
-  height: auto;
-  min-height: 50px;
+  height: auto !important;
 }
 
-/* Mobile adjustments */
+/* Mobile: keeps table legible without breaking page width */
 @media (max-width: 480px) {
-  .dyntable table {
-    font-size: 0.8rem;
-  }
-
   .dyntable th,
   .dyntable td {
-    padding: 0.4rem 0.2rem;
+    padding: 0.35rem 0.25rem !important;
   }
 }

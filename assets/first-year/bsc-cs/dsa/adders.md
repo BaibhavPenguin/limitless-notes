@@ -8,7 +8,9 @@ An Adder is a combinational digital circuit which performs arithmetic addition o
 ---
 A Half Adder is a combinational digital logic circuit which performs arithmetic addition on two binary bits and generates Sum and Carry as results.  
 It is constructed using an XOR and AND gate, the output at the XOR gate is the **Sum** while the output at the AND gate is the **Carry**.
+<link rel="stylesheet" href="./styles/tables.css">
 
+<div class="dyntable">
 <table>
   <thead>
     <tr>
@@ -55,6 +57,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
     <figcaption><strong>Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/8khfm57H/Half-Adder.png">  
 </figure>
+</div>
 
 > **Boolean Expressions**  
 > **Sum :** A &oplus; B   
@@ -65,6 +68,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
 A Full Adder is a combinational digital logic circuit which performs arithmetic addition on three binary bits and generates Sum and Carry as results.  
 It is constructed using an XOR, AND and OR gates, the output at the XOR gate is the **Sum** while the output at the OR gate is the **Carry**.
 
+<div class="dyntable">
 <table>
   <thead>
     <tr>
@@ -147,6 +151,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
     <figcaption><strong>Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/PfmvQxCy/Full-Adder.png">  
 </figure>
+</div>
 
 > **Deriving the boolean expression for Sum :**    
 > Sum = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  

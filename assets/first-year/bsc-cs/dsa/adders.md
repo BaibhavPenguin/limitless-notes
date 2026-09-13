@@ -146,6 +146,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
       <td>ABC</td>
     </tr>
   </tbody>
+  <caption><strong>Truth Table</strong></caption>
 </table>
 <figure>
     <figcaption><strong>Circuit Diagram</strong> </figcaption>   

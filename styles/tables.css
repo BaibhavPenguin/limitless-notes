@@ -1,3 +1,6 @@
+/*Dynamic Table Styles, Renders all tables and the images in a beautiful block which is centered across devices*/
+
+
 /* Container: centers block content without altering theme colors */
 .dyntable {
   width: 100%;

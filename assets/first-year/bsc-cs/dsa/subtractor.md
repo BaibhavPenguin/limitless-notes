@@ -9,6 +9,9 @@ A Subtractor is a combinational digital circuit which performs arithmetic subtra
 A Half Subtractor is a combinational digital logic circuit which performs arithmetic subtraction on two binary bits and generates Difference and Borrow as results.  
 It is constructed using an XOR and AND gate, the output at the XOR gate is the **Difference** while the output at the AND gate is the **Borrow**.
 
+<link rel="stylesheet" href="./styles/tables.css" >
+
+<div class="dyntable">
 <table>
   <thead>
     <tr>
@@ -55,6 +58,7 @@ It is constructed using an XOR and AND gate, the output at the XOR gate is the *
     <figcaption><strong>Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/T2r5JwKj/Half-Subtractor.png">  
 </figure>
+</div>
 
 > **Boolean Expression**  
 > **Difference :** A &oplus; B   
@@ -66,6 +70,8 @@ A Full Subtractor is a combinational digital logic circuit which performs arithm
 It is constructed using an XOR, AND and OR gates, the output at the XOR gate is the **Difference** while the output at the OR gate is the **Borrow**.
 
 <blockquote><strong>B<sub>in</sub> is taken as 'C' for convenience and clarity while forming equations. </strong></blockquote> <br>
+
+<div class="dyntable">
 <table>
   <thead>
     <tr>
@@ -148,6 +154,7 @@ It is constructed using an XOR, AND and OR gates, the output at the XOR gate is 
     <figcaption><strong>Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/66d4f38h/Full-Subtractor.png">  
 </figure>
+</div>
 
 > **Deriving the boolean expression for Difference :**    
 > Difference = A&#773;B&#773;C + A&#773;BC&#773; + AB&#773;C&#773; + ABC  

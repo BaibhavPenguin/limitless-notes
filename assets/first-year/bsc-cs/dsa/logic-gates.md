@@ -19,7 +19,8 @@ There are mainly two types of Logic Gates namely **Basic Logic Gates** and **Uni
 ### <u>AND GATE</U>
 The AND is a digital logic gate which only outputs high (1) when all of the inputs are high (1)
 
-
+<link rel="stylesheet" href="./styles/tables.css" >
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -58,6 +59,7 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
     <img src="https://i.postimg.cc/htW9dqzV/AND-GATE.png">
     
 </figure>
+</div>
 
 
 > **Boolean Expression : A &middot; B**
@@ -66,7 +68,7 @@ The AND is a digital logic gate which only outputs high (1) when all of the inpu
 ### <u>OR GATE</U>
 The OR GATE is a digital logic gate which outputs high (1) when any one or both inputs are high (1)
 
-<div>
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -114,7 +116,7 @@ The OR GATE is a digital logic gate which outputs high (1) when any one or both 
 ### <u>NOT GATE</u>
 The NOT GATE is a digital logic gate which inverts the state of the input i.e. *If A = 0 then Y = 1 and If A = 1 then Y = 0 where A is the input and Y is the output*
 
-
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -140,6 +142,7 @@ The NOT GATE is a digital logic gate which inverts the state of the input i.e. *
     <img src="https://i.postimg.cc/VkQjCcrt/NOt-GATE.png">
     
 </figure>
+</div>
 
 > **Boolean Expression : A&#773; = Y**
 ---
@@ -147,7 +150,7 @@ The NOT GATE is a digital logic gate which inverts the state of the input i.e. *
 ### <u>NAND GATE</u>
 The NAND is a digital logic gate which outputs high (1) if any one of the inputs is low (0). It is an inversion of the AND Gate and can also be formed by attaching a NOT Gate to the output of an AND GATE.
 
-
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -187,13 +190,14 @@ The NAND is a digital logic gate which outputs high (1) if any one of the inputs
     
 </figure>
 <blockquote><strong>Boolean Expression : <span style="text-decoration:overline;">A &middot; B</span> = Y</strong></blockquote>
+<div class="dyntable">
 
 ---
 
 ### <u>NOR GATE</u>
 The NOR is a digital logic gate which only outputs high (1) if all the inputs are low (0). It is an inversion of the OR Gate and can also be formed by attaching a NOT Gate to the output of an OR GATE.
 
-
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -232,6 +236,7 @@ The NOR is a digital logic gate which only outputs high (1) if all the inputs ar
     <img src="https://i.postimg.cc/jS0z7rwN/NOR-GATE.png">
     
 </figure>
+<div class="dyntable">
 <blockquote><strong>Boolean Expression : <span style="text-decoration:overline;">A + B</span> = Y</strong></blockquote>
 
 ---
@@ -240,7 +245,7 @@ The NOR is a digital logic gate which only outputs high (1) if all the inputs ar
 ### <u>XOR GATE</u>
 The XOR Gate is a digital logic gate which only outputs high (1) if the inputs are different I.e. when A &ne; B
 
-
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -284,6 +289,7 @@ The XOR Gate is a digital logic gate which only outputs high (1) if the inputs a
     <figcaption><strong>XOR Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/CxBTff2H/XOR-CIRCUIT.png">
 </figure>
+<div class="dyntable">
 
 > **Boolean Expression : AB&#773; + A&#773;B**  
 > **Simplified Expression : A &oplus; B**  
@@ -295,6 +301,7 @@ The XOR Gate is a digital logic gate which only outputs high (1) if the inputs a
 The XNOR Gate is a digital logic gate which only outputs high (1) if the inputs are same I.e. when A = B
 It is the inversion of an XOR Gate. It is considered as a special function gate.
 
+<div class="dyntable">
 <table>
 <tr>
 <th> A
@@ -338,6 +345,7 @@ It is the inversion of an XOR Gate. It is considered as a special function gate.
     <figcaption><strong>XNOR Circuit Diagram</strong> </figcaption>   
     <img src="https://i.postimg.cc/8k7zbsxr/XNOR-CIRCUIT.png">
 </figure>
+<div class="dyntable">
 
 > **Boolean Expression : A &middot; B + A&#773; &middot; B&#773;**  
 > **Simplified Expression : A &odot; B**  

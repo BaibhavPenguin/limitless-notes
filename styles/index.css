@@ -330,8 +330,12 @@ body .content {
   padding-top: var(--header-height) !important;
 }
 
-/* Reposition Darklight theme toggle button if it conflicts */
+/* Position Darklight theme toggle button at original bottom-right */
 #docsify-darklight-theme {
-  top: calc(var(--header-height) + 15px) !important;
-  right: 20px !important;
+  position: fixed !important;
+  top: auto !important;
+  bottom: 25px !important;
+  right: 25px !important;
+  left: auto !important;
+  z-index: 999 !important;
 }

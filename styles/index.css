@@ -1,247 +1,55 @@
- /*<style>*/
-    /* Default site font */
-    :root {
-      --site-font: Arial, Helvetica, "Segoe UI", sans-serif;
-    }
-    body,
-    .sidebar,
-    .markdown-section,
-    .search input {
-      font-family: var(--site-font) !important;
-    }
-
-    /* Global smooth color transition when switching Light/Dark modes */
-    body,
-    .sidebar,
-    .markdown-section,
-    .content,
-    article,
-    nav,
-    aside,
-    input,
-    button,
-    .sidebar-toggle,
-    #docsify-darklight-theme {
-      transition: background-color 0.5s ease,
-                  color 0.5s ease,
-                  border-color 0.5s ease,
-                  box-shadow 0.5s ease !important;
-    }
-
-    /* Remove site title from sidebar */
-    .app-name,
-    .sidebar > h1 {
-      display: none !important;
-    }
-
-    /* Smooth sidebar transition */
-    .sidebar,
-    .content {
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                  left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                  padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                  background-color 0.5s ease,
-                  color 0.5s ease !important;
-    }
-
-    /* Responsive container for YouTube embeds */
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      max-width: 100%;
-      margin: 1.5rem 0;
-      border-radius: 8px;
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    /* App Loader */
-    .app-loader {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 85vh;
-      font-family: var(--site-font);
-    }
-
-    .loader-spinner {
-      width: 44px;
-      height: 44px;
-      border: 3.5px solid #e5e7eb;
-      border-top-color: #42b983;
-      border-radius: 50%;
-      animation: 
-        spin 0.85s linear infinite,
-        dynamicHue 8s ease-in-out infinite;
-      margin-bottom: 16px;
-    }
-
-    .loader-text {
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes dynamicHue {
-      0%   { border-top-color: #000000; border-right-color: #000000; }
-      25%  { border-top-color: #7c3aed; border-right-color: #7c3aed; }
-      50%  { border-top-color: #db2777; border-right-color: #db2777; }
-      75%  { border-top-color: #059669; border-right-color: #059669; }
-      100% { border-top-color: #000000; border-right-color: #000000; }
-    }
-
-    /* Top-Right Hamburger Menu with Dynamic Contrast Background */
-    .sidebar-toggle {
-      position: fixed !important;
-      top: 14px !important;
-      right: 14px !important;
-      left: auto !important;
-      bottom: auto !important;
-      width: 38px !important;
-      height: 38px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border-radius: 8px !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
-      cursor: pointer;
-      z-index: 1000 !important;
-      padding: 0 !important;
-      background-color: #1e293b !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    }
-    .sidebar-toggle span {
-      background-color: #ffffff !important;
-      height: 2px !important;
-      width: 18px !important;
-      margin: 2px 0 !important;
-      border-radius: 2px;
-      transition: background-color 0.5s ease;
-    }
-
-    body.dark .sidebar-toggle,
-    [data-theme="dark"] .sidebar-toggle {
-      background-color: #ffffff !important;
-      border-color: rgba(0, 0, 0, 0.1) !important;
-    }
-    body.dark .sidebar-toggle span,
-    [data-theme="dark"] .sidebar-toggle span {
-      background-color: #0f172a !important;
-    }
-
-    /* Dark/Light Toggle with Dynamic Contrast Background */
-    #docsify-darklight-theme {
-      position: fixed !important;
-      right: 20px !important;
-      bottom: 20px !important;
-      top: auto !important;
-      left: auto !important;
-      z-index: 9999 !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
-      border-radius: 50% !important;
-      background-color: #1e293b !important;
-      color: #ffffff !important;
-    }
-    #docsify-darklight-theme svg {
-      fill: #ffffff !important;
-      stroke: #ffffff !important;
-      transition: fill 0.5s ease, stroke 0.5s ease;
-    }
-
-    body.dark #docsify-darklight-theme,
-    [data-theme="dark"] #docsify-darklight-theme {
-      background-color: #ffffff !important;
-      color: #0f172a !important;
-    }
-    body.dark #docsify-darklight-theme svg,
-    [data-theme="dark"] #docsify-darklight-theme svg {
-      fill: #0f172a !important;
-      stroke: #0f172a !important;
-    }
-
-    /* Fixed compact footer */
-    .site-footer {
-      margin-top: 48px;
-      padding: 16px 0 24px;
-      font-size: 0.85rem;
-      text-align: center;
-      opacity: 0.75;
-      border-top: 1px solid rgba(125, 125, 125, 0.2);
-      user-select: none;
-    }
-    .site-footer .heart {
-      color: #ef4444;
-      display: inline-block;
-      margin: 0 2px;
-    }
-
-    /* Ensure the sidebar item spans the full container width */
-    .sidebar-nav li {
-      position: relative !important;
-    }
-
-    /* Force the line item to flex and push children to opposite edges */
-    .sidebar-nav li > p,
-    .sidebar-nav li > a,
-    .sidebar-nav li > span {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      width: 100% !important;
-    }
-
-    /* 1. If the plugin uses pseudo-elements (::after or ::before) */
-    .sidebar-nav li.collapse::before,
-    .sidebar-nav li.folder::before,
-    .sidebar-nav .folder::before,
-    .sidebar-nav .collapse::before {
-      left: auto !important;
-      right: 18px !important;
-      position: absolute !important;
-    }
-
-    /* Clear any left padding reserved for the original arrow position */
-    .sidebar-nav li.collapse > a,
-    .sidebar-nav li.folder > a {
-      padding-left: 0 !important;
-      padding-right: 28px !important;
-    }
-
-    /* 2. If the plugin injects an HTML element/icon */
-    .sidebar-nav .folder,
-    .sidebar-nav .collapse,
-    .sidebar-nav span.folder,
-    .sidebar-nav span.collapse {
-      order: 2 !important;
-      margin-left: auto !important;
-      margin-right: 14px !important;
-      left: auto !important;
-    }
-  /*</style>*/
-
-
-  /* =========================================
-   Top Bar / Header Styles
-   ========================================= */
+/* ==========================================================================
+   Global Variables & Root Configuration
+   ========================================================================== */
 :root {
+  --site-font: Arial, Helvetica, "Segoe UI", sans-serif;
   --header-height: 55px;
 }
 
+body,
+.sidebar,
+.markdown-section,
+.search input {
+  font-family: var(--site-font) !important;
+}
+
+/* Global smooth color transition when switching Light/Dark modes */
+body,
+.sidebar,
+.markdown-section,
+.content,
+article,
+nav,
+aside,
+input,
+button,
+.sidebar-toggle,
+#docsify-darklight-theme {
+  transition: background-color 0.5s ease,
+              color 0.5s ease,
+              border-color 0.5s ease,
+              box-shadow 0.5s ease !important;
+}
+
+/* Remove default site title from sidebar */
+.app-name,
+.sidebar > h1 {
+  display: none !important;
+}
+
+/* Smooth sidebar transition */
+.sidebar,
+.content {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.5s ease,
+              color 0.5s ease !important;
+}
+
+/* ==========================================================================
+   Top Bar / Header (Floating with pure bottom-only shadow)
+   ========================================================================== */
 .site-header {
   position: fixed;
   top: 0;
@@ -253,14 +61,17 @@
   justify-content: space-between;
   padding: 0 16px;
   background-color: var(--background, #ffffff);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  /* Bottom-only shadow: 0 horizontal spread, negative spread radius */
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 100;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Dark mode border adjustment */
-[data-theme="dark"] .site-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+[data-theme="dark"] .site-header,
+body.dark .site-header {
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .site-header-left {
@@ -295,9 +106,9 @@
   height: 100%;
 }
 
-/* =========================================
-   Sidebar Toggle Button in Header (Top Right)
-   ========================================= */
+/* ==========================================================================
+   Sidebar Toggle Button (Header Top-Right, Transparent & Rotating with Delay)
+   ========================================================================== */
 .site-header .sidebar-toggle {
   position: static !important;
   display: flex !important;
@@ -309,18 +120,32 @@
   margin: 0 !important;
   background: transparent !important;
   border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   cursor: pointer;
   z-index: 101;
+  transform: rotate(0deg);
+  transition: transform 0.35s ease 0.15s !important;
 }
 
 .site-header .sidebar-toggle span {
   background-color: var(--textColor, #1e293b) !important;
+  height: 2px !important;
+  width: 18px !important;
+  margin: 2px 0 !important;
+  border-radius: 2px;
+  transition: background-color 0.5s ease;
 }
 
-/* =========================================
-   Layout Adjustments for the Top Bar
-   ========================================= */
-/* Push the sidebar and main content down below the header */
+/* 90-degree rotation when collapsed, retaining the delayed easing */
+body.close .site-header .sidebar-toggle {
+  transform: rotate(90deg);
+  transition: transform 0.35s ease 0.15s !important;
+}
+
+/* ==========================================================================
+   Docsify Layout Offsets for Fixed Header
+   ========================================================================== */
 body .sidebar {
   top: var(--header-height) !important;
   height: calc(100vh - var(--header-height)) !important;
@@ -330,12 +155,161 @@ body .content {
   padding-top: var(--header-height) !important;
 }
 
-/* Position Darklight theme toggle button at original bottom-right */
+/* ==========================================================================
+   Dark/Light Toggle Button (Floating Fixed Bottom-Right)
+   ========================================================================== */
 #docsify-darklight-theme {
   position: fixed !important;
-  top: auto !important;
-  bottom: 25px !important;
   right: 25px !important;
+  bottom: 25px !important;
+  top: auto !important;
   left: auto !important;
-  z-index: 999 !important;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 50% !important;
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+#docsify-darklight-theme svg {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  transition: fill 0.5s ease, stroke 0.5s ease;
+}
+
+body.dark #docsify-darklight-theme,
+[data-theme="dark"] #docsify-darklight-theme {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body.dark #docsify-darklight-theme svg,
+[data-theme="dark"] #docsify-darklight-theme svg {
+  fill: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
+/* ==========================================================================
+   Sidebar Collapse Plugin Adjustments
+   ========================================================================== */
+.sidebar-nav li {
+  position: relative !important;
+}
+
+.sidebar-nav li > p,
+.sidebar-nav li > a,
+.sidebar-nav li > span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+/* 1. Pseudo-element arrows */
+.sidebar-nav li.collapse::before,
+.sidebar-nav li.folder::before,
+.sidebar-nav .folder::before,
+.sidebar-nav .collapse::before {
+  left: auto !important;
+  right: 18px !important;
+  position: absolute !important;
+}
+
+.sidebar-nav li.collapse > a,
+.sidebar-nav li.folder > a {
+  padding-left: 0 !important;
+  padding-right: 28px !important;
+}
+
+/* 2. Injected HTML icons */
+.sidebar-nav .folder,
+.sidebar-nav .collapse,
+.sidebar-nav span.folder,
+.sidebar-nav span.collapse {
+  order: 2 !important;
+  margin-left: auto !important;
+  margin-right: 14px !important;
+  left: auto !important;
+}
+
+/* ==========================================================================
+   App Loader & Animations
+   ========================================================================== */
+.app-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  font-family: var(--site-font);
+}
+
+.loader-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3.5px solid #e5e7eb;
+  border-top-color: #42b983;
+  border-radius: 50%;
+  animation: 
+    spin 0.85s linear infinite,
+    dynamicHue 8s ease-in-out infinite;
+  margin-bottom: 16px;
+}
+
+.loader-text {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dynamicHue {
+  0%   { border-top-color: #000000; border-right-color: #000000; }
+  25%  { border-top-color: #7c3aed; border-right-color: #7c3aed; }
+  50%  { border-top-color: #db2777; border-right-color: #db2777; }
+  75%  { border-top-color: #059669; border-right-color: #059669; }
+  100% { border-top-color: #000000; border-right-color: #000000; }
+}
+
+/* ==========================================================================
+   Responsive Embeds & Site Footer
+   ========================================================================== */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.site-footer {
+  margin-top: 48px;
+  padding: 16px 0 24px;
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0.75;
+  border-top: 1px solid rgba(125, 125, 125, 0.2);
+  user-select: none;
+}
+
+.site-footer .heart {
+  color: #ef4444;
+  display: inline-block;
+  margin: 0 2px;
 }

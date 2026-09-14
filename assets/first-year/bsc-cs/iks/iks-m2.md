@@ -71,3 +71,5 @@ Rasashastra is the science of processing minerals, metals, and chemical compound
 
 ### Mercury and Metallurgy
 Rasashastra places special emphasis on mercury (*rasa*) and its compounds. Classical texts outline intricate multi-step procedures designed to detoxify and purify mercury (*shodhana*) so it can be safely blended with metals such as gold, silver, copper, and iron for medical use.
+
+*&mdash; Edited by Baibhav Bhattacharya*

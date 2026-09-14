@@ -1,7 +1,7 @@
 # Indian Knowledge System - Module 2
 
 ## <u>**Ayurveda - an Introduction**</u>
-**Ayurveda is built on the idea that everything in the universe—living or non-living—is connected.** When your mind, body, and spirit live in harmony with the world around you, you enjoy good health. If this balance is broken, illness occurs. Things that can disturb this balance include genetic conditions, birth defects, physical injuries, changes in weather or seasons, aging, and your emotions. **Ayurveda (a Sanskrit term meaning "science of life" or "knowledge of life")** is one of the world's oldest holistic healing systems, developed over 5,000 years ago in India.  
+**Ayurveda is built on the idea that everything in the universe, living or non-living, is connected.** When your mind, body, and spirit live in harmony with the world around you, you enjoy good health. If this balance is broken, illness occurs. Things that can disturb this balance include genetic conditions, birth defects, physical injuries, changes in weather or seasons, aging, and your emotions. **Ayurveda (a Sanskrit term meaning "science of life" or "knowledge of life")** is one of the world's oldest holistic healing systems, developed over 5,000 years ago in India.  
 Ayurveda teaches that health and wellness rely on a fine balance among the mind, body, spirit, and environment. **Its primary goal is to promote overall wellness and prevent disease, rather than simply fighting sickness after it begins. However, it also provides specific treatments for particular health conditions.**
 
 ## <u>**History of Ayurveda**</u> 

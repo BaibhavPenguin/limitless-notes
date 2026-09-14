@@ -233,3 +233,105 @@
       left: auto !important;
     }
   /*</style>*/
+
+
+  /* =========================================
+   Top Bar / Header Styles
+   ========================================= */
+:root {
+  --header-height: 55px;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--background, #ffffff);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode border adjustment */
+[data-theme="dark"] .site-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--textColor, inherit);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.header-brand:hover {
+  text-decoration: none;
+}
+
+.brand-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.site-header-right {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+/* =========================================
+   Sidebar Toggle Button in Header (Top Right)
+   ========================================= */
+.site-header .sidebar-toggle {
+  position: static !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.site-header .sidebar-toggle span {
+  background-color: var(--textColor, #1e293b) !important;
+}
+
+/* =========================================
+   Layout Adjustments for the Top Bar
+   ========================================= */
+/* Push the sidebar and main content down below the header */
+body .sidebar {
+  top: var(--header-height) !important;
+  height: calc(100vh - var(--header-height)) !important;
+}
+
+body .content {
+  padding-top: var(--header-height) !important;
+}
+
+/* Reposition Darklight theme toggle button if it conflicts */
+#docsify-darklight-theme {
+  top: calc(var(--header-height) + 15px) !important;
+  right: 20px !important;
+}

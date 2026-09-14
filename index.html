@@ -16,9 +16,29 @@
 
   <!-- Site wide Styles for Sidebar , Tables and Buttons-->
   <link rel="stylesheet" href="./styles/index.css">
- 
 </head>
 <body>
+  <!-- ================= TOP HEADER / NAVBAR ================= -->
+  <header class="site-header">
+    <div class="site-header-left">
+      <!-- 
+        =========================================================
+        LOGO PLACEHOLDER
+        Replace the <img> src or content inside this anchor tag.
+        =========================================================
+      -->
+      <a href="#/" class="header-brand">
+        <img src="./LOGO-NO-BG.png" alt="Limitless Logo" class="brand-logo">
+        <span class="brand-title">Limitless</span>
+      </a>
+      <!-- ======================================================= -->
+    </div>
+
+    <!-- Container slot where Docsify's toggle button will be mounted -->
+    <div class="site-header-right" id="header-toggle-slot"></div>
+  </header>
+  <!-- ======================================================= -->
+
   <div id="app">
     <div class="app-loader">
       <div class="loader-spinner"></div>
@@ -71,6 +91,15 @@
           hook.afterEach(function(html) {
             return html + footer;
           });
+
+          // Move the sidebar toggle button into the header once Docsify renders it
+          hook.doneEach(function() {
+            var toggleBtn = document.querySelector('.sidebar-toggle');
+            var slot = document.getElementById('header-toggle-slot');
+            if (toggleBtn && slot && !slot.contains(toggleBtn)) {
+              slot.appendChild(toggleBtn);
+            }
+          });
         }
       ]
     }
@@ -82,8 +111,6 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-
-
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -107,7 +134,5 @@
     }
   });
   </script>
-
-
 </body>
 </html>

@@ -189,7 +189,7 @@ The NAND is a digital logic gate which outputs high (1) if any one of the inputs
     
 </figure>
 <blockquote><strong>Boolean Expression : <span style="text-decoration:overline;">A &middot; B</span> = Y</strong></blockquote>
-<div class="dyntable">
+</div>>
 
 ---
 
@@ -235,7 +235,7 @@ The NOR is a digital logic gate which only outputs high (1) if all the inputs ar
     <img src="https://i.postimg.cc/jS0z7rwN/NOR-GATE.png">
     
 </figure>
-<div class="dyntable">
+</div>>
 <blockquote><strong>Boolean Expression : <span style="text-decoration:overline;">A + B</span> = Y</strong></blockquote>
 
 ---

@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+/* ========================================================
+   WRAPPER: Shared Hero Framing & Theme Palette
+   ======================================================== */
+.limitless-hero-wrapper {
+  --banner-base-color: var(
+    --docsify_darklight_textColor,
+    var(--textColor, var(--text-color, currentColor))
+  );
+
+  /* 4-Color Architectural Palette: Light Mode Defaults */
+  --c-blue: #2563eb;
+  --c-green: #059669;
+  --c-grey: #64748b;
+  --c-purple: #7c3aed;
+
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.5rem 0 3.5rem 0;
+  overflow: visible; /* Prevents parent clipping */
+  user-select: none;
+}
+
+/* 4-Color Palette: Dark Mode Adaptations */
+@media (prefers-color-scheme: dark) {
+  .limitless-hero-wrapper {
+    --c-blue: #38bdf8;
+    --c-green: #34d399;
+    --c-grey: #94a3b8;
+    --c-purple: #c084fc;
+  }
+}
+:root[data-theme="dark"] .limitless-hero-wrapper,
+body[data-theme="dark"] .limitless-hero-wrapper,
+.dark .limitless-hero-wrapper {
+  --c-blue: #38bdf8;
+  --c-green: #34d399;
+  --c-grey: #94a3b8;
+  --c-purple: #c084fc;
+}
+
+/* ========================================================
+   CONTAINER: Single-Line Hero Billboard Frame
+   ======================================================== */
+.limitless-hero-banner {
+  container-type: inline-size;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: nowrap; /* Strictly single line across all screens */
+  justify-content: center;
+  align-items: center;
+  /* Extra bottom padding gives scaleY room so nothing is clipped */
+  padding: clamp(2rem, 7cqw, 4.5rem) 0 clamp(2rem, 8cqw, 4rem) 0;
+  overflow: visible; /* FIX: ensures bottom parts never get cut off */
+
+  /* Typography */
+  font-family: 'Anton', Impact, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+/* ========================================================
+   SUBTITLE: Static, Non-Overlapping Bottom Descriptor
+   ======================================================== */
+.limitless-hero-subtitle {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: 'Anton', Impact, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--banner-base-color);
+  opacity: 0.85;
+
+  /* Sized & kerned to span neatly underneath */
+  font-size: clamp(0.75rem, 2.2vw, 1.35rem);
+  letter-spacing: clamp(0.2em, 1.2vw, 0.45em);
+  padding-left: clamp(0.2em, 1.2vw, 0.45em); /* Balances last letter kerning */
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  line-height: 1.2;
+}
+
+/* ========================================================
+   GLYPHS: Single-Row Large Scale & 4-Color Paint Stroke
+   ======================================================== */
+.limitless-hero-banner .l-char {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 0 0 auto;
+
+  /* Size & calibrated tiny gap between letters */
+  font-size: clamp(3.6rem, 15vw, 6rem);
+  margin: 0 clamp(1.5px, 0.55vw, 4px);
+
+  /* Tall physical height on mobile (~2.8 inches tall) */
+  transform: scaleY(1.95);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity, background-position;
+  cursor: default;
+
+  /* 
+   * 4-Color Hard-Edge Diagonal Paint Stroke:
+   * Base -> Blue -> Green -> Grey -> Purple -> Base
+   */
+  background-image: linear-gradient(
+    120deg,
+    var(--banner-base-color) 0%,
+    var(--banner-base-color) 32%,
+    var(--c-blue) 32.2%,
+    var(--c-blue) 38%,
+    var(--c-green) 38.2%,
+    var(--c-green) 44%,
+    var(--c-grey) 44.2%,
+    var(--c-grey) 50%,
+    var(--c-purple) 50.2%,
+    var(--c-purple) 68%,
+    var(--banner-base-color) 68.2%,
+    var(--banner-base-color) 100%
+  );
+  background-size: 360% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 
+   * 14s Coordinated Cycle:
+   * 1. char-paint-sweep: 4-color diagonal brush wave
+   * 2. char-snap-cycle-mobile: clean drop, blind reset, snappy return
+   */
+  animation: 
+    char-paint-sweep 14s cubic-bezier(0.2, 0.8, 0.2, 1) infinite,
+    char-snap-cycle-mobile 14s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+
+  animation-delay: 
+    calc(var(--i) * 0.22s),
+    0s;
+}
+
+/* ========================================================
+   ANIMATION 1: 4-Color Diagonal Paint Sweep & Hold
+   ======================================================== */
+@keyframes char-paint-sweep {
+  0%, 5% {
+    background-position: 100% 0;
+  }
+  14% {
+    background-position: 72% 0;
+  }
+  24% {
+    background-position: 48% 0;
+  }
+  /* Sustained rich plateau (~7 seconds) */
+  75% {
+    background-position: 48% 0;
+  }
+  /* Clean reset back to base color while vanished */
+  84%, 100% {
+    background-position: 100% 0;
+  }
+}
+
+/* ========================================================
+   ANIMATION 2: Mobile Snappy Vanish & Reappear
+   ======================================================== */
+@keyframes char-snap-cycle-mobile {
+  0%, 78% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1.95);
+  }
+  81% {
+    opacity: 0;
+    transform: translateY(35px) scaleY(1.6);
+  }
+  83% {
+    opacity: 0;
+    transform: translateY(-30px) scaleY(2.1);
+  }
+  86% {
+    opacity: 1;
+    transform: translateY(2px) scaleY(1.9);
+  }
+  89%, 100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1.95);
+  }
+}
+
+/* ========================================================
+   DESKTOP SCREEN ADAPTATION (Wider Viewports)
+   ======================================================== */
+@media (min-width: 768px) {
+  .limitless-hero-banner {
+    padding: clamp(2.5rem, 5vw, 5rem) 0 clamp(1.5rem, 3vw, 3rem) 0;
+  }
+
+  .limitless-hero-banner .l-char {
+    font-size: clamp(5.2rem, 11.5vw, 15.5rem);
+    margin: 0 clamp(2px, 0.4vw, 8px);
+    transform: scaleY(1.35);
+    animation-name: char-paint-sweep, char-snap-cycle-desktop;
+  }
+
+  @keyframes char-snap-cycle-desktop {
+    0%, 78% {
+      opacity: 1;
+      transform: translateY(0) scaleY(1.35);
+    }
+    81% {
+      opacity: 0;
+      transform: translateY(40px) scaleY(1.1);
+    }
+    83% {
+      opacity: 0;
+      transform: translateY(-35px) scaleY(1.45);
+    }
+    86% {
+      opacity: 1;
+      transform: translateY(2px) scaleY(1.32);
+    }
+    89%, 100% {
+      opacity: 1;
+      transform: translateY(0) scaleY(1.35);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .limitless-hero-banner .l-char {
+    animation: none !important;
+  }
+}

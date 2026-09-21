@@ -1,9 +1,9 @@
 * [Environmental Management & Sustainable Development](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
-    * [Module 1]()
+    * [Module 1]
         * [Ecosystems](/assets/first-year/bsc-cs/emsd/emsd-m1.md)
-        * [Food Chain & Food Web]()
-        * [Biodiversity]()
+        * [Food Chain & Food Web]
+        * [Biodiversity]
     * [Module 2](/assets/first-year/bsc-cs/emsd/emsd-m2.md)
-        * [Natural Resources]()
-        * [Renewable & Non-Renewable Energy]()
+        * [Natural Resources]
+        * [Renewable & Non-Renewable Energy]
 * [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

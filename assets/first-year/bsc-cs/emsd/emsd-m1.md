@@ -1,7 +1,7 @@
 
 # Environmental Management & Sustainable Development
 
-> **What is Ecosystem? and explain its structure.**
+> **What is Ecosystem? and explain its structure, functions and importance in detail**  
 
 ## <u>Definition of an Ecosystem</u>
 
@@ -50,5 +50,109 @@ This structure determines how energy and nutrients flow within the ecosystem.
 
 ---
 ![ENERGY PYRAMID](https://i.postimg.cc/bNQ2yv0y/Untitled.jpg)
+
+---
+## <u>Functions of an Ecosystem</u>
+---
+An Ecosystem has several important functions:
+
+### <u>Primary Productivity</u>  
+The producers (green plants) in the ecosystem use photosynthesis to synthesize energy. Producers rely on the nutrients in the soil which are provided by the decomposers and sunlight thus, the ecosystem allows the producers to thrive and provide energy for all living organisms.  
+
+### <u>Energy Flow</u>  
+The **Energy Flow** in an ecosystem is a one way process. As producers rely on Sunlight for synthesis of energy and provide it for all living organisms, it can be said that the source of energy in an ecosystem is the Sun hence, as no energy goes back to the sun from the ecosystem, The Energy Flow in an ecosystem is a one way flow.  
+The energy flows through the energy pyramid from one level to another, Primary Producers consume the maximum energy from the Sunlight and the energy consumed goes on decreasing in the pyramid going bottom-up.  
+
+### <u>Nutrient Cycling</u>  
+The **Nutrient Flow** in a ecosystem is a cyclic process as all the nutrients absorbed by the producers, consumers and apex predators all end up back into the soil thereby being used again with the help of Decomposers.  
+There are different types of nutrient cycles which take place simultaneously in the ecosystem some of which are;
+
+* **Carbon Cycle**
+* **Nitrogen Cycle**
+* **Water Cycle**
+
+### <u>Decomposition</u>
+In an ecosystem, all the waste organic matter (dead plants and animals, rotting leaves, fecal matter, etc) are decomposed and broken down into simpler minerals and compounds forming the nutrients required by the Primary Producers for photosynthesis.  
+This matter is decomposed by the decomposers, some examples of decomposers are Micro-organisms , Earthworms, etc. 
+ 
+## <u>Importance of an Ecosystem</u>  
+---
+The following points describe the importance of an Ecosystem for both Biotic & Abiotic Components.  
+
+1. Provide food and water.
+2. Produce oxygen.
+3. Maintain ecological balance.
+4. Support biodiversity.
+5. Recycle nutrients.
+6. Help regulate climate.
+7. Provide habitat for plants and animals.
+
+Thus, an ecosystem ensures the smooth and predictable functioning of nature and life with respect to flora, fauna and topology of a specific region or a place.
+
+## <u>Different Types of Ecosystems</u>  
+---
+### <u>Forest Ecosystems</u> 
+These ecosystems are identified by certain features such as
+- Dense evergreen and deciduous forests.  
+- Heavy rainfall throughout the year.  
+- Warm and humid climate.  
+- Rich soil suitable for plant growth.    
+
+**Examle**: Western Ghats Forest in Maharashtra, India
+
+**The following are the differentiating factors of a Forest Ecosystem**:
+
+**1 &mdash; <u>Flora (Plants)**</u>  
+- Teak  
+- Bamboo  
+- Rosewood  
+- Sandalwood  
+- Mango  
+- Jackfruit  
+
+**2 &mdash; <u>Fauna (Animals)**</u>   
+
+- Bengal Tiger  
+- Indian Elephant  
+- Leopard  
+- Lion-tailed Macaque  
+- Malabar Giant Squirrel  
+- King Cobra  
+- Hornbill  
+
+
+**3 &mdash; <u>Importance**</u>  
+
+- Produces oxygen.  
+- Maintains climate and rainfall.  
+- Prevents soil erosion.  
+- Stores carbon and reduces global warming.  
+- Provides medicinal plants, timber and food.  
+- Supports tribal communities.  
+
+**4 &mdash; <u>Threats**</u>  
+
+- Deforestation  
+- Illegal logging  
+- Mining  
+- Forest fires  
+- Road construction  
+- Climate change  
+
+**5 &mdash; <u>Conservation Measures**</u>  
+
+- National parks and wildlife sanctuaries.  
+- Afforestation (planting trees).  
+- Ban on illegal tree cutting.  
+- Public awareness.  
+- Eco-tourism with proper rules.   
+
+### <u>Grassland Ecosystems</u> 
+**1 &mdash; <u>Flora (Plants)**</u>  
+**2 &mdash; <u>Fauna (Animals)**</u>  
+**3 &mdash; <u>Importance**</u>  
+**4 &mdash; <u>Threats**</u>  
+**5 &mdash; <u>Conservation Measures**</u>
+
 
 *&mdash; Edited by Baibhav Bhattacharya*

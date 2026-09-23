@@ -38,7 +38,7 @@ x = int(input("Enter any number : "))
 y = int(input("Enter any number : "))
 if x > y:
     print(x," is greater")
-elif y < x:
+elif x < y:
     print(y," is greater")
 else:
     print("Both numbers are equal.")

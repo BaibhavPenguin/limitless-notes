@@ -305,13 +305,20 @@
 
         let code = sourceArea.value;
 
-        // Pre-scan for input() patterns to show the custom themed dialog
+        // Collect inputs sequentially
         const inputMatches = [...code.matchAll(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g)];
+        const userValues = [];
         for (const match of inputMatches) {
           const promptText = match[1] || "Enter value:";
           const userInput = await requestSandboxInput(promptText, "Python Input Prompt", false);
-          code = code.replace(match[0], JSON.stringify(userInput));
+          userValues.push(userInput);
         }
+
+        // Replace each occurrence in exact order without string replacement collisions
+        let pyInputIdx = 0;
+        code = code.replace(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g, () => {
+          return JSON.stringify(userValues[pyInputIdx++]);
+        });
 
         py.runPython(`
 import sys
@@ -406,12 +413,20 @@ sys.stderr = io.StringIO()
         const r = await window.ensureWebR();
         let code = sourceArea.value;
 
+        // Collect inputs sequentially
         const readlineMatches = [...code.matchAll(/readline\s*\(\s*(?:prompt\s*=\s*)?["'](.*?)["']\s*\)/g)];
+        const rValues = [];
         for (const match of readlineMatches) {
           const promptText = match[1] || "Enter R input:";
           const userInput = await requestSandboxInput(promptText, "R Input Prompt", true);
-          code = code.replace(match[0], JSON.stringify(userInput));
+          rValues.push(userInput);
         }
+
+        // Replace each occurrence in exact order without string replacement collisions
+        let rInputIdx = 0;
+        code = code.replace(/readline\s*\(\s*(?:prompt\s*=\s*)?["'](.*?)["']\s*\)/g, () => {
+          return JSON.stringify(rValues[rInputIdx++]);
+        });
 
         const shelter = await new r.Shelter();
         const capture = await shelter.captureR(code);

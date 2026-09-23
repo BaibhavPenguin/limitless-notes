@@ -3,17 +3,13 @@
 ### <u>Title</u>  
 
 Write a program in python to find Simple Interest
+
 ---
 
 ### <u>Explanation</u>
-To find the simple interest we will use the formula **SI = principal amount x rate of interest x tenure** 
+To find the simple interest we will use the formula **SI = (principal amount x rate of interest x tenure) &divide; 100** 
 
-Here, we require four distinct variables to store principal amount, rate of interest, tenure and the simple interest. 
-
-To get user input we use the built in **input()** function of python, in simpler words, we are giving a command to the python interpreter to wait for the user and give them a chance to enter an input value. The input() function takes a prompt argument, the prompt is the message shown to the user while getting the input.
-
-Python assumes that all user inputs are Strings by default so we must convert the string to an float type before processing it.  
-A floating point number is a number with a decimal place. We use floats when storing values like percentages, interest rates, temperature, etc.
+We have to gather Principal Amount, Rate of Interest and Tenure from the user and calculate the Simple Interest and print it. 
 
 
 <link rel="stylesheet" href="./styles/python.css">
@@ -43,7 +39,7 @@ print("Simple Interest - IPP")
 p = float(input("Enter the principal amount : "))
 r = float(input("Enter the rate of interest : "))
 t = int(input("Enter the tenure : "))
-si = p * r * t
+si = (p * r * t) / 100
 print("Simple Interest : " , si)
         </textarea>
       </div>

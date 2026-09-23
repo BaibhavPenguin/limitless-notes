@@ -2,15 +2,12 @@
 ---
 ### <u>Title</u>
 Write a program in python to find the area of a circle
+
 ---
 ### <u>Explanation</u>
 To find the area of a circle we will use the formula Area = &pi;r<sup>2</sup>  hence, we need to create two different variables for storing the radius and area.  
 
-A Variable is a value either numeric or non numeric (encoded in ascii or utf-8) stored in Memory.  
-
-To get user input we use the built in **input()** function of python, in simpler words, we are giving a command to the python interpreter to wait for the user and give them a chance to enter an input value. The input() function takes a prompt argument, the prompt is the message shown to the user while getting the input.
-
-Python assumes that all user inputs are Strings by default so we must convert the string to an integer type before processing it.
+As radius will be entered by the user, we need to use the **input()** function.
 
 
 <link rel="stylesheet" href="./styles/python.css">

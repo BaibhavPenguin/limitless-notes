@@ -291,10 +291,14 @@
       const originalText = buttonEl.innerHTML;
       buttonEl.innerHTML = 'Running...';
       outputPre.className = 'py-output';
-      outputPre.textContent = 'Executing...';
+      outputPre.textContent = 'Loading packages...';
 
       try {
         const py = await ensurePyodide();
+
+        await py.loadPackagesFromImports(sourceArea.value);
+
+        outputPre.textContent = 'Executing...';
 
         py.setStdin({
           stdin: () => {
@@ -305,7 +309,6 @@
 
         let code = sourceArea.value;
 
-        // Collect inputs sequentially
         const inputMatches = [...code.matchAll(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g)];
         const userValues = [];
         for (const match of inputMatches) {
@@ -314,7 +317,6 @@
           userValues.push(userInput);
         }
 
-        // Replace each occurrence in exact order without string replacement collisions
         let pyInputIdx = 0;
         code = code.replace(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g, () => {
           return JSON.stringify(userValues[pyInputIdx++]);
@@ -413,7 +415,6 @@ sys.stderr = io.StringIO()
         const r = await window.ensureWebR();
         let code = sourceArea.value;
 
-        // Collect inputs sequentially
         const readlineMatches = [...code.matchAll(/readline\s*\(\s*(?:prompt\s*=\s*)?["'](.*?)["']\s*\)/g)];
         const rValues = [];
         for (const match of readlineMatches) {
@@ -422,7 +423,6 @@ sys.stderr = io.StringIO()
           rValues.push(userInput);
         }
 
-        // Replace each occurrence in exact order without string replacement collisions
         let rInputIdx = 0;
         code = code.replace(/readline\s*\(\s*(?:prompt\s*=\s*)?["'](.*?)["']\s*\)/g, () => {
           return JSON.stringify(rValues[rInputIdx++]);

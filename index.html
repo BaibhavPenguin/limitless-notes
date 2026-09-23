@@ -134,5 +134,54 @@
     }
   });
   </script>
+
+
+
+  <!-- Global Background Pyodide Worker with Preloaded Packages -->
+<script>
+  (function () {
+    const workerCode = `
+      importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
+
+      let pyodidePromise = (async () => {
+        const pyodide = await loadPyodide();
+        // Preload NumPy and Pandas in the background thread
+        await pyodide.loadPackage(['numpy', 'pandas']);
+        return pyodide;
+      })();
+
+      self.onmessage = async (event) => {
+        const pyodide = await pyodidePromise;
+        const { code } = event.data;
+        let output = [];
+
+        pyodide.setStdout({
+          write: (buf) => {
+            output.push(String.fromCharCode.apply(null, buf));
+          }
+        });
+
+        try {
+          let result = await pyodide.runPythonAsync(code);
+          let outputText = output.join('');
+          if (result !== undefined && result !== null) {
+            outputText += (outputText ? '\\n' : '') + String(result);
+          }
+          self.postMessage({ success: true, output: outputText });
+        } catch (err) {
+          self.postMessage({ success: false, error: err.message });
+        }
+      };
+    `;
+
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    window.__pyodideWorkerUrl = URL.createObjectURL(blob);
+
+    // Warm up Pyodide & load packages in the background on page load
+    const warmUpWorker = new Worker(window.__pyodideWorkerUrl);
+    warmUpWorker.postMessage({ code: '' });
+  })();
+  </script>
+  
 </body>
 </html>

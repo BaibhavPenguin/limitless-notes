@@ -1,3 +1,5 @@
+<a href="#" class="py-link"></a>
+<link rel="stylesheet" href="./styles/python.css">
 <div class="py-island">
   <div class="py-island-header">
     <span class="py-island-title">Python Sandbox</span>

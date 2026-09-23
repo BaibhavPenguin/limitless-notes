@@ -137,51 +137,85 @@
 
 
 
-  <!-- Global Background Pyodide Worker with Preloaded Packages -->
-<script>
-  (function () {
-    const workerCode = `
-      importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
 
-      let pyodidePromise = (async () => {
-        const pyodide = await loadPyodide();
-        // Preload NumPy and Pandas in the background thread
-        await pyodide.loadPackage(['numpy', 'pandas']);
-        return pyodide;
-      })();
+<!-- Global Pyodide Preloader & Code Runner -->
+  <script>
+    (function () {
+      // 1. Pyodide Background Web Worker Code
+      const workerCode = `
+        importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
 
-      self.onmessage = async (event) => {
-        const pyodide = await pyodidePromise;
-        const { code } = event.data;
-        let output = [];
+        let pyodidePromise = (async () => {
+          const pyodide = await loadPyodide();
+          await pyodide.loadPackage(['numpy', 'pandas']);
+          return pyodide;
+        })();
 
-        pyodide.setStdout({
-          write: (buf) => {
-            output.push(String.fromCharCode.apply(null, buf));
+        self.onmessage = async (event) => {
+          const pyodide = await pyodidePromise;
+          const { code } = event.data;
+          let output = [];
+
+          pyodide.setStdout({
+            write: (buf) => {
+              output.push(String.fromCharCode.apply(null, buf));
+            }
+          });
+
+          try {
+            let result = await pyodide.runPythonAsync(code);
+            let outputText = output.join('');
+            if (result !== undefined && result !== null) {
+              outputText += (outputText ? '\\n' : '') + String(result);
+            }
+            self.postMessage({ success: true, output: outputText });
+          } catch (err) {
+            self.postMessage({ success: false, error: err.message });
           }
-        });
+        };
+      `;
 
-        try {
-          let result = await pyodide.runPythonAsync(code);
-          let outputText = output.join('');
-          if (result !== undefined && result !== null) {
-            outputText += (outputText ? '\\n' : '') + String(result);
-          }
-          self.postMessage({ success: true, output: outputText });
-        } catch (err) {
-          self.postMessage({ success: false, error: err.message });
+      const blob = new Blob([workerCode], { type: 'application/javascript' });
+      window.__pyodideWorkerUrl = URL.createObjectURL(blob);
+
+      // Warm up worker on page load
+      const warmUpWorker = new Worker(window.__pyodideWorkerUrl);
+      warmUpWorker.postMessage({ code: '' });
+    })();
+
+    // 2. Global Run Button Handler (Accessible across all Docsify Markdown pages)
+    function runPythonCode(buttonEl) {
+      const island = buttonEl.closest('.py-island');
+      const sourceArea = island.querySelector('.pysource textarea');
+      const outputPre = island.querySelector('.pyterm pre');
+
+      if (!sourceArea || !outputPre || !window.__pyodideWorkerUrl) return;
+
+      const code = sourceArea.value;
+      buttonEl.disabled = true;
+      const originalText = buttonEl.innerHTML;
+      buttonEl.innerHTML = 'Running...';
+      outputPre.className = 'py-output';
+      outputPre.textContent = 'Executing (preloading Pyodide/packages if first run)...';
+
+      const execWorker = new Worker(window.__pyodideWorkerUrl);
+
+      execWorker.onmessage = (e) => {
+        buttonEl.disabled = false;
+        buttonEl.innerHTML = originalText;
+
+        if (e.data.success) {
+          outputPre.textContent = e.data.output || '(Execution completed with no output)';
+        } else {
+          outputPre.className = 'py-output py-err';
+          outputPre.textContent = e.data.error;
         }
+        execWorker.terminate();
       };
-    `;
 
-    const blob = new Blob([workerCode], { type: 'application/javascript' });
-    window.__pyodideWorkerUrl = URL.createObjectURL(blob);
-
-    // Warm up Pyodide & load packages in the background on page load
-    const warmUpWorker = new Worker(window.__pyodideWorkerUrl);
-    warmUpWorker.postMessage({ code: '' });
-  })();
+      execWorker.postMessage({ code });
+    }
   </script>
-  
+
 </body>
 </html>

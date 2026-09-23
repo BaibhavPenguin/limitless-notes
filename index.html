@@ -16,6 +16,12 @@
 
   <!-- Site wide Styles for Sidebar , Tables and Buttons-->
   <link rel="stylesheet" href="./styles/index.css">
+
+  <!-- Pyodide Loader-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
 </head>
 <body>
   <!-- ================= TOP HEADER / NAVBAR ================= -->
@@ -141,7 +147,7 @@
 <!-- Global Pyodide Preloader & Code Runner -->
   <script>
     (function () {
-      // 1. Pyodide Background Web Worker Code
+      // Web Worker Code with UTF-8 String Output Processing
       const workerCode = `
         importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
 
@@ -156,9 +162,14 @@
           const { code } = event.data;
           let output = [];
 
+          const decoder = new TextDecoder('utf-8');
+
           pyodide.setStdout({
-            write: (buf) => {
-              output.push(String.fromCharCode.apply(null, buf));
+            batched: (str) => {
+              output.push(str);
+            },
+            raw: (buf) => {
+              output.push(decoder.decode(buf));
             }
           });
 
@@ -178,12 +189,22 @@
       const blob = new Blob([workerCode], { type: 'application/javascript' });
       window.__pyodideWorkerUrl = URL.createObjectURL(blob);
 
-      // Warm up worker on page load
+      // Warm up Pyodide worker
       const warmUpWorker = new Worker(window.__pyodideWorkerUrl);
       warmUpWorker.postMessage({ code: '' });
     })();
 
-    // 2. Global Run Button Handler (Accessible across all Docsify Markdown pages)
+    // Global Function: Updates Prism syntax highlighting when typing or loading
+    function updatePyHighlight(textarea) {
+      const pysource = textarea.closest('.pysource');
+      const codeEl = pysource.querySelector('pre code');
+      if (codeEl && window.Prism) {
+        codeEl.textContent = textarea.value + (textarea.value.endsWith('\n') ? ' ' : '');
+        Prism.highlightElement(codeEl);
+      }
+    }
+
+    // Global Function: Executes code and routes output to .pyterm pre
     function runPythonCode(buttonEl) {
       const island = buttonEl.closest('.py-island');
       const sourceArea = island.querySelector('.pysource textarea');
@@ -196,7 +217,7 @@
       const originalText = buttonEl.innerHTML;
       buttonEl.innerHTML = 'Running...';
       outputPre.className = 'py-output';
-      outputPre.textContent = 'Executing (preloading Pyodide/packages if first run)...';
+      outputPre.textContent = 'Executing...';
 
       const execWorker = new Worker(window.__pyodideWorkerUrl);
 
@@ -205,7 +226,7 @@
         buttonEl.innerHTML = originalText;
 
         if (e.data.success) {
-          outputPre.textContent = e.data.output || '(Execution completed with no output)';
+          outputPre.textContent = e.data.output || '(Execution finished with no output)';
         } else {
           outputPre.className = 'py-output py-err';
           outputPre.textContent = e.data.error;

@@ -144,99 +144,96 @@
 
 
 
-<!-- Global Pyodide Preloader & Code Runner -->
-  <script>
-    (function () {
-      // Web Worker Code with UTF-8 String Output Processing
-      const workerCode = `
-        importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
+<!-- Global Shared Pyodide Worker & Execution Manager -->
+<script>
+  (function () {
+    // 1. Worker Code with Lazy-Loading (loadPackagesFromImports)
+    const workerCode = `
+      importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
 
-        let pyodidePromise = (async () => {
-          const pyodide = await loadPyodide();
-          await pyodide.loadPackage(['numpy', 'pandas']);
-          return pyodide;
-        })();
+      let pyodidePromise = (async () => {
+        // Initializes lightweight core WASM runtime (~10MB)
+        const pyodide = await loadPyodide();
+        return pyodide;
+      })();
 
-        self.onmessage = async (event) => {
-          const pyodide = await pyodidePromise;
-          const { code } = event.data;
-          let output = [];
+      self.onmessage = async (event) => {
+        const pyodide = await pyodidePromise;
+        const { code } = event.data;
+        let output = [];
 
-          const decoder = new TextDecoder('utf-8');
+        const decoder = new TextDecoder('utf-8');
 
-          pyodide.setStdout({
-            batched: (str) => {
-              output.push(str);
-            },
-            raw: (buf) => {
-              output.push(decoder.decode(buf));
-            }
-          });
-
-          try {
-            let result = await pyodide.runPythonAsync(code);
-            let outputText = output.join('');
-            if (result !== undefined && result !== null) {
-              outputText += (outputText ? '\\n' : '') + String(result);
-            }
-            self.postMessage({ success: true, output: outputText });
-          } catch (err) {
-            self.postMessage({ success: false, error: err.message });
+        // Redirect Python stdout
+        pyodide.setStdout({
+          batched: (str) => {
+            output.push(str);
+          },
+          raw: (buf) => {
+            output.push(decoder.decode(buf));
           }
-        };
-      `;
+        });
 
-      const blob = new Blob([workerCode], { type: 'application/javascript' });
-      window.__pyodideWorkerUrl = URL.createObjectURL(blob);
+        try {
+          // Lazy-load packages automatically based on import statements in user code
+          await pyodide.loadPackagesFromImports(code);
 
-      // Warm up Pyodide worker
-      const warmUpWorker = new Worker(window.__pyodideWorkerUrl);
-      warmUpWorker.postMessage({ code: '' });
-    })();
-
-    // Global Function: Updates Prism syntax highlighting when typing or loading
-    function updatePyHighlight(textarea) {
-      const pysource = textarea.closest('.pysource');
-      const codeEl = pysource.querySelector('pre code');
-      if (codeEl && window.Prism) {
-        codeEl.textContent = textarea.value + (textarea.value.endsWith('\n') ? ' ' : '');
-        Prism.highlightElement(codeEl);
-      }
-    }
-
-    // Global Function: Executes code and routes output to .pyterm pre
-    function runPythonCode(buttonEl) {
-      const island = buttonEl.closest('.py-island');
-      const sourceArea = island.querySelector('.pysource textarea');
-      const outputPre = island.querySelector('.pyterm pre');
-
-      if (!sourceArea || !outputPre || !window.__pyodideWorkerUrl) return;
-
-      const code = sourceArea.value;
-      buttonEl.disabled = true;
-      const originalText = buttonEl.innerHTML;
-      buttonEl.innerHTML = 'Running...';
-      outputPre.className = 'py-output';
-      outputPre.textContent = 'Executing...';
-
-      const execWorker = new Worker(window.__pyodideWorkerUrl);
-
-      execWorker.onmessage = (e) => {
-        buttonEl.disabled = false;
-        buttonEl.innerHTML = originalText;
-
-        if (e.data.success) {
-          outputPre.textContent = e.data.output || '(Execution finished with no output)';
-        } else {
-          outputPre.className = 'py-output py-err';
-          outputPre.textContent = e.data.error;
+          let result = await pyodide.runPythonAsync(code);
+          let outputText = output.join('');
+          
+          if (result !== undefined && result !== null) {
+            outputText += (outputText ? '\\n' : '') + String(result);
+          }
+          self.postMessage({ success: true, output: outputText });
+        } catch (err) {
+          self.postMessage({ success: false, error: err.message });
         }
-        execWorker.terminate();
       };
+    `;
 
-      execWorker.postMessage({ code });
-    }
-  </script>
+    // 2. Create a single Blob URL and persistent Worker instance
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const workerUrl = URL.createObjectURL(blob);
+
+    // Single persistent worker reused for ALL runs across the site session
+    window.__sharedPyWorker = new Worker(workerUrl);
+
+    // Pre-initialize Pyodide on page load in the background
+    window.__sharedPyWorker.postMessage({ code: '' });
+  })();
+
+  // 3. Global Run Button Handler (Uses the single shared worker)
+  function runPythonCode(buttonEl) {
+    const island = buttonEl.closest('.py-island');
+    const sourceArea = island.querySelector('.pysource textarea');
+    const outputPre = island.querySelector('.pyterm pre');
+
+    if (!sourceArea || !outputPre || !window.__sharedPyWorker) return;
+
+    const code = sourceArea.value;
+    buttonEl.disabled = true;
+    const originalText = buttonEl.innerHTML;
+    buttonEl.innerHTML = 'Running...';
+    outputPre.className = 'py-output';
+    outputPre.textContent = 'Executing...';
+
+    // Route message listener directly to the single active worker
+    window.__sharedPyWorker.onmessage = (e) => {
+      buttonEl.disabled = false;
+      buttonEl.innerHTML = originalText;
+
+      if (e.data.success) {
+        outputPre.textContent = e.data.output || '(Execution finished with no output)';
+      } else {
+        outputPre.className = 'py-output py-err';
+        outputPre.textContent = e.data.error;
+      }
+    };
+
+    // Send code to persistent worker
+    window.__sharedPyWorker.postMessage({ code });
+  }
+</script>
 
 </body>
 </html>

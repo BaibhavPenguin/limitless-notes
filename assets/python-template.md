@@ -1,5 +1,3 @@
-<a href="#" class="py-link">Go Back</a>
-<link rel="stylesheet" href="./styles/python.css">
 <div class="py-island">
   <div class="py-island-header">
     <div class="py-header-left">
@@ -13,7 +11,12 @@
   </div>
   <div class="py-island-body">
     <div class="pysource">
-      <textarea spellcheck="false" placeholder="Write Python code here..." oninput="syncPyHighlight(this); syncPyScroll(this);" onscroll="syncPyScroll(this)"></textarea>
+      <textarea 
+        spellcheck="false" 
+        placeholder="Write Python code here..." 
+        oninput="syncPyHighlight(this); syncPyScroll(this);" 
+        onscroll="syncPyScroll(this)"
+      >print("Hello, World!")</textarea>
       <pre><code class="language-python"></code></pre>
     </div>
     <div class="pyterm">
@@ -22,19 +25,31 @@
   </div>
 </div>
 
-<!--Run Button Script-->
 <script>
-  // Sync Prism syntax highlighting with text area
+  function updatePyodideBadges(isReady) {
+    document.querySelectorAll('.py-status-badge').forEach(badge => {
+      if (isReady) {
+        badge.classList.add('ready');
+        badge.querySelector('.py-status-text').textContent = 'Python Ready';
+      } else {
+        badge.classList.remove('ready');
+        badge.querySelector('.py-status-text').textContent = 'Loading...';
+      }
+    });
+  }
+
   function syncPyHighlight(textarea) {
     const pysource = textarea.closest('.pysource');
     const codeEl = pysource.querySelector('pre code');
-    if (codeEl && window.Prism) {
-      codeEl.textContent = textarea.value + (textarea.value.endsWith('\n') ? ' ' : '');
+    if (!codeEl) return;
+
+    codeEl.textContent = textarea.value + (textarea.value.endsWith('\n') ? ' ' : '');
+    
+    if (window.Prism) {
       Prism.highlightElement(codeEl);
     }
   }
 
-  // Keep scroll position in sync between textarea and highlighted overlay
   function syncPyScroll(textarea) {
     const pysource = textarea.closest('.pysource');
     const preEl = pysource.querySelector('pre');
@@ -44,15 +59,16 @@
     }
   }
 
-  // Execute code via the global shared Web Worker
   function runPythonCode(buttonEl) {
     const island = buttonEl.closest('.py-island');
     const sourceArea = island.querySelector('.pysource textarea');
     const outputPre = island.querySelector('.pyterm pre');
 
-    // Use the global persistent shared worker
-    if (!sourceArea || !outputPre || !window.__sharedPyWorker) {
-      if (outputPre) outputPre.textContent = 'Error: Worker not initialized yet.';
+    if (!sourceArea || !outputPre) return;
+
+    if (!window.__sharedPyWorker) {
+      outputPre.className = 'py-output py-err';
+      outputPre.textContent = 'Error: Shared Pyodide worker script not found on page.';
       return;
     }
 
@@ -63,35 +79,37 @@
     outputPre.className = 'py-output';
     outputPre.textContent = 'Executing...';
 
-    // Route response listener directly to shared worker
-    window.__sharedPyWorker.onmessage = (e) => {
-      // Ignore background readiness ping messages
+    const handleResult = (e) => {
       if (e.data.type === 'ready') {
-        if (typeof updatePyodideBadges === 'function') updatePyodideBadges(true);
+        window.__isPyodideReady = true;
+        updatePyodideBadges(true);
         return;
       }
 
-      buttonEl.disabled = false;
-      buttonEl.innerHTML = originalText;
+      if (e.data.type === 'result') {
+        window.__sharedPyWorker.removeEventListener('message', handleResult);
+        buttonEl.disabled = false;
+        buttonEl.innerHTML = originalText;
 
-      if (e.data.success) {
-        outputPre.textContent = e.data.output || '(Execution completed with no output)';
-      } else {
-        outputPre.className = 'py-output py-err';
-        outputPre.textContent = e.data.error;
+        if (e.data.success) {
+          outputPre.textContent = e.data.output || '(Execution completed with no output)';
+        } else {
+          outputPre.className = 'py-output py-err';
+          outputPre.textContent = e.data.error;
+        }
       }
     };
 
-    // Send code payload to persistent worker
+    window.__sharedPyWorker.addEventListener('message', handleResult);
     window.__sharedPyWorker.postMessage({ type: 'run', code });
   }
 
-  // Initial syntax highlight pass for default text on page render
+  // Mount syntax highlighting and sync initial status
   document.querySelectorAll('.pysource textarea').forEach(textarea => {
     syncPyHighlight(textarea);
-    // Sync status badge state if worker was already loaded
-    if (window.__isPyodideReady && typeof updatePyodideBadges === 'function') {
-      updatePyodideBadges(true);
-    }
   });
+
+  if (window.__isPyodideReady) {
+    updatePyodideBadges(true);
+  }
 </script>

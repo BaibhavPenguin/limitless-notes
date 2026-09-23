@@ -1,243 +1,158 @@
-/* ==========================================================================
-   PYTHON SANDBOX FLOATING ISLAND (Full Consolidated Styles)
-   ========================================================================== */
-
-/* Main Floating Island Container */
+/* Main Container */
 .py-island {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background-color: var(--background, #ffffff) !important;
-  color: var(--textColor, #1e293b) !important;
-  border: 1px solid rgba(125, 125, 125, 0.2) !important;
-  border-radius: 12px;
-  padding: 16px;
-  margin: 1.5rem 0;
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(8px);
-  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  background: var(--codeBackgroundColor, #1e293b);
+  border: 1px solid rgba(125, 125, 125, 0.25);
+  border-radius: 10px;
+  margin: 1.25rem 0;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="dark"] .py-island,
-body.dark .py-island {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
-}
-
-/* Header Bar & Controls */
+/* Header */
 .py-island-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(125, 125, 125, 0.15);
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(125, 125, 125, 0.2);
 }
 
 .py-header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .py-island-title {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: var(--textColor, inherit) !important;
-  opacity: 0.8;
+  color: var(--textColor, inherit);
 }
 
-/* Python Loading Status Badge */
+/* Status Badge */
 .py-status-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 8px;
-  border-radius: 12px;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 600;
-  background-color: rgba(239, 68, 68, 0.15);
+  background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  transition: all 0.3s ease;
 }
 
 .py-status-badge.ready {
-  background-color: rgba(16, 185, 129, 0.15);
+  background: rgba(16, 185, 129, 0.15);
   color: #10b981;
-  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .py-status-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #ef4444;
-}
-
-.py-status-badge.ready .py-status-dot {
-  background-color: #10b981;
+  background: currentColor;
 }
 
 /* Run Button */
 .py-run-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background-color: #10b981 !important;
+  gap: 4px;
+  background-color: #10b981;
   color: #ffffff !important;
-  border: none !important;
+  border: none;
   border-radius: 6px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
+  padding: 5px 12px;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
-  transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .py-run-btn:hover {
-  background-color: #059669 !important;
-  transform: translateY(-1px);
+  background-color: #059669;
 }
 
 .py-run-btn:disabled {
-  background-color: #6b7280 !important;
+  background-color: #6b7280;
   cursor: not-allowed;
-  opacity: 0.6;
-  transform: none;
+  opacity: 0.7;
 }
 
-/* Workspace Layout */
+/* Layout Split */
 .py-island-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-/* Shared Editor & Terminal Styling */
-.pysource,
-.pyterm {
-  flex: 1;
-  min-width: 0;
-  border-radius: 8px;
-  border: 1px solid rgba(125, 125, 125, 0.2) !important;
-  background-color: rgba(0, 0, 0, 0.02) !important;
-  overflow: hidden;
-  font-family: "Fira Code", Consolas, Monaco, "Andale Mono", monospace !important;
-  font-size: 0.9rem;
-  box-sizing: border-box;
-}
-
-[data-theme="dark"] .pysource,
-[data-theme="dark"] .pyterm,
-body.dark .pysource,
-body.dark .pyterm {
-  background-color: rgba(255, 255, 255, 0.03) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Source Editor (Syntax Overlay Container) */
-.pysource {
-  position: relative !important;
-  min-height: 160px;
-}
-
-.pysource textarea,
-.pysource pre {
-  margin: 0 !important;
-  padding: 12px !important;
-  border: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 160px;
-  font-family: inherit !important;
-  font-size: inherit !important;
-  line-height: 1.5 !important;
-  box-sizing: border-box !important;
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
-  tab-size: 4;
-}
-
-/* Editable Area Overlay */
-.pysource textarea {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  z-index: 2 !important;
-  color: transparent !important;
-  background: transparent !important;
-  caret-color: var(--textColor, #0f172a) !important;
-  resize: vertical;
-  outline: none !important;
-}
-
-[data-theme="dark"] .pysource textarea,
-body.dark .pysource textarea {
-  caret-color: #ffffff !important;
-}
-
-.pysource textarea::placeholder {
-  color: rgba(125, 125, 125, 0.6) !important;
-}
-
-/* Highlighting Display Surface */
-.pysource pre {
-  position: relative !important;
-  z-index: 1 !important;
-  background: transparent !important;
-  pointer-events: none !important;
-  overflow: hidden;
-  color: var(--textColor, inherit) !important;
-}
-
-.pysource pre code {
-  font-family: inherit !important;
-  background: transparent !important;
-  padding: 0 !important;
-}
-
-/* Terminal Area */
-.pyterm {
-  padding: 12px;
-  min-height: 160px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.pyterm pre {
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  color: var(--textColor, inherit) !important;
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
-  font-family: inherit !important;
-  font-size: inherit !important;
-  line-height: 1.5 !important;
-}
-
-.pyterm .py-err {
-  color: #ef4444 !important;
-}
-
-/* Desktop Side-by-Side Responsive View */
 @media (min-width: 768px) {
   .py-island-body {
     flex-direction: row;
   }
-  
-  .pysource,
-  .pyterm {
-    width: 50%;
-  }
+}
 
-  .pysource textarea,
-  .pysource pre,
-  .pyterm {
-    height: 100%;
-    min-height: 180px;
+/* Editor Section */
+.pysource {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  background: transparent;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.15);
+}
+
+@media (min-width: 768px) {
+  .pysource {
+    border-bottom: none;
+    border-right: 1px solid rgba(125, 125, 125, 0.15);
   }
+}
+
+.pysource textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: var(--textColor, #f8fafc);
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  tab-size: 4;
+}
+
+/* Output Console */
+.pyterm {
+  flex: 1;
+  min-width: 0;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  min-height: 140px;
+  max-height: 280px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.pyterm pre {
+  margin: 0;
+  padding: 0;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--textColor, inherit);
+  background: transparent !important;
+}
+
+.pyterm .py-err {
+  color: #f87171 !important;
 }

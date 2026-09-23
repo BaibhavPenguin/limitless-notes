@@ -1,9 +1,9 @@
 # IPP &mdash; Area of Circle 
 ---
-## <u>TITLE</u>
-**Write a program in python to find the area of a circle**  
+### <u>Title</u>
+Write a program in python to find the area of a circle
 ---
-### <u>EXPLANATION</u>
+### <u>Explanation</u>
 To find the area of a circle we will use the formula Area = &pi;r<sup>2</sup>  hence, we need to create two different variables for storing the radius and area.  
 
 A Variable is a value either numeric or non numeric (encoded in ascii or utf-8) stored in Memory.  
@@ -35,11 +35,11 @@ Python assumes that all user inputs are Strings by default so we must convert th
           placeholder="Write Python code here..." 
           oninput="updateCodeGutter(this)" 
           onscroll="syncCodeGutterScroll(this)"
-        >print("Name & Roll No of Student")
+        >print("Limitless Editor - Roll Number 00")
 print("Area of Circle - IPP")
 radius = int(input("Enter the radius of a circle : "))
 area = 3.142 * radius * radius
-print("Radius of the circle is ",radius)
+print("Area of the circle is ",area)
         </textarea>
       </div>
       <div class="code-term">
@@ -49,3 +49,6 @@ print("Radius of the circle is ",radius)
   </div>
 </div>
 
+
+Replace the first print statement with your own name and roll number.  
+*&mdash; Edited by Baibhav Bhattacharya*

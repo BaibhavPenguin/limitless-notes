@@ -2,7 +2,7 @@
 <div class="webr-sandbox-wrapper code-sandbox-wrapper">
   <div class="webr-status-badge">
     <span class="webr-status-dot"></span>
-    <span class="webr-status-text">Loading...</span>
+    <span class="webr-status-text">Waiting</span>
   </div>
 
   <div class="webr-island code-island">

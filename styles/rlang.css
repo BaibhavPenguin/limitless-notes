@@ -261,3 +261,146 @@ body.dark .webrterm pre {
 body.dark .webr-err {
   color: #f87171 !important;
 }
+
+
+
+.sandbox-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+}
+
+.sandbox-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sandbox-modal {
+  width: 90%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.15);
+  padding: 18px 20px;
+  box-sizing: border-box;
+  transform: translateY(-8px);
+  transition: transform 0.15s ease-out;
+}
+
+.sandbox-modal-backdrop.active .sandbox-modal {
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .sandbox-modal,
+body.dark .sandbox-modal {
+  background-color: #111827;
+  border-color: #374151;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6);
+}
+
+.sandbox-modal-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+[data-theme="dark"] .sandbox-modal-title,
+body.dark .sandbox-modal-title {
+  color: #9ca3af;
+}
+
+.sandbox-modal-prompt {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+[data-theme="dark"] .sandbox-modal-prompt,
+body.dark .sandbox-modal-prompt {
+  color: #f3f4f6;
+}
+
+.sandbox-modal-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 16px;
+  transition: border-color 0.15s ease;
+}
+
+.sandbox-modal-input:focus {
+  border-color: #2563eb;
+}
+
+[data-theme="dark"] .sandbox-modal-input,
+body.dark .sandbox-modal-input {
+  background-color: #030712;
+  border-color: #374151;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .sandbox-modal-input:focus {
+  border-color: #38bdf8;
+}
+
+.sandbox-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sandbox-modal-btn {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+}
+
+.sandbox-modal-btn.cancel {
+  background: transparent;
+  color: #64748b;
+}
+
+[data-theme="dark"] .sandbox-modal-btn.cancel {
+  color: #94a3b8;
+}
+
+.sandbox-modal-btn.submit {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.sandbox-modal-btn.submit.r-btn {
+  background-color: #2563eb;
+}
+
+.sandbox-modal-btn:hover {
+  opacity: 0.85;
+}

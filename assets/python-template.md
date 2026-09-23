@@ -2,7 +2,7 @@
 <div class="code-sandbox-wrapper">
   <div class="py-status-badge">
     <span class="py-status-dot"></span>
-    <span class="py-status-text">Loading...</span>
+    <span class="py-status-text">Waiting</span>
   </div>
 
   <div class="code-island">

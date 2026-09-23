@@ -35,6 +35,18 @@
     </div>
   </div>
 
+  <div id="sandbox-modal-backdrop" class="sandbox-modal-backdrop">
+    <div class="sandbox-modal">
+      <div class="sandbox-modal-title" id="sandbox-modal-title">Program Input</div>
+      <div class="sandbox-modal-prompt" id="sandbox-modal-prompt">Enter value:</div>
+      <input type="text" class="sandbox-modal-input" id="sandbox-modal-input" autocomplete="off" />
+      <div class="sandbox-modal-actions">
+        <button class="sandbox-modal-btn cancel" id="sandbox-modal-cancel">Cancel</button>
+        <button class="sandbox-modal-btn submit" id="sandbox-modal-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     window.$docsify = {
       name: '',
@@ -160,6 +172,57 @@
         gutter.scrollTop = textarea.scrollTop;
       }
     }
+
+    function requestSandboxInput(promptText, titleText = "Program Input", isR = false) {
+      return new Promise((resolve, reject) => {
+        const backdrop = document.getElementById('sandbox-modal-backdrop');
+        const titleEl = document.getElementById('sandbox-modal-title');
+        const promptEl = document.getElementById('sandbox-modal-prompt');
+        const inputEl = document.getElementById('sandbox-modal-input');
+        const submitBtn = document.getElementById('sandbox-modal-submit');
+        const cancelBtn = document.getElementById('sandbox-modal-cancel');
+
+        titleEl.textContent = titleText;
+        promptEl.textContent = promptText || "Enter input:";
+        inputEl.value = "";
+
+        if (isR) {
+          submitBtn.classList.add('r-btn');
+        } else {
+          submitBtn.classList.remove('r-btn');
+        }
+
+        backdrop.classList.add('active');
+        inputEl.focus();
+
+        function cleanup() {
+          backdrop.classList.remove('active');
+          submitBtn.removeEventListener('click', onDone);
+          cancelBtn.removeEventListener('click', onCancel);
+          inputEl.removeEventListener('keydown', onKey);
+        }
+
+        function onDone() {
+          const val = inputEl.value;
+          cleanup();
+          resolve(val);
+        }
+
+        function onCancel() {
+          cleanup();
+          reject(new Error("Input cancelled by user."));
+        }
+
+        function onKey(e) {
+          if (e.key === 'Enter') onDone();
+          if (e.key === 'Escape') onCancel();
+        }
+
+        submitBtn.addEventListener('click', onDone);
+        cancelBtn.addEventListener('click', onCancel);
+        inputEl.addEventListener('keydown', onKey);
+      });
+    }
   </script>
 
   <script>
@@ -232,6 +295,15 @@
 
       try {
         const py = await ensurePyodide();
+        
+        py.setStdin({
+          stdin: () => {
+            const res = window.prompt("Python input():");
+            return res !== null ? res + "\n" : null;
+          },
+          error: true
+        });
+
         const code = sourceArea.value;
         py.runPython(`
 import sys
@@ -324,7 +396,15 @@ sys.stderr = io.StringIO()
 
       try {
         const r = await window.ensureWebR();
-        const code = sourceArea.value;
+        let code = sourceArea.value;
+
+        const readlineMatches = [...code.matchAll(/readline\s*\(\s*(?:prompt\s*=\s*)?["'](.*?)["']\s*\)/g)];
+        for (const match of readlineMatches) {
+          const promptText = match[1] || "Enter R input:";
+          const userInput = await requestSandboxInput(promptText, "R Input Prompt", true);
+          code = code.replace(match[0], JSON.stringify(userInput));
+        }
+
         const shelter = await new r.Shelter();
         const capture = await shelter.captureR(code);
 

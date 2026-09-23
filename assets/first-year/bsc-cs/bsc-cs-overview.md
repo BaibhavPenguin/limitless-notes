@@ -29,7 +29,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 <tr>
 <td>Introduction to Python Programming (IPP)
-<td><a href="">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/ipp/ipp-ov.md">View Notes</a>
 </tr>
 
 <tr>

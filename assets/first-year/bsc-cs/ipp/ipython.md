@@ -1,3 +1,8 @@
+# Python Interpreter
+---
+Try and execute python programs yourself.
+Enter the program in the code editor and click the run button to view the output on the output panel.
+
 <link rel="stylesheet" href="./styles/python.css">
 <div class="code-sandbox-wrapper">
   <div class="py-status-badge">
@@ -28,6 +33,3 @@
     </div>
   </div>
 </div>
-
-
-*&mdash; Developed by Baibhav Bhattacharya*

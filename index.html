@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
   <link rel="stylesheet" href="./styles/index.css">
   <link rel="stylesheet" href="./styles/python.css">
+  <link rel="stylesheet" href="./styles/r-css.css">
 
   <!-- Pyodide Engine -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
@@ -90,9 +91,12 @@
             if (window.__isPyodideReady) {
               updatePyodideBadges(true);
             }
+            if (window.__isWebRReady) {
+              updateWebRBadges(true);
+            }
 
-            // Generic Line Number Initialization for any sandbox (Python, WebR, etc.)
-            document.querySelectorAll('.code-source textarea').forEach(function(textarea) {
+            // Sync gutter line numbers for all code sandboxes on render
+            document.querySelectorAll('.code-source textarea, .pysource textarea').forEach(function(textarea) {
               updateCodeGutter(textarea);
             });
           });
@@ -108,7 +112,6 @@
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 
-  <!-- Sidebar click outside handler -->
   <script>
   document.addEventListener('DOMContentLoaded', function () {
     var sidebar = document.querySelector('.sidebar');
@@ -129,7 +132,7 @@
   });
   </script>
 
-  <!-- Generic Code Editor Line Number Helpers (Shared across Pyodide, WebR, etc.) -->
+  <!-- Generic Code Editor Line Number Helpers -->
   <script>
     function updateCodeGutter(textarea) {
       const container = textarea.closest('.code-source') || textarea.closest('.pysource');
@@ -231,6 +234,82 @@ sys.stderr = io.StringIO()
         buttonEl.innerHTML = originalText;
       }
     }
+  </script>
+
+  <!-- R / WebR Execution Engine -->
+  <script type="module">
+    import { WebR } from 'https://webr.r-wasm.org/v0.3.3/webr.mjs';
+
+    let webrInstance = null;
+    window.__isWebRReady = false;
+
+    window.updateWebRBadges = function(isReady) {
+      document.querySelectorAll('.webr-status-badge').forEach(function(badge) {
+        if (isReady) {
+          badge.classList.add('ready');
+          badge.querySelector('.webr-status-text').textContent = 'R Ready';
+        } else {
+          badge.classList.remove('ready');
+          badge.querySelector('.webr-status-text').textContent = 'Loading...';
+        }
+      });
+    };
+
+    async function initWebREngine() {
+      try {
+        webrInstance = new WebR();
+        await webrInstance.init();
+        window.__isWebRReady = true;
+        window.updateWebRBadges(true);
+      } catch (err) {
+        console.error('Failed to initialize WebR:', err);
+      }
+    }
+    initWebREngine();
+
+    window.runWebRCode = async function(buttonEl) {
+      const island = buttonEl.closest('.code-island') || buttonEl.closest('.webr-island');
+      if (!island) return;
+
+      const sourceArea = island.querySelector('.code-source textarea') || island.querySelector('.webrsource textarea');
+      const outputPre = island.querySelector('.code-term pre') || island.querySelector('.webrterm pre');
+      if (!sourceArea || !outputPre) return;
+
+      if (!window.__isWebRReady || !webrInstance) {
+        outputPre.className = 'webr-output webr-err';
+        outputPre.textContent = 'WebR is still loading, please wait a moment...';
+        return;
+      }
+
+      buttonEl.disabled = true;
+      const originalText = buttonEl.innerHTML;
+      buttonEl.innerHTML = 'Running...';
+      outputPre.className = 'webr-output';
+      outputPre.textContent = 'Executing...';
+
+      try {
+        const code = sourceArea.value;
+        const shelter = await new webrInstance.Shelter();
+        const capture = await shelter.captureR(code);
+
+        let outputText = '';
+        if (capture.output && capture.output.length > 0) {
+          outputText = capture.output
+            .filter(item => item.type === 'stdout' || item.type === 'stderr')
+            .map(item => item.data)
+            .join('\n');
+        }
+
+        await shelter.purge();
+        outputPre.textContent = outputText.trim() || '(Execution completed with no output)';
+      } catch (err) {
+        outputPre.className = 'webr-output webr-err';
+        outputPre.textContent = err.message;
+      } finally {
+        buttonEl.disabled = false;
+        buttonEl.innerHTML = originalText;
+      }
+    };
   </script>
 </body>
 </html>

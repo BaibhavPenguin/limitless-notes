@@ -16,4 +16,5 @@
 * [Legal Notices & Copyright](/legal/TERMS-OF-USE.md)  
 
 
-* [Debug](/assets/python-template.md)
+* [Debug-Python](/assets/python-template.md)
+* [Debug-R](/assets/rlang-template.md)

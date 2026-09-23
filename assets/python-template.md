@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="./styles/spyodide.css">
 <div class="py-island">
   <div class="py-island-header">
     <span class="py-island-title">Python Sandbox</span>

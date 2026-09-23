@@ -310,3 +310,5 @@ body.dark #docsify-darklight-theme svg,
   display: inline-block;
   margin: 0 2px;
 }
+
+@import url('./spyodide.css');

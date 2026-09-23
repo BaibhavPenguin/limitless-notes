@@ -28,6 +28,3 @@
     </div>
   </div>
 </div>
-
-
-*&mdash; Developed by Baibhav Bhattacharya*

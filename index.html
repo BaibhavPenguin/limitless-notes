@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
   <link rel="icon" href="./LOGO-NO-BG.png" type="image/x-icon">
-  <title>Limitless - The Open Academic Archive | Degree College Notes</title>
+  <title>Limitless - The Open Academic Archive</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="The free and open source archive of high quality notes and academic resources for degree college in India">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <!-- Base Theme Stylesheet -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
   <link rel="stylesheet" href="./styles/index.css">
   <link rel="stylesheet" href="./styles/python.css">
-  <link rel="stylesheet" href="./styles/r-css.css">
-
-  <!-- Pyodide Engine -->
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+  <link rel="stylesheet" href="./styles/rlang.css">
 </head>
 <body>
   <header class="site-header">
@@ -74,7 +73,7 @@
         function(hook) {
           var footer = [
             '<footer class="site-footer">',
-            'Made with <span class="heart">❤️</span> by Baibhav Bhattacharya, Prem Vishvakarma & Ankush Yadav',
+            'Made with <span class="heart">❤️</span> by Baibhav Bhattacharya, Prem Vishwakarma & Ankush Yadav',
             '</footer>'
           ].join('');
 
@@ -88,24 +87,30 @@
             if (toggleBtn && slot && !slot.contains(toggleBtn)) {
               slot.appendChild(toggleBtn);
             }
+
             if (window.__isPyodideReady) {
-              updatePyodideBadges(true);
+              updatePyodideBadges('ready');
             }
             if (window.__isWebRReady) {
-              updateWebRBadges(true);
+              updateWebRBadges('ready');
             }
 
-            // Sync gutter line numbers for all code sandboxes on render
-            document.querySelectorAll('.code-source textarea, .pysource textarea').forEach(function(textarea) {
+            document.querySelectorAll('.code-source textarea, .webrsource textarea, .pysource textarea').forEach(function(textarea) {
               updateCodeGutter(textarea);
             });
+
+            if (document.querySelector('.py-island, .code-island .py-status-badge')) {
+              ensurePyodide();
+            }
+            if (document.querySelector('.webr-island, .webr-status-badge')) {
+              ensureWebR();
+            }
           });
         }
       ]
     };
   </script>
 
-  <!-- Core Docsify Plugins -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
@@ -132,12 +137,11 @@
   });
   </script>
 
-  <!-- Generic Code Editor Line Number Helpers -->
   <script>
     function updateCodeGutter(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.pysource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.py-line-numbers');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
       if (!gutter) return;
 
       const lineCount = textarea.value.split('\n').length;
@@ -149,42 +153,68 @@
     }
 
     function syncCodeGutterScroll(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.pysource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.py-line-numbers');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
       if (gutter) {
         gutter.scrollTop = textarea.scrollTop;
       }
     }
   </script>
 
-  <!-- Python / Pyodide Execution Engine -->
   <script>
     let pyodideInstance = null;
+    window.__isPyodideLoading = false;
     window.__isPyodideReady = false;
 
-    function updatePyodideBadges(isReady) {
+    function updatePyodideBadges(status) {
       document.querySelectorAll('.py-status-badge').forEach(function(badge) {
-        if (isReady) {
-          badge.classList.add('ready');
+        if (status === 'ready') {
+          badge.className = 'py-status-badge ready';
           badge.querySelector('.py-status-text').textContent = 'Python Ready';
+        } else if (status === 'loading') {
+          badge.className = 'py-status-badge';
+          badge.querySelector('.py-status-text').textContent = 'Initializing...';
         } else {
-          badge.classList.remove('ready');
+          badge.className = 'py-status-badge';
           badge.querySelector('.py-status-text').textContent = 'Loading...';
         }
       });
     }
 
-    async function initPyodideEngine() {
+    async function ensurePyodide() {
+      if (window.__isPyodideReady) return pyodideInstance;
+      if (window.__isPyodideLoading) {
+        while (!window.__isPyodideReady) {
+          await new Promise(r => setTimeout(r, 100));
+        }
+        return pyodideInstance;
+      }
+
+      window.__isPyodideLoading = true;
+      updatePyodideBadges('loading');
+
       try {
+        if (!window.loadPyodide) {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        }
         pyodideInstance = await loadPyodide();
         window.__isPyodideReady = true;
-        updatePyodideBadges(true);
+        window.__isPyodideLoading = false;
+        updatePyodideBadges('ready');
+        return pyodideInstance;
       } catch (err) {
-        console.error('Failed to initialize Pyodide:', err);
+        window.__isPyodideLoading = false;
+        console.error('Failed to load Pyodide:', err);
+        throw err;
       }
     }
-    initPyodideEngine();
 
     async function runPythonCode(buttonEl) {
       const island = buttonEl.closest('.code-island') || buttonEl.closest('.py-island');
@@ -194,12 +224,6 @@
       const outputPre = island.querySelector('.code-term pre') || island.querySelector('.pyterm pre');
       if (!sourceArea || !outputPre) return;
 
-      if (!window.__isPyodideReady || !pyodideInstance) {
-        outputPre.className = 'py-output py-err';
-        outputPre.textContent = 'Pyodide is still loading, please wait a moment...';
-        return;
-      }
-
       buttonEl.disabled = true;
       const originalText = buttonEl.innerHTML;
       buttonEl.innerHTML = 'Running...';
@@ -207,16 +231,17 @@
       outputPre.textContent = 'Executing...';
 
       try {
+        const py = await ensurePyodide();
         const code = sourceArea.value;
-        pyodideInstance.runPython(`
+        py.runPython(`
 import sys
 import io
 sys.stdout = io.StringIO()
 sys.stderr = io.StringIO()
 `);
-        const result = await pyodideInstance.runPythonAsync(code);
-        let stdout = pyodideInstance.runPython("sys.stdout.getvalue()");
-        let stderr = pyodideInstance.runPython("sys.stderr.getvalue()");
+        const result = await py.runPythonAsync(code);
+        let stdout = py.runPython("sys.stdout.getvalue()");
+        let stderr = py.runPython("sys.stderr.getvalue()");
 
         let finalOutput = '';
         if (stdout) finalOutput += stdout;
@@ -236,50 +261,60 @@ sys.stderr = io.StringIO()
     }
   </script>
 
-  <!-- R / WebR Execution Engine -->
   <script type="module">
-    import { WebR } from 'https://webr.r-wasm.org/v0.3.3/webr.mjs';
-
     let webrInstance = null;
+    window.__isWebRLoading = false;
     window.__isWebRReady = false;
 
-    window.updateWebRBadges = function(isReady) {
+    window.updateWebRBadges = function(status) {
       document.querySelectorAll('.webr-status-badge').forEach(function(badge) {
-        if (isReady) {
-          badge.classList.add('ready');
+        if (status === 'ready') {
+          badge.className = 'webr-status-badge ready';
           badge.querySelector('.webr-status-text').textContent = 'R Ready';
+        } else if (status === 'loading') {
+          badge.className = 'webr-status-badge';
+          badge.querySelector('.webr-status-text').textContent = 'Initializing...';
         } else {
-          badge.classList.remove('ready');
+          badge.className = 'webr-status-badge';
           badge.querySelector('.webr-status-text').textContent = 'Loading...';
         }
       });
     };
 
-    async function initWebREngine() {
+    window.ensureWebR = async function() {
+      if (window.__isWebRReady) return webrInstance;
+      if (window.__isWebRLoading) {
+        while (!window.__isWebRReady) {
+          await new Promise(r => setTimeout(r, 100));
+        }
+        return webrInstance;
+      }
+
+      window.__isWebRLoading = true;
+      window.updateWebRBadges('loading');
+
       try {
+        const { WebR } = await import('https://webr.r-wasm.org/v0.3.3/webr.mjs');
         webrInstance = new WebR();
         await webrInstance.init();
         window.__isWebRReady = true;
-        window.updateWebRBadges(true);
+        window.__isWebRLoading = false;
+        window.updateWebRBadges('ready');
+        return webrInstance;
       } catch (err) {
-        console.error('Failed to initialize WebR:', err);
+        window.__isWebRLoading = false;
+        console.error('Failed to load WebR:', err);
+        throw err;
       }
-    }
-    initWebREngine();
+    };
 
     window.runWebRCode = async function(buttonEl) {
-      const island = buttonEl.closest('.code-island') || buttonEl.closest('.webr-island');
+      const island = buttonEl.closest('.webr-island') || buttonEl.closest('.code-island');
       if (!island) return;
 
-      const sourceArea = island.querySelector('.code-source textarea') || island.querySelector('.webrsource textarea');
-      const outputPre = island.querySelector('.code-term pre') || island.querySelector('.webrterm pre');
+      const sourceArea = island.querySelector('.webrsource textarea') || island.querySelector('.code-source textarea');
+      const outputPre = island.querySelector('.webrterm pre') || island.querySelector('.code-term pre');
       if (!sourceArea || !outputPre) return;
-
-      if (!window.__isWebRReady || !webrInstance) {
-        outputPre.className = 'webr-output webr-err';
-        outputPre.textContent = 'WebR is still loading, please wait a moment...';
-        return;
-      }
 
       buttonEl.disabled = true;
       const originalText = buttonEl.innerHTML;
@@ -288,8 +323,9 @@ sys.stderr = io.StringIO()
       outputPre.textContent = 'Executing...';
 
       try {
+        const r = await window.ensureWebR();
         const code = sourceArea.value;
-        const shelter = await new webrInstance.Shelter();
+        const shelter = await new r.Shelter();
         const capture = await shelter.captureR(code);
 
         let outputText = '';

@@ -1,18 +1,67 @@
-/* =========================================================
-   Python Sandbox Component Styles
-   ========================================================= */
+/* Outer Wrapper (Positions badge above the editor) */
+.py-sandbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1.5rem 0;
+  width: 100%;
+}
 
-/* Main Container */
+/* Python Loading Status Badge */
+.py-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.py-status-badge.ready {
+  background-color: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+[data-theme="dark"] .py-status-badge,
+body.dark .py-status-badge {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .py-status-badge.ready,
+body.dark .py-status-badge.ready {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.py-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Main Sandbox Box */
 .py-island {
   display: flex;
   flex-direction: column;
+  width: 100%;
   background-color: #ffffff;
   color: #1e293b;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  margin: 1.5rem 0;
+  margin: 0;
   overflow: hidden;
   box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -24,7 +73,7 @@ body.dark .py-island {
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
 }
 
-/* Header */
+/* Header Bar & Controls */
 .py-island-header {
   display: flex;
   align-items: center;
@@ -59,52 +108,14 @@ body.dark .py-island-title {
   color: #9ca3af;
 }
 
-/* Status Badge */
-.py-status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  background-color: #fef2f2;
-  color: #ef4444;
-  border: 1px solid #fecaca;
-}
-
-.py-status-badge.ready {
-  background-color: #ecfdf5;
-  color: #059669;
-  border-color: #a7f3d0;
-}
-
-[data-theme="dark"] .py-status-badge {
-  background-color: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-[data-theme="dark"] .py-status-badge.ready {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.3);
-}
-
-.py-status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: currentColor;
-}
-
 /* Run Button */
 .py-run-btn {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background-color: #10b981;
+  background-color: #10b981 !important;
   color: #ffffff !important;
-  border: none;
+  border: none !important;
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 0.82rem;
@@ -115,12 +126,12 @@ body.dark .py-island-title {
 }
 
 .py-run-btn:hover {
-  background-color: #059669;
+  background-color: #059669 !important;
   transform: translateY(-1px);
 }
 
 .py-run-btn:disabled {
-  background-color: #94a3b8;
+  background-color: #94a3b8 !important;
   cursor: not-allowed;
   transform: none;
   opacity: 0.7;
@@ -138,9 +149,6 @@ body.dark .py-island-title {
   }
 }
 
-/* =========================================================
-   Code Editor (with pure CSS Gutter & Line Indicators)
-   ========================================================= */
 .pysource {
   flex: 1;
   min-width: 0;
@@ -166,7 +174,7 @@ body.dark .pysource {
   }
 }
 
-/* Left line-number gutter bar */
+/* Left Line Indicator Gutter */
 .pysource::before {
   content: "";
   position: absolute;
@@ -180,7 +188,8 @@ body.dark .pysource {
   z-index: 1;
 }
 
-[data-theme="dark"] .pysource::before {
+[data-theme="dark"] .pysource::before,
+body.dark .pysource::before {
   background-color: #161b22;
   border-right-color: #30363d;
 }
@@ -189,11 +198,11 @@ body.dark .pysource {
   display: block;
   width: 100%;
   min-height: 160px;
-  padding: 12px 14px 12px 52px; /* 52px leaves room for the gutter */
+  padding: 12px 14px 12px 52px;
   border: none;
   background: transparent;
   color: #0f172a;
-  font-family: "JetBrains Mono", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
   font-size: 0.88rem;
   line-height: 1.6;
   resize: vertical;
@@ -237,7 +246,7 @@ body.dark .pyterm {
 .pyterm pre {
   margin: 0;
   padding: 0;
-  font-family: "JetBrains Mono", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
   font-size: 0.88rem;
   line-height: 1.6;
   white-space: pre-wrap;

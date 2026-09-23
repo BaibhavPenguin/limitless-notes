@@ -1,12 +1,14 @@
 /* ==========================================================================
-   PYTHON SANDBOX CODE (Transparent Theme & Highlighting Support)
+   PYTHON SANDBOX FLOATING ISLAND (Full Consolidated Styles)
    ========================================================================== */
+
+/* Main Floating Island Container */
 .py-island {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background-color: var(--card-bg, rgba(255, 255, 255, 0.85));
-  border: 1px solid rgba(125, 125, 125, 0.2);
+  background-color: var(--card-bg, rgba(255, 255, 255, 0.85)) !important;
+  border: 1px solid rgba(125, 125, 125, 0.2) !important;
   border-radius: 12px;
   padding: 16px;
   margin: 1.5rem 0;
@@ -18,11 +20,11 @@
 [data-theme="dark"] .py-island,
 body.dark .py-island {
   --card-bg: rgba(30, 41, 59, 0.75);
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
 }
 
-/* Header & Controls */
+/* Header Bar & Run Button */
 .py-island-header {
   display: flex;
   align-items: center;
@@ -36,16 +38,17 @@ body.dark .py-island {
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  opacity: 0.75;
+  color: var(--textColor, inherit) !important;
+  opacity: 0.8;
 }
 
 .py-run-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: #10b981;
+  background-color: #10b981 !important;
   color: #ffffff !important;
-  border: none;
+  border: none !important;
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 0.85rem;
@@ -56,18 +59,18 @@ body.dark .py-island {
 }
 
 .py-run-btn:hover {
-  background-color: #059669;
+  background-color: #059669 !important;
   transform: translateY(-1px);
 }
 
 .py-run-btn:disabled {
-  background-color: #6b7280;
+  background-color: #6b7280 !important;
   cursor: not-allowed;
   opacity: 0.6;
   transform: none;
 }
 
-/* Split Workspace Layout */
+/* Split Workspace Body */
 .py-island-body {
   display: flex;
   flex-direction: column;
@@ -75,27 +78,42 @@ body.dark .py-island {
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Code Editor Window */
-.pysource {
-  position: relative;
+/* Common Window Panels (Source & Terminal Containers) */
+.pysource,
+.pyterm {
   flex: 1;
   min-width: 0;
   border-radius: 8px;
-  border: 1px solid rgba(125, 125, 125, 0.2);
-  background-color: transparent !important;
+  border: 1px solid rgba(125, 125, 125, 0.2) !important;
+  background-color: rgba(0, 0, 0, 0.02) !important;
   overflow: hidden;
-  font-family: "Fira Code", Consolas, Monaco, "Andale Mono", monospace;
+  font-family: "Fira Code", Consolas, Monaco, "Andale Mono", monospace !important;
   font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
-.pysource pre,
+[data-theme="dark"] .pysource,
+[data-theme="dark"] .pyterm,
+body.dark .pysource,
+body.dark .pyterm {
+  background-color: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Code Editor Textarea */
 .pysource textarea {
-  margin: 0 !important;
-  padding: 12px !important;
-  border: none !important;
   width: 100% !important;
   height: 100% !important;
   min-height: 140px;
+  padding: 12px !important;
+  margin: 0 !important;
+  border: none !important;
+  background-color: transparent !important;
+  color: var(--textColor, #0f172a) !important;
+  caret-color: var(--textColor, #0f172a) !important;
+  resize: vertical;
+  outline: none !important;
   font-family: inherit !important;
   font-size: inherit !important;
   line-height: 1.5 !important;
@@ -105,63 +123,46 @@ body.dark .py-island {
   tab-size: 4;
 }
 
-/* Syntax Overlay Alignment */
-.pysource textarea {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  color: transparent !important;
-  background: transparent !important;
-  caret-color: var(--textColor, #000);
-  resize: vertical;
-  outline: none;
-}
-
 [data-theme="dark"] .pysource textarea,
 body.dark .pysource textarea {
-  caret-color: #fff;
+  color: #f8fafc !important;
+  caret-color: #ffffff !important;
 }
 
-.pysource pre {
-  position: relative;
-  z-index: 0;
-  background: transparent !important;
-  pointer-events: none;
-  overflow: hidden;
+.pysource textarea::placeholder {
+  color: rgba(125, 125, 125, 0.6) !important;
 }
 
-/* Output Terminal Window */
+/* Output Terminal Pre Element */
 .pyterm {
-  flex: 1;
-  min-width: 0;
-  border-radius: 8px;
   padding: 12px;
   min-height: 140px;
   max-height: 300px;
   overflow-y: auto;
-  border: 1px solid rgba(125, 125, 125, 0.2);
-  background-color: transparent !important;
-  color: inherit !important;
-  font-family: "Fira Code", Consolas, Monaco, "Andale Mono", monospace;
-  font-size: 0.9rem;
-  box-sizing: border-box;
 }
 
 .pyterm pre {
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   background: transparent !important;
-  color: inherit !important;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: inherit;
+  color: var(--textColor, #0f172a) !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: 1.5 !important;
+}
+
+[data-theme="dark"] .pyterm pre,
+body.dark .pyterm pre {
+  color: #f8fafc !important;
 }
 
 .pyterm .py-err {
   color: #ef4444 !important;
 }
 
-/* Desktop Responsive Layout (Side-by-Side) */
+/* Desktop Side-by-Side Responsive View */
 @media (min-width: 768px) {
   .py-island-body {
     flex-direction: row;
@@ -173,7 +174,6 @@ body.dark .pysource textarea {
   }
 
   .pysource textarea,
-  .pysource pre,
   .pyterm {
     height: 100%;
     min-height: 180px;

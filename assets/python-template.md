@@ -1,21 +1,27 @@
-<div class="py-sandbox-wrapper">
+<div class="code-sandbox-wrapper">
   <div class="py-status-badge">
     <span class="py-status-dot"></span>
     <span class="py-status-text">Loading...</span>
   </div>
 
-  <div class="py-island">
-    <div class="py-island-header">
-      <div class="py-header-left">
-        <span class="py-island-title">Python Sandbox</span>
+  <div class="code-island">
+    <div class="code-island-header">
+      <div class="code-header-left">
+        <span class="code-island-title">Python Sandbox</span>
       </div>
-      <button class="py-run-btn" onclick="runPythonCode(this)">▶ Run</button>
+      <button class="code-run-btn" onclick="runPythonCode(this)">▶ Run</button>
     </div>
-    <div class="py-island-body">
-      <div class="pysource">
-        <textarea spellcheck="false" placeholder="Write Python code here...">print("Hello, World!")</textarea>
+    <div class="code-island-body">
+      <div class="code-source">
+        <div class="code-gutter">1</div>
+        <textarea 
+          spellcheck="false" 
+          placeholder="Write Python code here..." 
+          oninput="updateCodeGutter(this)" 
+          onscroll="syncCodeGutterScroll(this)"
+        >print("Hello, World!")</textarea>
       </div>
-      <div class="pyterm">
+      <div class="code-term">
         <pre class="py-output"></pre>
       </div>
     </div>

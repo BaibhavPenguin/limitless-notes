@@ -1,4 +1,9 @@
-/* Outer Wrapper (Positions badge above the editor) */
+/* =========================================================
+   Unified Sandbox Component Styles (Python, WebR, etc.)
+   ========================================================= */
+
+/* Outer Wrapper (positions badge cleanly on top left) */
+.code-sandbox-wrapper,
 .py-sandbox-wrapper {
   display: flex;
   flex-direction: column;
@@ -7,8 +12,9 @@
   width: 100%;
 }
 
-/* Python Loading Status Badge */
-.py-status-badge {
+/* Status Badges */
+.py-status-badge,
+.webr-status-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -23,26 +29,32 @@
   transition: all 0.3s ease;
 }
 
-.py-status-badge.ready {
+.py-status-badge.ready,
+.webr-status-badge.ready {
   background-color: #ecfdf5;
   color: #059669;
   border-color: #a7f3d0;
 }
 
 [data-theme="dark"] .py-status-badge,
-body.dark .py-status-badge {
+[data-theme="dark"] .webr-status-badge,
+body.dark .py-status-badge,
+body.dark .webr-status-badge {
   background-color: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.3);
 }
 
 [data-theme="dark"] .py-status-badge.ready,
-body.dark .py-status-badge.ready {
+[data-theme="dark"] .webr-status-badge.ready,
+body.dark .py-status-badge.ready,
+body.dark .webr-status-badge.ready {
   background-color: rgba(16, 185, 129, 0.15);
   color: #10b981;
   border-color: rgba(16, 185, 129, 0.3);
 }
 
-.py-status-dot {
+.py-status-dot,
+.webr-status-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -50,6 +62,7 @@ body.dark .py-status-badge.ready {
 }
 
 /* Main Sandbox Box */
+.code-island,
 .py-island {
   display: flex;
   flex-direction: column;
@@ -65,7 +78,9 @@ body.dark .py-status-badge.ready {
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
+[data-theme="dark"] .code-island,
 [data-theme="dark"] .py-island,
+body.dark .code-island,
 body.dark .py-island {
   background-color: #111827;
   color: #f3f4f6;
@@ -74,6 +89,7 @@ body.dark .py-island {
 }
 
 /* Header Bar & Controls */
+.code-island-header,
 .py-island-header {
   display: flex;
   align-items: center;
@@ -83,18 +99,22 @@ body.dark .py-island {
   border-bottom: 1px solid #e2e8f0;
 }
 
+[data-theme="dark"] .code-island-header,
 [data-theme="dark"] .py-island-header,
+body.dark .code-island-header,
 body.dark .py-island-header {
   background-color: #1f2937;
   border-color: #374151;
 }
 
+.code-header-left,
 .py-header-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+.code-island-title,
 .py-island-title {
   font-size: 0.8rem;
   font-weight: 700;
@@ -103,12 +123,15 @@ body.dark .py-island-header {
   color: #475569;
 }
 
+[data-theme="dark"] .code-island-title,
 [data-theme="dark"] .py-island-title,
+body.dark .code-island-title,
 body.dark .py-island-title {
   color: #9ca3af;
 }
 
-/* Run Button */
+/* Run Buttons */
+.code-run-btn,
 .py-run-btn {
   display: inline-flex;
   align-items: center;
@@ -125,11 +148,13 @@ body.dark .py-island-title {
   transition: all 0.2s ease;
 }
 
+.code-run-btn:hover,
 .py-run-btn:hover {
   background-color: #059669 !important;
   transform: translateY(-1px);
 }
 
+.code-run-btn:disabled,
 .py-run-btn:disabled {
   background-color: #94a3b8 !important;
   cursor: not-allowed;
@@ -138,67 +163,89 @@ body.dark .py-island-title {
 }
 
 /* Body Split */
+.code-island-body,
 .py-island-body {
   display: flex;
   flex-direction: column;
 }
 
 @media (min-width: 768px) {
+  .code-island-body,
   .py-island-body {
     flex-direction: row;
   }
 }
 
+/* =========================================================
+   Code Editor with Interactive Gutter Line Numbers
+   ========================================================= */
+.code-source,
 .pysource {
   flex: 1;
   min-width: 0;
+  display: flex;
   position: relative;
   background-color: #fcfcfd;
   border-bottom: 1px solid #e2e8f0;
 }
 
+[data-theme="dark"] .code-source,
 [data-theme="dark"] .pysource,
+body.dark .code-source,
 body.dark .pysource {
   background-color: #0d1117;
   border-color: #374151;
 }
 
 @media (min-width: 768px) {
+  .code-source,
   .pysource {
     border-bottom: none;
     border-right: 1px solid #e2e8f0;
   }
+  [data-theme="dark"] .code-source,
   [data-theme="dark"] .pysource,
+  body.dark .code-source,
   body.dark .pysource {
     border-right-color: #374151;
   }
 }
 
-/* Left Line Indicator Gutter */
-.pysource::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
+/* Line Number Gutter */
+.code-gutter,
+.py-line-numbers {
   width: 42px;
+  flex-shrink: 0;
+  padding: 12px 8px 12px 0;
+  text-align: right;
   background-color: #f1f5f9;
   border-right: 1px solid #e2e8f0;
-  pointer-events: none;
-  z-index: 1;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  user-select: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: pre;
 }
 
-[data-theme="dark"] .pysource::before,
-body.dark .pysource::before {
+[data-theme="dark"] .code-gutter,
+[data-theme="dark"] .py-line-numbers,
+body.dark .code-gutter,
+body.dark .py-line-numbers {
   background-color: #161b22;
   border-right-color: #30363d;
+  color: #6e7681;
 }
 
+/* Textarea input */
+.code-source textarea,
 .pysource textarea {
-  display: block;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   min-height: 160px;
-  padding: 12px 14px 12px 52px;
+  padding: 12px 14px;
   border: none;
   background: transparent;
   color: #0f172a;
@@ -211,15 +258,16 @@ body.dark .pysource::before {
   tab-size: 4;
   white-space: pre;
   overflow-x: auto;
-  position: relative;
-  z-index: 2;
 }
 
+[data-theme="dark"] .code-source textarea,
 [data-theme="dark"] .pysource textarea,
+body.dark .code-source textarea,
 body.dark .pysource textarea {
   color: #e6edf3;
 }
 
+.code-source textarea::placeholder,
 .pysource textarea::placeholder {
   color: #94a3b8;
 }
@@ -227,6 +275,7 @@ body.dark .pysource textarea {
 /* =========================================================
    Terminal / Output Panel
    ========================================================= */
+.code-term,
 .pyterm {
   flex: 1;
   min-width: 0;
@@ -238,11 +287,14 @@ body.dark .pysource textarea {
   box-sizing: border-box;
 }
 
+[data-theme="dark"] .code-term,
 [data-theme="dark"] .pyterm,
+body.dark .code-term,
 body.dark .pyterm {
   background-color: #030712;
 }
 
+.code-term pre,
 .pyterm pre {
   margin: 0;
   padding: 0;
@@ -255,17 +307,22 @@ body.dark .pyterm {
   background: transparent !important;
 }
 
+[data-theme="dark"] .code-term pre,
 [data-theme="dark"] .pyterm pre,
+body.dark .code-term pre,
 body.dark .pyterm pre {
   color: #9ca3af;
 }
 
-.pyterm .py-err {
+.py-err,
+.webr-err {
   color: #dc2626 !important;
   font-weight: 500;
 }
 
-[data-theme="dark"] .pyterm .py-err,
-body.dark .pyterm .py-err {
+[data-theme="dark"] .py-err,
+[data-theme="dark"] .webr-err,
+body.dark .py-err,
+body.dark .webr-err {
   color: #f87171 !important;
 }

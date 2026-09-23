@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="./styles/index.css">
   <link rel="stylesheet" href="./styles/python.css">
 
-  <!-- Pyodide Engine directly in main thread to avoid worker desync -->
+  <!-- Pyodide Engine -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
 </head>
 <body>
@@ -90,6 +90,11 @@
             if (window.__isPyodideReady) {
               updatePyodideBadges(true);
             }
+
+            // Generic Line Number Initialization for any sandbox (Python, WebR, etc.)
+            document.querySelectorAll('.code-source textarea').forEach(function(textarea) {
+              updateCodeGutter(textarea);
+            });
           });
         }
       ]
@@ -124,6 +129,32 @@
   });
   </script>
 
+  <!-- Generic Code Editor Line Number Helpers (Shared across Pyodide, WebR, etc.) -->
+  <script>
+    function updateCodeGutter(textarea) {
+      const container = textarea.closest('.code-source') || textarea.closest('.pysource');
+      if (!container) return;
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.py-line-numbers');
+      if (!gutter) return;
+
+      const lineCount = textarea.value.split('\n').length;
+      let numbers = '';
+      for (let i = 1; i <= lineCount; i++) {
+        numbers += i + '\n';
+      }
+      gutter.textContent = numbers.slice(0, -1);
+    }
+
+    function syncCodeGutterScroll(textarea) {
+      const container = textarea.closest('.code-source') || textarea.closest('.pysource');
+      if (!container) return;
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.py-line-numbers');
+      if (gutter) {
+        gutter.scrollTop = textarea.scrollTop;
+      }
+    }
+  </script>
+
   <!-- Python / Pyodide Execution Engine -->
   <script>
     let pyodideInstance = null;
@@ -153,11 +184,11 @@
     initPyodideEngine();
 
     async function runPythonCode(buttonEl) {
-      const island = buttonEl.closest('.py-island');
+      const island = buttonEl.closest('.code-island') || buttonEl.closest('.py-island');
       if (!island) return;
 
-      const sourceArea = island.querySelector('.pysource textarea');
-      const outputPre = island.querySelector('.pyterm pre');
+      const sourceArea = island.querySelector('.code-source textarea') || island.querySelector('.pysource textarea');
+      const outputPre = island.querySelector('.code-term pre') || island.querySelector('.pyterm pre');
       if (!sourceArea || !outputPre) return;
 
       if (!window.__isPyodideReady || !pyodideInstance) {

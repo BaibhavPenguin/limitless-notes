@@ -295,16 +295,24 @@
 
       try {
         const py = await ensurePyodide();
-        
+
         py.setStdin({
           stdin: () => {
             const res = window.prompt("Python input():");
-            return res !== null ? res + "\n" : null;
-          },
-          error: true
+            return res !== null ? res + "\n" : "\n";
+          }
         });
 
-        const code = sourceArea.value;
+        let code = sourceArea.value;
+
+        // Pre-scan for input() patterns to show the custom themed dialog
+        const inputMatches = [...code.matchAll(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g)];
+        for (const match of inputMatches) {
+          const promptText = match[1] || "Enter value:";
+          const userInput = await requestSandboxInput(promptText, "Python Input Prompt", false);
+          code = code.replace(match[0], JSON.stringify(userInput));
+        }
+
         py.runPython(`
 import sys
 import io

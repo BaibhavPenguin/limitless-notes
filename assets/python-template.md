@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="./styles/python.css">
 <div class="py-island">
   <div class="py-island-header">
     <div class="py-header-left">

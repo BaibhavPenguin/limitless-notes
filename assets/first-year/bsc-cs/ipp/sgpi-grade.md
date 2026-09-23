@@ -42,7 +42,6 @@ The user will enter the **spga** the program should find the grade using **If...
         >print("Limitless Editor - Roll Number 00")
 print("Grade from SGPA - IPP")
 sgpa = float(input("Enter your SGPA : "))
-
 if 9.0 <= sgpa <= 10.0:
     print("Your grade is O")
 elif 8.0 <= sgpa <= 8.99:

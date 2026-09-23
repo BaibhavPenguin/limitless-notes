@@ -1,7 +1,7 @@
 # IPP &mdash; Area of Circle 
 ---
 ## <u>TITLE</u>
-Write a program in python to find the area of a circle**  
+**Write a program in python to find the area of a circle**  
 ---
 ### <u>EXPLANATION</u>
 To find the area of a circle we will use the formula Area = &pi;r<sup>2</sup>  hence, we need to create two different variables for storing the radius and area.  
@@ -36,7 +36,7 @@ Python assumes that all user inputs are Strings by default so we must convert th
           oninput="updateCodeGutter(this)" 
           onscroll="syncCodeGutterScroll(this)"
         >print("Name & Roll No of Student")
-print("Area of Circle - IPP)
+print("Area of Circle - IPP")
 radius = int(input("Enter the radius of a circle : ))
 area = 3.142 * radius * radius
 print("Radius of the circle is ",radius)

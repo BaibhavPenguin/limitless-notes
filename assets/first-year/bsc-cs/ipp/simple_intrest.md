@@ -45,7 +45,6 @@ r = float(input("Enter the rate of interest : "))
 t = int(input("Enter the tenure : "))
 si = p * r * t
 print("Simple Interest : " , si)
-print("Area of the circle is ",area)
         </textarea>
       </div>
       <div class="code-term">

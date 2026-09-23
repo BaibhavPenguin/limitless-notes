@@ -37,7 +37,7 @@ Python assumes that all user inputs are Strings by default so we must convert th
           onscroll="syncCodeGutterScroll(this)"
         >print("Name & Roll No of Student")
 print("Area of Circle - IPP")
-radius = int(input("Enter the radius of a circle : ))
+radius = int(input("Enter the radius of a circle : "))
 area = 3.142 * radius * radius
 print("Radius of the circle is ",radius)
         </textarea>

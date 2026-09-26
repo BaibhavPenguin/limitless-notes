@@ -93,8 +93,7 @@ Industrial goods are purchased by organizations for further processing or for us
 
 ---
 
-# Product Management & Branding Notes
-**Framework:** NEP 2020 Model Curriculum
+# Product Management & Branding
 
 ## <u>Product Life Cycle (PLC) Stages</u>
 ---
@@ -155,7 +154,14 @@ The **Product Life Cycle (PLC)** describes the journey a product goes through in
     </tr>
   </tbody>
 </table>
+
+<figure>
+<figcaption align="center" >Product Lifecycle</figcaption>
+<img src="https://i.postimg.cc/sXHQG94X/product-lifecycle.png">
+</figure>
+
 </div>
+
 
 ## <u>Product Positioning</u>
 ---

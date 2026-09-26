@@ -10,6 +10,9 @@ All Notes as per NEP 2020.
     * [Natural Resources](/assets/first-year/bsc-cs/emsd/emsd-m2.md)
 * [Unit 3](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
     * [Human Communities & Environment](/assets/first-year/bsc-cs/emsd/emsd-m3.md)
+* [Unit 4](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
+    * [Environmental Issues](/assets/first-year/bsc-cs/emsd/emsd-m4.md)
+
 > **Tracked Years :** 2026-2027  
 
 ---

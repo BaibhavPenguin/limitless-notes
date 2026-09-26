@@ -1,4 +1,5 @@
-# Unit III: Human Communities and the Environment
+# Human Communities and the Environment &mdash; Module 3
+<link rel="stylesheet" href="./styles/tables.css">
 
 ## <u>Introduction & Causes of Human Population Growth</u>
 ---

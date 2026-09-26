@@ -6,4 +6,6 @@
         * [Natural Resources](/assets/first-year/bsc-cs/emsd/emsd-m2.md)
     * [Unit 3](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
         * [Human Communities & Environment](/assets/first-year/bsc-cs/emsd/emsd-m3.md)
+    * [Unit 4](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
+        * [Environmental Issues](/assets/first-year/bsc-cs/emsd/emsd-m4.md)
 * [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

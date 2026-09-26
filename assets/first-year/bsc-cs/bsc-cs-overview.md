@@ -39,7 +39,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 <tr>
 <td>Marketing Mix - 1 (MM-1)
-<td><a href="">View Notes</a>
+<td><a href="#/assets/first-year/bsc-cs/mm1/mm1-ov.md">View Notes</a>
 </tr>
 
 <tr>

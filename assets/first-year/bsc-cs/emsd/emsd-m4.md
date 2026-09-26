@@ -396,3 +396,5 @@ Greenhouse gases (GHGs) like CO<sub>2</sub>, CH<sub>4</sub>, and N<sub>2</sub>O 
 #### Response Strategies
 * **Mitigation (Reducing Causes):** Transitioning to renewable energy, enhancing energy efficiency, protecting forest carbon sinks.
 * **Adaptation (Managing Impacts):** Building coastal defenses, cultivating drought-resistant crop varieties, developing urban heat action plans.
+
+*&mdash; Edited by Baibhav Bhattacharya*

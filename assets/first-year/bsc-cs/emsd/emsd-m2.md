@@ -447,7 +447,7 @@ Microscopic organisms (bacteria, fungi, microalgae, protozoa) serve as important
 
 ### Environmental Impacts of Mining & Mineral Use
 * **Extraction Impacts:** Deforestation, acid mine drainage, air pollution (particulate dust), topsoil removal, and habitat loss.
-* **Usage Impacts:** Combustion of fossil fuels releasing $CO_2$, $SO_2$, and $NO_x$, causing global warming, acid rain, and heavy industrial toxicity.
+* **Usage Impacts:** Combustion of fossil fuels releasing CO<sub>2</sub>, SO<sub>2</sub>, and NO<sub>x</sub>, causing global warming, acid rain, and heavy industrial toxicity.
 
 
 
@@ -661,3 +661,6 @@ Adopted by all United Nations Member States in 2015 as part of the 2030 Agenda, 
     </tbody>
   </table>
 </div>
+
+
+*&mdash; Edited by Baibhav Bhattacharya*

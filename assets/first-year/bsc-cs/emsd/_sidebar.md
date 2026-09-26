@@ -4,5 +4,6 @@
         * [Biodiversity](/assets/first-year/bsc-cs/emsd/biodiversity.md)
     * [Unit 2](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
         * [Natural Resources](/assets/first-year/bsc-cs/emsd/emsd-m2.md)
-        * [Renewable & Non-Renewable Energy](/assets/first-year/bsc-cs/emsd/emsd-m2.md)
+    * [Unit 3](/assets/first-year/bsc-cs/emsd/emsd-ov.md)
+        * [Human Communities & Environment](/assets/first-year/bsc-cs/emsd/emsd-m3.md)
 * [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

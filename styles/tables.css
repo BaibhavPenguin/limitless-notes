@@ -1,12 +1,40 @@
-/*Dynamic Table Styles, Renders all tables and the images in a beautiful block which is centered across devices*/
-
+/* Dynamic Table Styles, Renders all tables and the images in a beautiful block which is centered across devices */
 
 /* Container: centers block content without altering theme colors */
 .dyntable {
   width: 100%;
+  max-width: 100%;
   margin: 2rem auto;
   text-align: center;
   background: transparent !important;
+
+  /* Horizontal scrolling for wide content */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+  scroll-behavior: smooth;
+
+  /* Subtle cross-browser scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+}
+
+/* Custom WebKit Scrollbar (Chrome, Safari, Edge) */
+.dyntable::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dyntable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dyntable::-webkit-scrollbar-thumb {
+  background-color: rgba(150, 150, 150, 0.4);
+  border-radius: 9999px;
+}
+
+.dyntable::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(150, 150, 150, 0.7);
 }
 
 /* Force table to behave as a centered block element */
@@ -16,12 +44,14 @@
   margin-right: auto !important;
   text-align: center !important;
   background: transparent !important;
+  border-collapse: collapse;
 }
 
 .dyntable th,
 .dyntable td {
   text-align: center !important;
   vertical-align: middle !important;
+  white-space: nowrap; /* Prevents awkward narrow text wrapping on mobile */
 }
 
 /* Figure & Image: centered and responsive */
@@ -48,6 +78,6 @@
 @media (max-width: 480px) {
   .dyntable th,
   .dyntable td {
-    padding: 0.35rem 0.25rem !important;
+    padding: 0.5rem 0.6rem !important; /* Slightly more tap-friendly breathing room */
   }
 }

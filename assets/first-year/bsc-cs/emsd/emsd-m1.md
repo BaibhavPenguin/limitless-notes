@@ -1,7 +1,7 @@
 
-# Environmental Management & Sustainable Development
+# Ecosystems &mdash; Module 1
 
-> **What is Ecosystem? and explain its structure, functions and importance in detail**  
+> **What is an Ecosystem? and explain its structure, functions and importance in detail**  
 
 ## <u>Definition of an Ecosystem</u>
 
@@ -148,11 +148,101 @@ These ecosystems are identified by certain features such as
 - Eco-tourism with proper rules.   
 
 ### <u>Grassland Ecosystems</u> 
-**1 &mdash; <u>Flora (Plants)**</u>  
-**2 &mdash; <u>Fauna (Animals)**</u>  
-**3 &mdash; <u>Importance**</u>  
-**4 &mdash; <u>Threats**</u>  
-**5 &mdash; <u>Conservation Measures**</u>
+**1 &mdash; <u>Features**</u>   
+- Large open grassy land.  
+- Low to moderate rainfall.  
+- Few trees.  
+- Fertile grazing land.  
 
+**2 &mdash; <u>Flora (Plants)**</u>   
+- Grasses.  
+- Shrubs.  
+- Acacia.  
+- Herbs. 
+
+**3 &mdash; <u>Fauna (Animals)**</u>   
+- Blackbuck.  
+- Nilgai.  
+- Indian wolf.  
+- Desert fox.  
+- Wild cat.  
+- Various migratory birds.  
+
+**4 &mdash; <u>Importance**</u>   
+
+- Provides grazing land for cattle.
+- Supports biodiversity.
+- Prevents soil erosion.
+- Maintains ecological balance.
+- Supports local communities.
+
+**5 &mdash; <u>Threats**</u>  
+
+- Overgrazing
+- Invasive plant species
+- Urban development
+- Industrial expansion
+- Climate change
+
+**6 &mdash; <u>Conservation Measures**</u>
+
+- Controlled Grazing
+- Removal of invasive species
+- Wildlife protection
+- Restoration of grasslands
+- Community participation
+
+### <u>Desert Ecosystems</u>  
+**1 &mdash; <u>Features**</u>   
+
+- Very hot during summer.
+- Very little rainfall.
+- Sandy soil.
+- Scarcity of water.
+- Sparse vegetation.
+
+**2 &mdash; <u>Flora (Plants)**</u>   
+- Cactus
+- Acacia
+- Khejri tree
+- Thorny shrubs
+- Desert grass
+
+**3 &mdash; <u>Fauna (Animals)**</u>   
+
+- Camel
+- Desert Fox
+- Great Indian Bustard
+- Monitor Lizard
+- Desert cat
+- Snakes
+- Scorpions
+
+**4 &mdash; <u>Importance**</u>   
+- Habitat for unique wildlife.
+- Supports tourism.
+- Supports camel-based transport.
+- Rich in solar and wind energy.
+- Prevents desert expansion through vegetation.
+
+**5 &mdash; <u>Threats**</u>  
+
+- Water scarcity
+- Desertification
+- Mining
+- Climate Change
+
+**6 &mdash; <u>Conservation Measures**</u>
+
+- Rainwater Harvesting
+- Plantation of drought resistant trees
+- Wildlife sanctuaries
+- Sand dune stabilization
+- Sustainable grazing
+
+### <u>Aquatic Ecosystems</u>  
+The unique ecosystem of aquatic animals and plants is called as an Aquatic Ecosystem. The different types of aquatic ecosystems found are **Lakes**,**Rivers**,**Oceans**,**Streams**,**Deepsea Ecosystems**,**Estuary (Regions where saline sea water gets mixed with freshwater)**  
+Thousands of plants like Mangroves, Sea-grasses, Algae, Aquatic weeds are found in aquatic ecosystems.  
+Animals like corals, fishes, dolphins, molluscs, echinoderms, and sponges inhabit the aquatic ecosystems. These ecosystems are the most important ecosystems as they serve as a source of water fol all living beings and play a major role in water cycle thereby, directly affecting all ecosystems on earth.
 
 *&mdash; Edited by Baibhav Bhattacharya*

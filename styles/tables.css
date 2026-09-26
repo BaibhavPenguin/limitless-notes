@@ -8,13 +8,13 @@
   text-align: center;
   background: transparent !important;
 
-  /* Horizontal scrolling for wide content */
+  /* Horizontal scrolling: activates ONLY when the table hits its natural minimum width */
   overflow-x: auto;
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 
-  /* Subtle cross-browser scrollbar */
+  /* Cross-browser subtle scrollbar */
   scrollbar-width: thin;
   scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
 }
@@ -40,6 +40,8 @@
 /* Force table to behave as a centered block element */
 .dyntable table {
   display: table !important;
+  width: 100%; /* Stretch to fill available width first */
+  max-width: 100%;
   margin-left: auto !important;
   margin-right: auto !important;
   text-align: center !important;
@@ -51,7 +53,14 @@
 .dyntable td {
   text-align: center !important;
   vertical-align: middle !important;
-  white-space: nowrap; /* Prevents awkward narrow text wrapping on mobile */
+
+  /* 1. Allow text to wrap multi-line first before triggering scroll */
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: normal;
+
+  /* 2. Set minimum breathing room so words don't collapse into 1-character columns */
+  min-width: 80px;
 }
 
 /* Figure & Image: centered and responsive */
@@ -74,10 +83,12 @@
   height: auto !important;
 }
 
-/* Mobile: keeps table legible without breaking page width */
+/* Mobile: balances multi-line wrapping with compact padding */
 @media (max-width: 480px) {
   .dyntable th,
   .dyntable td {
-    padding: 0.5rem 0.6rem !important; /* Slightly more tap-friendly breathing room */
+    padding: 0.4rem 0.35rem !important;
+    min-width: 65px; /* Minimum cell width threshold before x-scroll triggers */
+    font-size: 0.875rem; /* Optional: subtle reduction to fit more words per line */
   }
 }

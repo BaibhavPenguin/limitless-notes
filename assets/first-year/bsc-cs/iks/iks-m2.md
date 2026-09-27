@@ -192,7 +192,7 @@ He propounds unique policy principles like "Tit for tat" and "*Yatha Raja tatha 
 
 ### <u>Kautilya and Governance</u>
 
-Kautilya's views on kingship are like that of the philosopher king of Plato[cite: 6, 7]. The king should have the best qualities of both head and heart[cite: 6, 7].
+Kautilya's views on kingship are like that of the philosopher king of Plato. The king should have the best qualities of both head and heart.
 
 The entire *Arthashastra* is addressed to the king, the sole ruler of the state. Kautilya was of the opinion that the people were oppressed by the law of fishes or *Matsyanyaya*, according to which the bigger fish swallows the smaller one. At this point of time, God made the king the first of its kind and called him Manu.
 
@@ -229,7 +229,7 @@ Thus, Kautilya attributed a divine status to the first king on earth. These king
 Kautilya conceptualizes the state as an organic whole consisting of seven interdependent constituent limbs (*Prakritis*):
 
 <div class="dyntable">
-  <table border="1" cellpadding="8" cellspacing="0">
+  <table>
     <thead>
       <tr>
         <th>Limb / Sanskrit Term</th>

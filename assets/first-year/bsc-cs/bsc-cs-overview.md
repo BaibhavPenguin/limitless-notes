@@ -3,7 +3,8 @@ This is the archive for *First Year Bachelor's of Science &mdash; Computer Scien
 
 Naviagte to the sidebar on the left or use the table given below to directly jump to a subject.
 
-<div align = 'center'>
+<link rel="stylesheeet" href="./styles/tables.css">
+<div class = "dyntable">
 <table>
 <!--HEADERS -->
 <tr>

@@ -1,7 +1,8 @@
 # First Year Overview  
 This is the overview page for the First Year (FY) academic archive. Navigate using the sidebar on the left, or access the courses directly using the table given below
 
-<div align = 'center'>
+<link rel="stylesheeet" href="./styles/tables.css">
+<div class="dyntable">
 <table>
 <!--HEADERS -->
 <tr>

@@ -1,5 +1,8 @@
 # Significance  of Pricing &mdash; Module 2
 
+
+<link rel="stylesheet" href="./styles/tables.css">
+
 ## Meaning of Pricing
 
 **Pricing** is the process whereby a business sets the monetary value at which it will sell its products and services as part of its overall marketing plan. Within the traditional **Marketing Mix (4 Ps: Product, Price, Place, Promotion)**, Price holds a unique position.

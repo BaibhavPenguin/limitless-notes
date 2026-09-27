@@ -1,5 +1,8 @@
 # Indian Knowledge System &mdash; Module 3
 
+
+<link rel="stylesheet" href="./styles/tables.css">
+
 ## <u>Ancient Sports of Indian</u>
 ---
 Traditional Indian sports and games have been an integral part of the country's cultural heritage for centuries.

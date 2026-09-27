@@ -245,4 +245,4 @@ The unique ecosystem of aquatic animals and plants is called as an Aquatic Ecosy
 Thousands of plants like Mangroves, Sea-grasses, Algae, Aquatic weeds are found in aquatic ecosystems.  
 Animals like corals, fishes, dolphins, molluscs, echinoderms, and sponges inhabit the aquatic ecosystems. These ecosystems are the most important ecosystems as they serve as a source of water fol all living beings and play a major role in water cycle thereby, directly affecting all ecosystems on earth.
 
-*&mdash; Edited by Baibhav Bhattacharya*
+*&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

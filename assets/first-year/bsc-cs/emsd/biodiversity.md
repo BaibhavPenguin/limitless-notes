@@ -148,6 +148,7 @@ Introduction: India is one of the 17 mega-biodiversity countries in the world. A
 ### 6 &mdash; Informational Value  
 **Definition:** Refers to the knowledge, education, and scientific information obtained from biodiversity.  
 **Importance & Benefits:** Scientific research and advancement, discovery of new medicines, agricultural improvement, genetic studies, environmental education  
-**Examples:** Penicillin discovered from fungi; medicinal plants studied for new drugs; wildlife research improving conservation strategies
+**Examples:** Penicillin discovered from fungi; medicinal plants studied for new drugs; wildlife research improving conservation strategies.
 
-*&mdash; Edited by Baibhav Bhattacharya*
+
+*&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

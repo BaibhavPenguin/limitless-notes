@@ -282,4 +282,4 @@ During the 1990s, New Delhi experienced severe air pollution due to expanding ve
 * **Core Takeaways:** Demonstrates that strong judicial/governmental policy, effective public communication, and supporting infrastructure are all essential for successful environmental transitions. However, addressing multi-faceted urban air pollution requires broader measures beyond public transport fuel changes alone.
 
 
-*&mdash; Edited by Baibhav Bhattacharya*
+*&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

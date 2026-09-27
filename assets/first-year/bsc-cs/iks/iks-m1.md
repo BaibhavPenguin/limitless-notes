@@ -167,13 +167,38 @@ The Indian knowledge system has influenced India as well as the world. Yoga, Ayu
 ### Modern relevance and Adaptation  
 The Indian knowledge system is still important in modern times. Yoga and Ayurveda are popular worldwide, and India combines its ancient knowledge with modern science and technology for better development.
 
---- 
+
+## <u>Ancient Indian Education</u>
+---
+The **Gurukul System** was an Ancient Indian Education system where students lived with their teacher **(guru)** in a secluded home or hermitage, devoting themselves to learning and spiritual growth. This system dates back to the Vedic Period (1500 BCE &mdash; 500BCE) and flourished until the 1200 CE.  
+
+In the Gurukul Systems, the students resided with their gurus, Immersing themselves in a disciplined and focused learning environment. 
+
+It featured **Holistic Learning** encompassing of **Vedic Studies, Philosophy, Spirituality, Physical Education and Vocational Skills.**   
+The **Guru &mdash; Shishya** (Teacher &mdash; Student) relationships were sacred emphasizing, mutual respect, trust and devotion.
+
+Gurukuls were usually self sufficient with students contributing to daily chores. Wealthy kings and Individuals also made monetary donations and Donations in the form of grains, spices, etc which also contributed to the running costs of the Gurukuls.
+
+The Gurukul System didn't discriminate based on social status and learning was available to anybody who was part of the Gurukul.
+
+The Gurukul System became obsolete during Modernization, with the rise of British India and the **Minute on Indian Education**
+
 
 ## <u>MEP (Macaulay's Education Policy)</u>  
 ---
 
 Macaulay's Education Policy, officially known as the <u>Minute on Indian Education</u>, was introduced in 1835 by Thomas Babington Macaulay.
 
+### Features of MEP
+-  All public funds were restricted exclusively to Western literature and science taught through the English language.
+-  It aimed to train a group of individuals who were "Indian in blood and colour, but English in tastes, opinions, morals, and intellect" to serve the British administration.
+-  It famously dismissed traditional Indian and Arabic literature as inferior to European knowledge.
+- Grants and printing support for traditional Oriental colleges and texts were stopped.
+
+### Impacts of MEP
+
+<link rel="stylesheet" href="./styles/tables.css>
+<div class = "dyntable">
 <table>
 <tr>
 <th> Positive Impacts of MEP
@@ -215,8 +240,12 @@ Macaulay's Education Policy, officially known as the <u>Minute on Indian Educati
 <td> Resistance and cultural backlash.
 </tr>
 </table>
+</div>
 
-## <u>Ancient IKS - Home Education</u>  
+The Minute on Indian Education was replaced by the National Education Policy in 1986 which addressed the critical flaws in MEP, it emphasized on inclusion of Ancient Indian Knowledge in addition to modern and western knowledge. It also made education more accessible to all strata of society.  
+Most recently, the National Education Policy underwent massive revisions in the year 2020 and the NEP2020 System was aligned with evolving technology and the needs of modern society.
+
+## <u>Home Education</u>  
 ---
 
 It is said that education of an individual starts at home, since ancient times, within any family, children observe their parents and relatives, naturally absorbing essential life lessons, moral values, and social behaviors through daily interactions. Through shared family traditions, cultural rituals, and stories passed down through generations.  
@@ -234,6 +263,6 @@ This phenomenon is called as <u>Home Education</u>
 - Transmission of cultural heritage.  
 - Socialization of cultural value.  
 
-
+Since ancient times, home education has played a major role in the initial development of an individual and is responsible for the preservation of culture, heritage and ancient knowledge systems.
 
 *&mdash; Edited by Baibhav Bhattacharya & Ankush Yadav*

@@ -161,9 +161,9 @@ These initiatives reflect the temple's commitment to social welfare and communit
 
 Chanakya's famous book on Political Economy entitled *Kautilya Arthashastra*, including *Chanakya Sutras* and *Chanakya Niti*, are the main sources to know about the Kautilyan State. He was a professor of political economics at the world-famous Takshashila University, now in Pakistan. He was the mentor of the great King Chandragupta Maurya and also the Prime Minister of his kingdom for 24 years.
 
-Chanakya has defined Governance—good and bad—in two *Sutras*:
+Chanakya has defined Governance—good and bad—in two *Sutras*
 
-> ***Alabdhalabhadicatushtayamrajyatantram***
+>***Alabdhalabhadicatushtayamrajyatantram***
 
 Governance is divided into four parts:
 1. To have what is not (production / growth of wealth)

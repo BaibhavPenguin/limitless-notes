@@ -173,6 +173,18 @@
       }
     }
 
+    function downloadWebRPlot(buttonEl) {
+      const plotContainer = buttonEl.closest('.webr-plot-container');
+      if (!plotContainer) return;
+      const canvas = plotContainer.querySelector('canvas');
+      if (!canvas) return;
+
+      const link = document.createElement('a');
+      link.download = 'plot.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
     function requestSandboxInput(promptText, titleText = "Program Input", isR = false) {
       return new Promise((resolve, reject) => {
         const backdrop = document.getElementById('sandbox-modal-backdrop');
@@ -403,6 +415,9 @@ sys.stderr = io.StringIO()
 
       const sourceArea = island.querySelector('.webrsource textarea') || island.querySelector('.code-source textarea');
       const outputPre = island.querySelector('.webrterm pre') || island.querySelector('.code-term pre');
+      const plotContainer = island.querySelector('.webr-plot-container');
+      const plotCanvas = island.querySelector('.webr-plot-canvas');
+
       if (!sourceArea || !outputPre) return;
 
       buttonEl.disabled = true;
@@ -410,6 +425,14 @@ sys.stderr = io.StringIO()
       buttonEl.innerHTML = 'Running...';
       outputPre.className = 'webr-output';
       outputPre.textContent = 'Executing...';
+
+      if (plotContainer) {
+        plotContainer.classList.remove('has-plot');
+      }
+      if (plotCanvas) {
+        const ctx = plotCanvas.getContext('2d');
+        ctx.clearRect(0, 0, plotCanvas.width, plotCanvas.height);
+      }
 
       try {
         const r = await window.ensureWebR();
@@ -429,7 +452,12 @@ sys.stderr = io.StringIO()
         });
 
         const shelter = await new r.Shelter();
-        const capture = await shelter.captureR(code);
+        const capture = await shelter.captureR(code, {
+          withAutoprint: true,
+          captureStreams: true,
+          captureConditions: true,
+          captureGraphics: true
+        });
 
         let outputText = '';
         if (capture.output && capture.output.length > 0) {
@@ -437,6 +465,17 @@ sys.stderr = io.StringIO()
             .filter(item => item.type === 'stdout' || item.type === 'stderr')
             .map(item => item.data)
             .join('\n');
+        }
+
+        if (capture.images && capture.images.length > 0 && plotCanvas && plotContainer) {
+          const lastImg = capture.images[capture.images.length - 1];
+          if (lastImg) {
+            plotCanvas.width = lastImg.width || 600;
+            plotCanvas.height = lastImg.height || 400;
+            const ctx = plotCanvas.getContext('2d');
+            ctx.drawImage(lastImg, 0, 0);
+            plotContainer.classList.add('has-plot');
+          }
         }
 
         await shelter.purge();

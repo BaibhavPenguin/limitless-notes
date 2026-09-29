@@ -15,3 +15,4 @@
 <!-- Legal Notices -->
 * [Legal Notices & Copyright](/legal/TERMS-OF-USE.md)  
 
+* [Debug R](/assets/rlang-template.md)

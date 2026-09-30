@@ -10,22 +10,28 @@
       <div class="mysql-header-left">
         <span class="mysql-island-title">MySQL Sandbox</span>
       </div>
-      <button class="mysql-enter-btn" onclick="runMySQLCode(this)">⏎ Enter</button>
-    </div>
-    <div class="mysql-island-body">
-      <div class="mysqlsource">
-        <div class="mysql-gutter">1</div>
-        <textarea 
-          spellcheck="false" 
-          placeholder="Enter SQL statements here..." 
-          oninput="updateCodeGutter(this)" 
-          onscroll="syncCodeGutterScroll(this)"
-        >CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));
-INSERT INTO users VALUES (1, 'Limitless'), (2, 'MariaDB');
-SELECT * FROM users;</textarea>
+      <div class="mysql-header-actions">
+        <button class="mysql-clear-btn" onclick="clearMySQLTerminal(this)">Clear</button>
+        <button class="mysql-enter-btn" onclick="runMySQLCode(this)">⏎ Enter</button>
       </div>
+    </div>
+    
+    <div class="mysql-island-body">
+      <!-- Output Window (Top) -->
       <div class="mysqlterm">
         <pre class="mysql-output"></pre>
+      </div>
+
+      <!--Line Editor (Bottom)-->
+      <div class="mysqlsource">
+        <textarea 
+          class="mysql-line-edit"
+          rows="1"
+          spellcheck="false" 
+          placeholder="Enter SQL statements here (e.g. SHOW DATABASES;)..." 
+          oninput="autoExpandSQLEdit(this)" 
+          onkeydown="handleSQLKeyDown(event, this)"
+        ></textarea>
       </div>
     </div>
   </div>

@@ -111,8 +111,12 @@
               updateMySQLBadges('ready');
             }
 
-            document.querySelectorAll('.code-source textarea, .webrsource textarea, .pysource textarea, .mysqlsource textarea').forEach(function(textarea) {
+            document.querySelectorAll('.code-source textarea, .webrsource textarea, .pysource textarea').forEach(function(textarea) {
               updateCodeGutter(textarea);
+            });
+
+            document.querySelectorAll('.mysql-line-edit').forEach(function(el) {
+              autoExpandSQLEdit(el);
             });
 
             if (document.querySelector('.py-island, .code-island .py-status-badge')) {
@@ -158,9 +162,9 @@
 
   <script>
     function updateCodeGutter(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource') || textarea.closest('.mysqlsource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers') || container.querySelector('.mysql-gutter');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
       if (!gutter) return;
 
       const lineCount = textarea.value.split('\n').length;
@@ -172,11 +176,37 @@
     }
 
     function syncCodeGutterScroll(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource') || textarea.closest('.mysqlsource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers') || container.querySelector('.mysql-gutter');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
       if (gutter) {
         gutter.scrollTop = textarea.scrollTop;
+      }
+    }
+
+    function autoExpandSQLEdit(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 240) + 'px';
+    }
+
+    function handleSQLKeyDown(e, textarea) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const island = textarea.closest('.mysql-island');
+        const enterBtn = island ? island.querySelector('.mysql-enter-btn') : null;
+        if (enterBtn && !enterBtn.disabled) {
+          enterBtn.click();
+        }
+      }
+    }
+
+    function clearMySQLTerminal(buttonEl) {
+      const island = buttonEl.closest('.mysql-island');
+      if (!island) return;
+      const outputPre = island.querySelector('.mysqlterm pre');
+      if (outputPre) {
+        outputPre.textContent = '';
+        outputPre.className = 'mysql-output';
       }
     }
 
@@ -563,7 +593,6 @@ sys.stderr = io.StringIO()
 
         mariadbModule = inst;
 
-        // Initialize the internal database instance if _l4m_open is exposed
         if (typeof mariadbModule._l4m_open === 'function') {
           try {
             mariadbDbHandle = mariadbModule._l4m_open();
@@ -584,20 +613,16 @@ sys.stderr = io.StringIO()
       }
     };
 
-    // Low-level C bridge to _l4m_query / _l4m_exec_multi
     async function executeSingleQuery(module, sql) {
-      // 1. If standard JavaScript wrappers exist
       if (typeof module.query === 'function') return await module.query(sql);
       if (typeof module.execute === 'function') return await module.execute(sql);
       if (typeof module.exec === 'function') return await module.exec(sql);
 
-      // 2. Low-level WASM / Emscripten ABI
       const queryFn = module._l4m_query || module._l4m_exec_multi;
       if (typeof queryFn !== 'function') {
         throw new Error('Neither query() nor _l4m_query exists on WASM module.');
       }
 
-      // Convert SQL string to UTF-8 in Emscripten WASM heap
       let sqlPtr = 0;
       if (typeof module.stringToUTF8 === 'function' && typeof module._malloc === 'function') {
         const length = (module.lengthBytesUTF8 ? module.lengthBytesUTF8(sql) : sql.length * 4) + 1;
@@ -606,18 +631,15 @@ sys.stderr = io.StringIO()
       } else if (typeof module.allocateUTF8 === 'function') {
         sqlPtr = module.allocateUTF8(sql);
       } else if (typeof module.ccall === 'function') {
-        // Fallback to ccall if available
-        const raw = module.ccall('l4m_query', 'string', ['string'], [sql]);
-        return raw;
+        return module.ccall('l4m_query', 'string', ['string'], [sql]);
       }
 
       if (!sqlPtr) {
-        throw new Error('Failed to allocate SQL string in WASM memory.');
+        throw new Error('Failed to allocate SQL query in WASM memory.');
       }
 
       let resPtr = 0;
       try {
-        // Some builds take (_l4m_query(sqlPtr)), others take (_l4m_query(dbHandle, sqlPtr))
         if (queryFn.length >= 2) {
           resPtr = await queryFn(mariadbDbHandle, sqlPtr);
         } else {
@@ -630,7 +652,7 @@ sys.stderr = io.StringIO()
       }
 
       if (!resPtr) {
-        return 'Query OK (0.00 sec)';
+        return null;
       }
 
       let rawResult = '';
@@ -638,14 +660,12 @@ sys.stderr = io.StringIO()
         rawResult = module.UTF8ToString(resPtr);
       }
 
-      // Release result string if _l4m_free is exposed
       if (typeof module._l4m_free === 'function') {
         module._l4m_free(resPtr);
       } else if (typeof module._free === 'function') {
         module._free(resPtr);
       }
 
-      // If the engine returns JSON string representation, parse it
       if (rawResult && typeof rawResult === 'string') {
         const trimmed = rawResult.trim();
         if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
@@ -660,9 +680,28 @@ sys.stderr = io.StringIO()
       return rawResult;
     }
 
-    function formatSQLResults(res) {
-      if (!res) return 'Query OK (0.00 sec)';
-      if (typeof res === 'string') return res;
+    function formatSQLResults(res, query) {
+      const q = (query || '').trim().toUpperCase();
+      const isDMLorDDL = /^(CREATE|DROP|ALTER|INSERT|UPDATE|DELETE|USE|SET|RENAME|TRUNCATE)\b/.test(q);
+
+      if (res === null || res === undefined || res === '') {
+        if (isDMLorDDL) {
+          return 'Query OK, 0 rows affected (0.01 sec)';
+        }
+        return 'Empty set (0.00 sec)';
+      }
+
+      // If lite4mariadb returned an already formatted ASCII border table
+      if (typeof res === 'string') {
+        const trimmed = res.trim();
+        if (trimmed.startsWith('+') || trimmed.includes('|')) {
+          return trimmed;
+        }
+        if (trimmed.length === 0) {
+          return isDMLorDDL ? 'Query OK, 0 rows affected (0.01 sec)' : 'Empty set (0.00 sec)';
+        }
+        return trimmed;
+      }
 
       let rows = null;
       let cols = null;
@@ -683,13 +722,16 @@ sys.stderr = io.StringIO()
       }
 
       if (!rows || rows.length === 0) {
+        if (isDMLorDDL) {
+          return 'Query OK, 0 rows affected (0.01 sec)';
+        }
         return 'Empty set (0.00 sec)';
       }
 
-      // 2D Array format: [[val1, val2], ...]
+      // 2D Array formatting: [[val1, val2], ...]
       if (Array.isArray(rows[0])) {
         if (!cols || !Array.isArray(cols)) {
-          cols = rows[0].map((_, i) => `col_${i + 1}`);
+          cols = rows[0].map((_, i) => `Col ${i + 1}`);
         } else {
           cols = cols.map(c => (typeof c === 'object' && c !== null ? c.name || c.columnName || String(c) : String(c)));
         }
@@ -707,7 +749,7 @@ sys.stderr = io.StringIO()
         return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
-      // Array of objects format: [{ col1: val1, ... }, ...]
+      // Array of objects formatting: [{ col1: val1, ... }, ...]
       if (typeof rows[0] === 'object' && rows[0] !== null) {
         const keys = Object.keys(rows[0]);
         const colWidths = {};
@@ -761,13 +803,19 @@ sys.stderr = io.StringIO()
         for (const query of queries) {
           try {
             const res = await executeSingleQuery(mod, query);
-            finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res)}`);
+            finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res, query)}`);
           } catch (queryErr) {
             finalOutputs.push(`mysql> ${query};\nERROR: ${queryErr.message}`);
           }
         }
 
-        outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || '(Query OK)');
+        outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || 'Query OK, 0 rows affected');
+        
+        // Auto-scroll output terminal to latest command
+        const termContainer = island.querySelector('.mysqlterm');
+        if (termContainer) {
+          termContainer.scrollTop = termContainer.scrollHeight;
+        }
       } catch (err) {
         outputPre.className = 'mysql-output mysql-err';
         outputPre.textContent = `mysql> ERROR: ${err.message}`;

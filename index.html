@@ -689,22 +689,39 @@ sys.stderr = io.StringIO()
       const q = (query || '').trim().toUpperCase();
       const isMutation = /^(CREATE|DROP|ALTER|INSERT|UPDATE|DELETE|USE|SET|RENAME|TRUNCATE)\b/.test(q);
 
-      if (res === null || res === undefined || res === '') {
-        if (isMutation) {
-          return 'Query OK, 0 rows affected (0.01 sec)';
-        }
-        return 'Empty set (0.00 sec)';
+      // Check for error payloads from MariaDB C runtime
+      if (typeof res === 'object' && res !== null && (res.error || res.errorMessage || res.errno)) {
+        const code = res.errno ? ` (${res.errno})` : '';
+        const msg = res.error || res.errorMessage || 'Execution failed';
+        return `ERROR${code}: ${msg}`;
       }
 
       if (typeof res === 'string') {
         const trimmed = res.trim();
+        
+        // Match standard MySQL error formats: "ERROR 1064 (42000): ..."
+        if (/^(ERROR|\bERR\b|FATAL)/i.test(trimmed)) {
+          return trimmed;
+        }
+
+        // Output contains an already rendered ASCII table
         if (trimmed.startsWith('+') || trimmed.includes('|')) {
           return trimmed;
         }
+
         if (trimmed.length === 0) {
           return isMutation ? 'Query OK, 0 rows affected (0.01 sec)' : 'Empty set (0.00 sec)';
         }
+
         return trimmed;
+      }
+
+      // Null or empty return values
+      if (res === null || res === undefined) {
+        if (isMutation) {
+          return 'Query OK, 0 rows affected (0.01 sec)';
+        }
+        return 'Empty set (0.00 sec)';
       }
 
       let rows = null;
@@ -712,7 +729,7 @@ sys.stderr = io.StringIO()
 
       if (Array.isArray(res)) {
         rows = res;
-      } else if (typeof res === 'object' && res !== null) {
+      } else if (typeof res === 'object') {
         if (Array.isArray(res.rows)) {
           rows = res.rows;
           cols = res.columns || res.fields;
@@ -732,6 +749,7 @@ sys.stderr = io.StringIO()
         return 'Empty set (0.00 sec)';
       }
 
+      // 2D Array formatting: [[val1, val2], ...]
       if (Array.isArray(rows[0])) {
         if (!cols || !Array.isArray(cols)) {
           cols = rows[0].map((_, i) => `Col ${i + 1}`);
@@ -752,6 +770,7 @@ sys.stderr = io.StringIO()
         return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
+      // Array of objects formatting: [{ col1: val1, ... }, ...]
       if (typeof rows[0] === 'object' && rows[0] !== null) {
         const keys = Object.keys(rows[0]);
         const colWidths = {};
@@ -802,7 +821,8 @@ sys.stderr = io.StringIO()
         for (const query of queries) {
           try {
             const res = await executeSingleQuery(mod, query);
-            finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res, query)}`);
+            const formatted = formatSQLResults(res, query);
+            finalOutputs.push(`mysql> ${query};\n${formatted}`);
           } catch (queryErr) {
             finalOutputs.push(`mysql> ${query};\nERROR: ${queryErr.message}`);
           }

@@ -52,7 +52,7 @@
     function autoExpandSQLEdit(textarea) {
       if (!textarea) return;
       textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 240) + 'px';
+      textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
     }
 
     function handleSQLKeyDown(e, textarea) {
@@ -71,7 +71,7 @@
       if (!island) return;
       const outputPre = island.querySelector('.mysqlterm pre');
       if (outputPre) {
-        outputPre.textContent = '';
+        outputPre.textContent = 'Welcome to the MariaDB monitor. Commands end with ;';
         outputPre.className = 'mysql-output';
       }
     }
@@ -602,7 +602,6 @@ sys.stderr = io.StringIO()
           }
         }
 
-        // Initialize sandbox default database
         try {
           await executeSingleQuery(mariadbModule, "CREATE DATABASE IF NOT EXISTS sandbox; USE sandbox;");
         } catch (_) {}
@@ -697,7 +696,6 @@ sys.stderr = io.StringIO()
         return 'Empty set (0.00 sec)';
       }
 
-      // Check if result is already ASCII table from lite4mariadb C printer
       if (typeof res === 'string') {
         const trimmed = res.trim();
         if (trimmed.startsWith('+') || trimmed.includes('|')) {
@@ -734,7 +732,6 @@ sys.stderr = io.StringIO()
         return 'Empty set (0.00 sec)';
       }
 
-      // 2D Array formatting: [[val1, val2], ...]
       if (Array.isArray(rows[0])) {
         if (!cols || !Array.isArray(cols)) {
           cols = rows[0].map((_, i) => `Col ${i + 1}`);
@@ -755,7 +752,6 @@ sys.stderr = io.StringIO()
         return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
-      // Array of objects formatting: [{ col1: val1, ... }, ...]
       if (typeof rows[0] === 'object' && rows[0] !== null) {
         const keys = Object.keys(rows[0]);
         const colWidths = {};
@@ -781,17 +777,15 @@ sys.stderr = io.StringIO()
 
       const sourceArea = island.querySelector('.mysqlsource textarea') || island.querySelector('.code-source textarea');
       const outputPre = island.querySelector('.mysqlterm pre') || island.querySelector('.code-term pre');
+      const termContainer = island.querySelector('.mysqlterm');
       if (!sourceArea || !outputPre) return;
 
       buttonEl.disabled = true;
       const originalText = buttonEl.innerHTML;
-      buttonEl.innerHTML = 'Executing...';
-      outputPre.className = 'mysql-output';
-      outputPre.textContent = 'Connecting to MariaDB...';
+      buttonEl.innerHTML = 'Running...';
 
       try {
         const mod = await window.ensureMySQL();
-        outputPre.textContent = 'Executing query...';
 
         const rawCode = sourceArea.value.trim();
         const cleanCode = rawCode
@@ -804,7 +798,6 @@ sys.stderr = io.StringIO()
           .filter(q => q.length > 0);
 
         let finalOutputs = [];
-        const welcomeBanner = "Welcome to the MariaDB monitor. Commands end with ;\n";
 
         for (const query of queries) {
           try {
@@ -815,15 +808,22 @@ sys.stderr = io.StringIO()
           }
         }
 
-        outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || 'Query OK, 0 rows affected');
-        
-        const termContainer = island.querySelector('.mysqlterm');
+        const newLog = finalOutputs.join('\n\n');
+        if (newLog) {
+          const currentHistory = outputPre.textContent.trim();
+          outputPre.textContent = currentHistory ? (currentHistory + '\n\n' + newLog) : newLog;
+        }
+
         if (termContainer) {
           termContainer.scrollTop = termContainer.scrollHeight;
         }
       } catch (err) {
-        outputPre.className = 'mysql-output mysql-err';
-        outputPre.textContent = `mysql> ERROR: ${err.message}`;
+        const currentHistory = outputPre.textContent.trim();
+        const errLog = `mysql> ERROR: ${err.message}`;
+        outputPre.textContent = currentHistory ? (currentHistory + '\n\n' + errLog) : errLog;
+        if (termContainer) {
+          termContainer.scrollTop = termContainer.scrollHeight;
+        }
       } finally {
         buttonEl.disabled = false;
         buttonEl.innerHTML = originalText;

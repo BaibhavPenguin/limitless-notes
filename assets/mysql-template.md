@@ -10,17 +10,18 @@
 </div>
 </div>
 <div class="mysql-island-body">
-<!-- Output Window (Terminal Black) -->
+<!-- Output Window (Fixed height, scrollable terminal) -->
 <div class="mysqlterm">
 <pre class="mysql-output">Welcome to the MariaDB monitor. Commands end with ;</pre>
 </div>
 <!-- Line Editor (Middle) -->
 <div class="mysqlsource">
-<textarea class="mysql-line-edit" rows="1" spellcheck="false" placeholder="Enter SQL statements here (e.g. SHOW DATABASES;)..." oninput="autoExpandSQLEdit(this)" onkeydown="handleSQLKeyDown(event, this)"></textarea>
+<textarea class="mysql-line-edit" rows="1" spellcheck="false" placeholder="Enter SQL statements here (e.g. SHOW DATABASES;)..." oninput="autoExpandSQLEdit(this)" onkeydown="handleSQLKeyDown(event, this)">CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));
+INSERT INTO users VALUES (1, 'Limitless'), (2, 'MariaDB');
+SELECT * FROM users;</textarea>
 </div>
-<!-- Bottom Actions Bar (Below Line Edit) -->
+<!-- Bottom Actions Bar (Clean Clear & Red Enter Buttons) -->
 <div class="mysql-island-footer">
-<div class="mysql-footer-hint">Press <span>Enter</span> to run, <span>Shift + Enter</span> for new line</div>
 <div class="mysql-footer-actions">
 <button class="mysql-btn mysql-clear-btn" onclick="clearMySQLTerminal(this)">Clear</button>
 <button class="mysql-btn mysql-enter-btn" onclick="runMySQLCode(this)">⏎ Enter</button>

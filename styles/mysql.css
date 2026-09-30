@@ -114,21 +114,23 @@ body.dark .mysql-island-title {
   width: 100%;
 }
 
-/* Terminal Panel: Fixed Height with Visible Scrollbar */
+/* Terminal Panel: Fixed Height with Both X & Y Scrollbars */
 .mysqlterm {
   width: 100%;
   background-color: #090d16 !important;
   padding: 14px 16px;
-  height: 260px;
-  max-height: 260px;
+  height: 270px;
+  max-height: 270px;
   overflow-y: scroll !important;
+  overflow-x: auto !important;
   border-bottom: 1px solid #1e293b;
   box-sizing: border-box;
 }
 
-/* Custom Scrollbar for Terminal */
+/* Custom Scrollbars for Terminal (Both Y and X) */
 .mysqlterm::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 .mysqlterm::-webkit-scrollbar-track {
@@ -148,16 +150,17 @@ body.dark .mysql-island-title {
   margin: 0;
   padding: 0;
   font-family: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
-  font-size: 0.86rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #38bdf8;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  color: #f87171 !important;
   background: transparent !important;
 }
 
 .mysql-err {
-  color: #f87171 !important;
+  color: #ff4d4f !important;
   font-weight: 600;
 }
 

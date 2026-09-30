@@ -497,7 +497,7 @@ sys.stderr = io.StringIO()
     };
   </script>
 
-  <!-- MySQL / lite4mariadb (Self-Hosted) -->
+  <!-- MySQL / lite4mariadb -->
   <script type="module">
     let mariadbInstance = null;
     window.__isMySQLLoading = false;
@@ -531,47 +531,33 @@ sys.stderr = io.StringIO()
       window.updateMySQLBadges('loading');
 
       try {
-        const mod = await import('./vendor/lite4mariadb/lite4mariadb.js');
+        const mod = await import('https://cdn.jsdelivr.net/npm/lite4mariadb@latest/+esm');
+        
+        let client = null;
+        const candidate = mod.Lite4MariaDB || mod.MariaDB || mod.default;
 
-        // Check common export properties for the class/factory possessing .create
-        const candidates = [
-          mod.Lite4MariaDB,
-          mod.default?.Lite4MariaDB,
-          mod.default,
-          mod.MariaDB,
-          mod.default?.MariaDB,
-          mod
-        ];
+        if (typeof candidate === 'function') {
+          try {
+            client = new candidate();
+          } catch (err) {
+            client = await candidate();
+          }
+        } else if (candidate && typeof candidate === 'object') {
+          client = candidate;
+        }
 
-        let Factory = candidates.find(c => c && typeof c.create === 'function');
-
-        // Fallback: enumerate through all keys if placed elsewhere by bundler
-        if (!Factory) {
-          for (const key of Object.keys(mod)) {
-            if (mod[key] && typeof mod[key].create === 'function') {
-              Factory = mod[key];
-              break;
-            }
+        if (client) {
+          if (typeof client.init === 'function') {
+            await client.init();
+          } else if (typeof client.open === 'function') {
+            await client.open();
+          } else if (typeof client.connect === 'function') {
+            await client.connect();
           }
         }
 
-        const options = {
-          wasmBinaryPath: './vendor/lite4mariadb/lite4mariadb.wasm',
-          workerPath: './vendor/lite4mariadb/lite4mariadb.worker.js'
-        };
-
-        let client;
-        if (Factory && typeof Factory.create === 'function') {
-          client = await Factory.create(options);
-        } else if (typeof mod.create === 'function') {
-          client = await mod.create(options);
-        } else {
-          console.error('Module export keys found:', Object.keys(mod), mod);
-          throw new Error("Could not find Lite4MariaDB.create factory method in module.");
-        }
-
-        if (client && typeof client.init === 'function') {
-          await client.init();
+        if (!client) {
+          throw new Error(`Available keys: ${Object.keys(mod).join(', ')}`);
         }
 
         mariadbInstance = client;
@@ -636,7 +622,7 @@ sys.stderr = io.StringIO()
           .filter(q => q.length > 0);
 
         let finalOutputs = [];
-        const welcomeBanner = "Welcome to the MySQL/MariaDB monitor. Commands end with ;\n";
+        const welcomeBanner = "Welcome to the MySQL/MariaDB monitor. Commands end with ;\\n";
 
         for (const query of queries) {
           let res;

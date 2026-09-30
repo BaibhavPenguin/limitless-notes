@@ -1,7 +1,7 @@
 # IPP &mdash; Area of Circle 
 ---
 
-<link rel="stylesheet" , href="./styles/tables.css">
+<link rel="stylesheet" , href="./styles/code-box.css">
 
 ### <u>Title</u>
 Write a program in python to find the area of a circle
@@ -14,14 +14,12 @@ As radius will be entered by the user, we need to use the **input()** function.
 
 
 ### <u>Program</u>
-<div class="dyntable">
-<table>
-<td><code>print("Limitless Editor - Roll Number 00") <br>
+<div class="code-container-div">
+print("Limitless Editor - Roll Number 00") <br>
 print("Area of Circle - IPP")<br>
 radius = int(input("Enter the radius of a circle : "))<br>
 area = 3.142 * radius * radius<br>
-print("Area of the circle is ",area)</code></td>
-</table>
+print("Area of the circle is ",area)
 </div>
 
 ### <u>Try and Execute</u>

@@ -1,5 +1,8 @@
 # IPP &mdash; Area of Circle 
 ---
+
+<link rel="stylesheet" , href="./styles/tables.css">
+
 ### <u>Title</u>
 Write a program in python to find the area of a circle
 
@@ -9,6 +12,19 @@ To find the area of a circle we will use the formula Area = &pi;r<sup>2</sup>  h
 
 As radius will be entered by the user, we need to use the **input()** function.
 
+
+### <u>Program</u>
+<div>
+<table>
+<td>print("Limitless Editor - Roll Number 00")
+print("Area of Circle - IPP")
+radius = int(input("Enter the radius of a circle : "))
+area = 3.142 * radius * radius
+print("Area of the circle is ",area)</td>
+</table>
+</div>
+
+### <u>Try and Execute</u>
 
 <link rel="stylesheet" href="./styles/python.css">
 <div class="code-sandbox-wrapper">

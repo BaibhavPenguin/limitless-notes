@@ -200,7 +200,7 @@ End users are the people and services that interact with the database system.
 They comprise:
 - **Application Programmers:** Software engineers writing database-driven applications.
 - **Database Administrators (DBAs):** Specialists managing system performance, security, and schema definitions.
-- **System Admins:** Analysts and engineers writing complex queries.
+- **System Administrators:** Analysts and engineers writing complex queries.
 - **Users:** Everyday users interacting with the database through simplified interfaces (such as students viewing grades on a college portal).
 
 *&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

@@ -1,0 +1,39 @@
+
+.code-container-div {
+  /* 1. Inherit colors and enforce transparent background */
+  color: inherit;
+  background-color: transparent !important;
+
+  /* 2. Source-code friendly font stack */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* 3. Border styling that respects light/dark themeing from index.css */
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+
+  /* 4. Padding and text behavior */
+  padding: 14px 16px;
+  white-space: pre; /* Keeps code formatting and forces horizontal growth */
+
+  /* 5. Fluid width behavior (Stretches until layout limits out, then choice-only overflow) */
+  display: block;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  /* 6. X-axis & Y-axis overflow logic */
+  overflow-x: auto;  /* Horizontal scrollbar appears only when absolutely required */
+  overflow-y: visible; /* No vertical scrollbar; container expands downwards organically */
+
+  /* 7. Global theme synchronization hook from index.css */
+  transition: color 0.5s ease,
+              border-color 0.5s ease,
+              box-shadow 0.5s ease !important;
+}
+
+
+/* Dark mode adjustment for the border to keep it soft and legible */
+body.dark .code-container-div,
+[data-theme="dark"] .code-container-div {
+  border-color: rgba(255, 255, 255, 0.15);
+}

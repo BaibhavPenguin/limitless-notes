@@ -14,7 +14,7 @@ As radius will be entered by the user, we need to use the **input()** function.
 
 
 ### <u>Program</u>
-<div>
+<div class="dyntable">
 <table>
 <td><code>print("Limitless Editor - Roll Number 00") <br>
 print("Area of Circle - IPP")<br>

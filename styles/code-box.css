@@ -37,3 +37,14 @@ body.dark .code-container-div,
 [data-theme="dark"] .code-container-div {
   border-color: rgba(255, 255, 255, 0.15);
 }
+
+/* make pre tag work*/
+
+.code-container-div pre,
+.code-container-div code {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+}

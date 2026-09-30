@@ -14,12 +14,12 @@ As radius will be entered by the user, we need to use the **input()** function.
 
 
 ### <u>Program</u>
-<div class="code-container-div">
-print("Limitless Editor - Roll Number 00") <br>
-print("Area of Circle - IPP")<br>
-radius = int(input("Enter the radius of a circle : "))<br>
-area = 3.142 * radius * radius<br>
-print("Area of the circle is ",area)
+<div class="code-container-div"><pre>
+print("Limitless Editor - Roll Number 00") 
+print("Area of Circle - IPP")
+radius = int(input("Enter the radius of a circle : "))
+area = 3.142 * radius * radius
+print("Area of the circle is ",area)</pre>
 </div>
 
 ### <u>Try and Execute</u>

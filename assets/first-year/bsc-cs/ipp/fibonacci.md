@@ -16,17 +16,17 @@ The user will enter the number of terms and the program should print the Fibonac
 
 ### <u>Program </u>
 <div class="code-container-div"><pre>
-print("Limitless Editor - Roll Number 00")<br>
-print("Fibonacci Series - IPP")<br>
-terms = int(input("Enter the number of terms : "))<br>
-num1 = 0<br>
-num2 = 1<br>
-temp = 0<br>
-for i in range(terms):<br>
-    print(num1,end=" ")<br>
-    temp = num1 + num2<br>
-    num1 = num2<br>
-    num2 = temp<br></pre>
+print("Limitless Editor - Roll Number 00")
+print("Fibonacci Series - IPP")
+terms = int(input("Enter the number of terms : "))
+num1 = 0
+num2 = 1
+temp = 0
+for i in range(terms):
+    print(num1,end=" ")
+    temp = num1 + num2
+    num1 = num2
+    num2 = temp</pre>
 </div>
 
 ### <u>Try and Execute</u>

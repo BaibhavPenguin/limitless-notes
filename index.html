@@ -531,24 +531,43 @@ sys.stderr = io.StringIO()
       window.updateMySQLBadges('loading');
 
       try {
-        // Points directly to the self-hosted distribution folder
         const mod = await import('./vendor/lite4mariadb/lite4mariadb.js');
-        const MariaDBTarget = mod.Lite4MariaDB || mod.MariaDB || mod.default?.Lite4MariaDB || mod.default?.MariaDB || mod.default;
 
-        let client;
+        // Check common export properties for the class/factory possessing .create
+        const candidates = [
+          mod.Lite4MariaDB,
+          mod.default?.Lite4MariaDB,
+          mod.default,
+          mod.MariaDB,
+          mod.default?.MariaDB,
+          mod
+        ];
+
+        let Factory = candidates.find(c => c && typeof c.create === 'function');
+
+        // Fallback: enumerate through all keys if placed elsewhere by bundler
+        if (!Factory) {
+          for (const key of Object.keys(mod)) {
+            if (mod[key] && typeof mod[key].create === 'function') {
+              Factory = mod[key];
+              break;
+            }
+          }
+        }
+
         const options = {
           wasmBinaryPath: './vendor/lite4mariadb/lite4mariadb.wasm',
           workerPath: './vendor/lite4mariadb/lite4mariadb.worker.js'
         };
 
-        if (MariaDBTarget && typeof MariaDBTarget.create === 'function') {
-          client = await MariaDBTarget.create(options);
+        let client;
+        if (Factory && typeof Factory.create === 'function') {
+          client = await Factory.create(options);
         } else if (typeof mod.create === 'function') {
           client = await mod.create(options);
-        } else if (typeof MariaDBTarget === 'function') {
-          client = await MariaDBTarget.create(options);
         } else {
-          client = mod;
+          console.error('Module export keys found:', Object.keys(mod), mod);
+          throw new Error("Could not find Lite4MariaDB.create factory method in module.");
         }
 
         if (client && typeof client.init === 'function') {

@@ -49,6 +49,33 @@
   </div>
 
   <script>
+    function autoExpandSQLEdit(textarea) {
+      if (!textarea) return;
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 240) + 'px';
+    }
+
+    function handleSQLKeyDown(e, textarea) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const island = textarea.closest('.mysql-island');
+        const enterBtn = island ? island.querySelector('.mysql-enter-btn') : null;
+        if (enterBtn && !enterBtn.disabled) {
+          enterBtn.click();
+        }
+      }
+    }
+
+    function clearMySQLTerminal(buttonEl) {
+      const island = buttonEl.closest('.mysql-island');
+      if (!island) return;
+      const outputPre = island.querySelector('.mysqlterm pre');
+      if (outputPre) {
+        outputPre.textContent = '';
+        outputPre.className = 'mysql-output';
+      }
+    }
+
     window.$docsify = {
       name: '',
       repo: '',
@@ -181,32 +208,6 @@
       const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
       if (gutter) {
         gutter.scrollTop = textarea.scrollTop;
-      }
-    }
-
-    function autoExpandSQLEdit(textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = Math.min(textarea.scrollHeight, 240) + 'px';
-    }
-
-    function handleSQLKeyDown(e, textarea) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        const island = textarea.closest('.mysql-island');
-        const enterBtn = island ? island.querySelector('.mysql-enter-btn') : null;
-        if (enterBtn && !enterBtn.disabled) {
-          enterBtn.click();
-        }
-      }
-    }
-
-    function clearMySQLTerminal(buttonEl) {
-      const island = buttonEl.closest('.mysql-island');
-      if (!island) return;
-      const outputPre = island.querySelector('.mysqlterm pre');
-      if (outputPre) {
-        outputPre.textContent = '';
-        outputPre.className = 'mysql-output';
       }
     }
 
@@ -527,7 +528,7 @@ sys.stderr = io.StringIO()
     };
   </script>
 
-  <!-- MySQL / lite4mariadb (Self-Hosted via C-WASM ABI) -->
+  <!-- MySQL / lite4mariadb (C-WASM Engine) -->
   <script type="module">
     let mariadbModule = null;
     let mariadbDbHandle = 0;
@@ -601,6 +602,11 @@ sys.stderr = io.StringIO()
           }
         }
 
+        // Initialize sandbox default database
+        try {
+          await executeSingleQuery(mariadbModule, "CREATE DATABASE IF NOT EXISTS sandbox; USE sandbox;");
+        } catch (_) {}
+
         window.__isMySQLReady = true;
         window.__isMySQLLoading = false;
         window.updateMySQLBadges('ready');
@@ -620,7 +626,7 @@ sys.stderr = io.StringIO()
 
       const queryFn = module._l4m_query || module._l4m_exec_multi;
       if (typeof queryFn !== 'function') {
-        throw new Error('Neither query() nor _l4m_query exists on WASM module.');
+        throw new Error('No execution method on WASM module.');
       }
 
       let sqlPtr = 0;
@@ -635,7 +641,7 @@ sys.stderr = io.StringIO()
       }
 
       if (!sqlPtr) {
-        throw new Error('Failed to allocate SQL query in WASM memory.');
+        throw new Error('Failed to allocate SQL query in memory.');
       }
 
       let resPtr = 0;
@@ -682,23 +688,23 @@ sys.stderr = io.StringIO()
 
     function formatSQLResults(res, query) {
       const q = (query || '').trim().toUpperCase();
-      const isDMLorDDL = /^(CREATE|DROP|ALTER|INSERT|UPDATE|DELETE|USE|SET|RENAME|TRUNCATE)\b/.test(q);
+      const isMutation = /^(CREATE|DROP|ALTER|INSERT|UPDATE|DELETE|USE|SET|RENAME|TRUNCATE)\b/.test(q);
 
       if (res === null || res === undefined || res === '') {
-        if (isDMLorDDL) {
+        if (isMutation) {
           return 'Query OK, 0 rows affected (0.01 sec)';
         }
         return 'Empty set (0.00 sec)';
       }
 
-      // If lite4mariadb returned an already formatted ASCII border table
+      // Check if result is already ASCII table from lite4mariadb C printer
       if (typeof res === 'string') {
         const trimmed = res.trim();
         if (trimmed.startsWith('+') || trimmed.includes('|')) {
           return trimmed;
         }
         if (trimmed.length === 0) {
-          return isDMLorDDL ? 'Query OK, 0 rows affected (0.01 sec)' : 'Empty set (0.00 sec)';
+          return isMutation ? 'Query OK, 0 rows affected (0.01 sec)' : 'Empty set (0.00 sec)';
         }
         return trimmed;
       }
@@ -722,7 +728,7 @@ sys.stderr = io.StringIO()
       }
 
       if (!rows || rows.length === 0) {
-        if (isDMLorDDL) {
+        if (isMutation) {
           return 'Query OK, 0 rows affected (0.01 sec)';
         }
         return 'Empty set (0.00 sec)';
@@ -811,7 +817,6 @@ sys.stderr = io.StringIO()
 
         outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || 'Query OK, 0 rows affected');
         
-        // Auto-scroll output terminal to latest command
         const termContainer = island.querySelector('.mysqlterm');
         if (termContainer) {
           termContainer.scrollTop = termContainer.scrollHeight;

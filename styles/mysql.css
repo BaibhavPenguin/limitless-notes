@@ -113,7 +113,7 @@ body.dark .mysql-island-title {
   color: #38bdf8;
 }
 
-/* Header Buttons */
+/* Buttons */
 .mysql-enter-btn {
   display: inline-flex;
   align-items: center;
@@ -181,7 +181,7 @@ body.dark .mysql-clear-btn:hover {
   width: 100%;
 }
 
-/* Terminal Panel (Shared same light background as editor) */
+/* Terminal Panel (Shared light background identical to editor) */
 .mysqlterm {
   width: 100%;
   background-color: #f8fafc;
@@ -226,7 +226,7 @@ body.dark .mysql-err {
   color: #f87171 !important;
 }
 
-/* Line Edit Container & Dynamic Textarea (Shared matching background) */
+/* Dynamic Line Edit Area */
 .mysqlsource {
   width: 100%;
   display: flex;
@@ -241,7 +241,7 @@ body.dark .mysqlsource {
 
 .mysqlsource textarea.mysql-line-edit {
   width: 100%;
-  min-height: 42px;
+  min-height: 44px;
   max-height: 240px;
   padding: 10px 16px;
   border: none;

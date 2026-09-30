@@ -534,6 +534,7 @@ sys.stderr = io.StringIO()
         const basePath = new URL('./vendor/lite4mariadb/', window.location.href).href;
         const mod = await import(basePath + 'lite4mariadb.js');
 
+        // Locate any factory function or constructor
         const Factory = 
           mod.Lite4MariaDB || 
           mod.MariaDB || 
@@ -562,14 +563,27 @@ sys.stderr = io.StringIO()
           client = mod;
         }
 
+        // Initialize connection/engine if necessary
         if (client && typeof client.init === 'function') {
           await client.init();
         } else if (client && typeof client.open === 'function') {
           await client.open();
+        } else if (client && typeof client.connect === 'function') {
+          const conn = await client.connect();
+          if (conn) client = conn;
+        }
+
+        // If client exposes an inner database connection, bridge to it
+        if (client && !client.query && !client.execute && !client.exec) {
+          if (client.connection && (typeof client.connection.query === 'function' || typeof client.connection.execute === 'function')) {
+            client = client.connection;
+          } else if (client.db && (typeof client.db.query === 'function' || typeof client.db.execute === 'function')) {
+            client = client.db;
+          }
         }
 
         if (!client) {
-          throw new Error('Lite4MariaDB instance could not be created from ./vendor/lite4mariadb/');
+          throw new Error('Lite4MariaDB client could not be instantiated from ./vendor/lite4mariadb/');
         }
 
         mariadbInstance = client;
@@ -585,43 +599,98 @@ sys.stderr = io.StringIO()
       }
     };
 
+    // Generic statement execution helper supporting lite4mariadb API variants
+    async function executeSingleQuery(db, sql) {
+      if (typeof db.execute === 'function') {
+        return await db.execute(sql);
+      }
+      if (typeof db.query === 'function') {
+        return await db.query(sql);
+      }
+      if (typeof db.exec === 'function') {
+        return await db.exec(sql);
+      }
+      if (typeof db.exec_query === 'function') {
+        return await db.exec_query(sql);
+      }
+      if (typeof db.execQuery === 'function') {
+        return await db.execQuery(sql);
+      }
+      if (typeof db.run === 'function') {
+        return await db.run(sql);
+      }
+      if (typeof db.sql === 'function') {
+        return await db.sql(sql);
+      }
+      if (typeof db === 'function') {
+        return await db(sql);
+      }
+      throw new Error(`Client object has no recognized query execution method. Available properties: ${Object.keys(db).join(', ')}`);
+    }
+
     function formatSQLResults(res) {
       if (!res) return 'Query OK (0.00 sec)';
       if (typeof res === 'string') return res;
 
-      if (res.columns && Array.isArray(res.values)) {
-        if (res.values.length === 0) return 'Empty set (0.00 sec)';
-        const cols = res.columns;
+      // Unpack { rows, columns } / { values, columns } wrapper formats
+      let rows = null;
+      let cols = null;
+
+      if (Array.isArray(res)) {
+        rows = res;
+      } else if (typeof res === 'object' && res !== null) {
+        if (Array.isArray(res.rows)) {
+          rows = res.rows;
+          cols = res.columns || res.fields;
+        } else if (Array.isArray(res.values)) {
+          rows = res.values;
+          cols = res.columns;
+        } else if (res.affectedRows !== undefined || res.changes !== undefined) {
+          const count = res.affectedRows ?? res.changes;
+          return `Query OK, ${count} row${count === 1 ? '' : 's'} affected (0.01 sec)`;
+        }
+      }
+
+      if (!rows || rows.length === 0) {
+        return 'Empty set (0.00 sec)';
+      }
+
+      // Format 2D array representation: [[val1, val2], ...]
+      if (Array.isArray(rows[0])) {
+        if (!cols || !Array.isArray(cols)) {
+          cols = rows[0].map((_, i) => `col_${i + 1}`);
+        } else {
+          cols = cols.map(c => (typeof c === 'object' && c !== null ? c.name || c.columnName || String(c) : String(c)));
+        }
+
         const colWidths = cols.map((col, idx) => 
-          Math.max(String(col).length, ...res.values.map(row => String(row[idx] ?? 'NULL').length))
+          Math.max(String(col).length, ...rows.map(r => String(r[idx] ?? 'NULL').length))
         );
 
         const separator = '+' + colWidths.map(w => '-'.repeat(w + 2)).join('+') + '+';
         const header = '| ' + cols.map((col, i) => String(col).padEnd(colWidths[i])).join(' | ') + ' |';
-        const rows = res.values.map(row => 
-          '| ' + row.map((val, i) => String(val ?? 'NULL').padEnd(colWidths[i])).join(' | ') + ' |'
+        const body = rows.map(r => 
+          '| ' + r.map((val, i) => String(val ?? 'NULL').padEnd(colWidths[i])).join(' | ') + ' |'
         ).join('\n');
 
-        return `${separator}\n${header}\n${separator}\n${rows}\n${separator}\n${res.values.length} row${res.values.length > 1 ? 's' : ''} in set`;
+        return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
-      if (Array.isArray(res)) {
-        if (res.length === 0) return 'Empty set (0.00 sec)';
-        if (typeof res[0] === 'object' && res[0] !== null) {
-          const keys = Object.keys(res[0]);
-          const colWidths = {};
-          keys.forEach(k => {
-            colWidths[k] = Math.max(k.length, ...res.map(row => String(row[k] ?? 'NULL').length));
-          });
+      // Format array of row objects: [{ col1: val1, ... }, ...]
+      if (typeof rows[0] === 'object' && rows[0] !== null) {
+        const keys = Object.keys(rows[0]);
+        const colWidths = {};
+        keys.forEach(k => {
+          colWidths[k] = Math.max(k.length, ...rows.map(row => String(row[k] ?? 'NULL').length));
+        });
 
-          const separator = '+' + keys.map(k => '-'.repeat(colWidths[k] + 2)).join('+') + '+';
-          const header = '| ' + keys.map(k => k.padEnd(colWidths[k])).join(' | ') + ' |';
-          const rows = res.map(row => 
-            '| ' + keys.map(k => String(row[k] ?? 'NULL').padEnd(colWidths[k])).join(' | ') + ' |'
-          ).join('\n');
+        const separator = '+' + keys.map(k => '-'.repeat(colWidths[k] + 2)).join('+') + '+';
+        const header = '| ' + keys.map(k => k.padEnd(colWidths[k])).join(' | ') + ' |';
+        const body = rows.map(row => 
+          '| ' + keys.map(k => String(row[k] ?? 'NULL').padEnd(colWidths[k])).join(' | ') + ' |'
+        ).join('\n');
 
-          return `${separator}\n${header}\n${separator}\n${rows}\n${separator}\n${res.length} row${res.length > 1 ? 's' : ''} in set`;
-        }
+        return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
       return JSON.stringify(res, null, 2);
@@ -659,17 +728,12 @@ sys.stderr = io.StringIO()
         const welcomeBanner = "Welcome to the MariaDB monitor. Commands end with ;\n";
 
         for (const query of queries) {
-          let res;
-          if (typeof db.query === 'function') {
-            res = await db.query(query);
-          } else if (typeof db.exec === 'function') {
-            res = await db.exec(query);
-          } else if (typeof db.run === 'function') {
-            res = await db.run(query);
-          } else {
-            throw new Error("No supported query execution method (query, exec, run) found on client.");
+          try {
+            const res = await executeSingleQuery(db, query);
+            finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res)}`);
+          } catch (queryErr) {
+            finalOutputs.push(`mysql> ${query};\nERROR: ${queryErr.message}`);
           }
-          finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res)}`);
         }
 
         outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || '(Query OK)');

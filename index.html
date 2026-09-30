@@ -497,9 +497,10 @@ sys.stderr = io.StringIO()
     };
   </script>
 
-  <!-- MySQL / lite4mariadb (Self-Hosted) -->
+  <!-- MySQL / lite4mariadb (Self-Hosted via C-WASM ABI) -->
   <script type="module">
-    let mariadbInstance = null;
+    let mariadbModule = null;
+    let mariadbDbHandle = 0;
     window.__isMySQLLoading = false;
     window.__isMySQLReady = false;
 
@@ -507,7 +508,7 @@ sys.stderr = io.StringIO()
       document.querySelectorAll('.mysql-status-badge').forEach(function(badge) {
         if (status === 'ready') {
           badge.className = 'mysql-status-badge ready';
-          badge.querySelector('.mysql-status-text').textContent = 'MySQL Ready';
+          badge.querySelector('.mysql-status-text').textContent = 'MariaDB Ready';
         } else if (status === 'loading') {
           badge.className = 'mysql-status-badge';
           badge.querySelector('.mysql-status-text').textContent = 'Initializing...';
@@ -519,12 +520,12 @@ sys.stderr = io.StringIO()
     };
 
     window.ensureMySQL = async function() {
-      if (window.__isMySQLReady && mariadbInstance) return mariadbInstance;
+      if (window.__isMySQLReady && mariadbModule) return mariadbModule;
       if (window.__isMySQLLoading) {
         while (!window.__isMySQLReady) {
           await new Promise(r => setTimeout(r, 100));
         }
-        return mariadbInstance;
+        return mariadbModule;
       }
 
       window.__isMySQLLoading = true;
@@ -534,105 +535,135 @@ sys.stderr = io.StringIO()
         const basePath = new URL('./vendor/lite4mariadb/', window.location.href).href;
         const mod = await import(basePath + 'lite4mariadb.js');
 
-        // Locate any factory function or constructor
         const Factory = 
           mod.Lite4MariaDB || 
           mod.MariaDB || 
           mod.createMariaDB || 
           (typeof mod.default === 'function' ? mod.default : mod.default?.Lite4MariaDB || mod.default?.MariaDB);
 
-        let client = null;
         const options = {
           locateFile: (file) => basePath + file,
           mainScriptUrlOrBlob: basePath + 'lite4mariadb.worker.js'
         };
 
+        let inst = null;
         if (typeof Factory === 'function') {
           try {
-            client = await Factory(options);
+            inst = await Factory(options);
           } catch (e) {
-            client = new Factory(options);
+            inst = new Factory(options);
           }
         } else if (typeof mod.create === 'function') {
-          client = await mod.create(options);
-        } else if (mod.default && typeof mod.default.create === 'function') {
-          client = await mod.default.create(options);
+          inst = await mod.create(options);
         } else if (typeof mod.default === 'object' && mod.default !== null) {
-          client = mod.default;
+          inst = mod.default;
         } else {
-          client = mod;
+          inst = mod;
         }
 
-        // Initialize connection/engine if necessary
-        if (client && typeof client.init === 'function') {
-          await client.init();
-        } else if (client && typeof client.open === 'function') {
-          await client.open();
-        } else if (client && typeof client.connect === 'function') {
-          const conn = await client.connect();
-          if (conn) client = conn;
-        }
+        mariadbModule = inst;
 
-        // If client exposes an inner database connection, bridge to it
-        if (client && !client.query && !client.execute && !client.exec) {
-          if (client.connection && (typeof client.connection.query === 'function' || typeof client.connection.execute === 'function')) {
-            client = client.connection;
-          } else if (client.db && (typeof client.db.query === 'function' || typeof client.db.execute === 'function')) {
-            client = client.db;
+        // Initialize the internal database instance if _l4m_open is exposed
+        if (typeof mariadbModule._l4m_open === 'function') {
+          try {
+            mariadbDbHandle = mariadbModule._l4m_open();
+          } catch (e) {
+            mariadbDbHandle = 1;
           }
         }
 
-        if (!client) {
-          throw new Error('Lite4MariaDB client could not be instantiated from ./vendor/lite4mariadb/');
-        }
-
-        mariadbInstance = client;
         window.__isMySQLReady = true;
         window.__isMySQLLoading = false;
         window.updateMySQLBadges('ready');
-        return mariadbInstance;
+        return mariadbModule;
       } catch (err) {
         window.__isMySQLLoading = false;
         window.updateMySQLBadges('waiting');
-        console.error('Failed to load local lite4mariadb:', err);
+        console.error('Failed to load local lite4mariadb module:', err);
         throw err;
       }
     };
 
-    // Generic statement execution helper supporting lite4mariadb API variants
-    async function executeSingleQuery(db, sql) {
-      if (typeof db.execute === 'function') {
-        return await db.execute(sql);
+    // Low-level C bridge to _l4m_query / _l4m_exec_multi
+    async function executeSingleQuery(module, sql) {
+      // 1. If standard JavaScript wrappers exist
+      if (typeof module.query === 'function') return await module.query(sql);
+      if (typeof module.execute === 'function') return await module.execute(sql);
+      if (typeof module.exec === 'function') return await module.exec(sql);
+
+      // 2. Low-level WASM / Emscripten ABI
+      const queryFn = module._l4m_query || module._l4m_exec_multi;
+      if (typeof queryFn !== 'function') {
+        throw new Error('Neither query() nor _l4m_query exists on WASM module.');
       }
-      if (typeof db.query === 'function') {
-        return await db.query(sql);
+
+      // Convert SQL string to UTF-8 in Emscripten WASM heap
+      let sqlPtr = 0;
+      if (typeof module.stringToUTF8 === 'function' && typeof module._malloc === 'function') {
+        const length = (module.lengthBytesUTF8 ? module.lengthBytesUTF8(sql) : sql.length * 4) + 1;
+        sqlPtr = module._malloc(length);
+        module.stringToUTF8(sql, sqlPtr, length);
+      } else if (typeof module.allocateUTF8 === 'function') {
+        sqlPtr = module.allocateUTF8(sql);
+      } else if (typeof module.ccall === 'function') {
+        // Fallback to ccall if available
+        const raw = module.ccall('l4m_query', 'string', ['string'], [sql]);
+        return raw;
       }
-      if (typeof db.exec === 'function') {
-        return await db.exec(sql);
+
+      if (!sqlPtr) {
+        throw new Error('Failed to allocate SQL string in WASM memory.');
       }
-      if (typeof db.exec_query === 'function') {
-        return await db.exec_query(sql);
+
+      let resPtr = 0;
+      try {
+        // Some builds take (_l4m_query(sqlPtr)), others take (_l4m_query(dbHandle, sqlPtr))
+        if (queryFn.length >= 2) {
+          resPtr = await queryFn(mariadbDbHandle, sqlPtr);
+        } else {
+          resPtr = await queryFn(sqlPtr);
+        }
+      } finally {
+        if (typeof module._free === 'function') {
+          module._free(sqlPtr);
+        }
       }
-      if (typeof db.execQuery === 'function') {
-        return await db.execQuery(sql);
+
+      if (!resPtr) {
+        return 'Query OK (0.00 sec)';
       }
-      if (typeof db.run === 'function') {
-        return await db.run(sql);
+
+      let rawResult = '';
+      if (typeof module.UTF8ToString === 'function') {
+        rawResult = module.UTF8ToString(resPtr);
       }
-      if (typeof db.sql === 'function') {
-        return await db.sql(sql);
+
+      // Release result string if _l4m_free is exposed
+      if (typeof module._l4m_free === 'function') {
+        module._l4m_free(resPtr);
+      } else if (typeof module._free === 'function') {
+        module._free(resPtr);
       }
-      if (typeof db === 'function') {
-        return await db(sql);
+
+      // If the engine returns JSON string representation, parse it
+      if (rawResult && typeof rawResult === 'string') {
+        const trimmed = rawResult.trim();
+        if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+          try {
+            return JSON.parse(trimmed);
+          } catch (e) {
+            return rawResult;
+          }
+        }
       }
-      throw new Error(`Client object has no recognized query execution method. Available properties: ${Object.keys(db).join(', ')}`);
+
+      return rawResult;
     }
 
     function formatSQLResults(res) {
       if (!res) return 'Query OK (0.00 sec)';
       if (typeof res === 'string') return res;
 
-      // Unpack { rows, columns } / { values, columns } wrapper formats
       let rows = null;
       let cols = null;
 
@@ -655,7 +686,7 @@ sys.stderr = io.StringIO()
         return 'Empty set (0.00 sec)';
       }
 
-      // Format 2D array representation: [[val1, val2], ...]
+      // 2D Array format: [[val1, val2], ...]
       if (Array.isArray(rows[0])) {
         if (!cols || !Array.isArray(cols)) {
           cols = rows[0].map((_, i) => `col_${i + 1}`);
@@ -676,7 +707,7 @@ sys.stderr = io.StringIO()
         return `${separator}\n${header}\n${separator}\n${body}\n${separator}\n${rows.length} row${rows.length > 1 ? 's' : ''} in set`;
       }
 
-      // Format array of row objects: [{ col1: val1, ... }, ...]
+      // Array of objects format: [{ col1: val1, ... }, ...]
       if (typeof rows[0] === 'object' && rows[0] !== null) {
         const keys = Object.keys(rows[0]);
         const colWidths = {};
@@ -711,7 +742,7 @@ sys.stderr = io.StringIO()
       outputPre.textContent = 'Connecting to MariaDB...';
 
       try {
-        const db = await window.ensureMySQL();
+        const mod = await window.ensureMySQL();
         outputPre.textContent = 'Executing query...';
 
         const rawCode = sourceArea.value.trim();
@@ -729,7 +760,7 @@ sys.stderr = io.StringIO()
 
         for (const query of queries) {
           try {
-            const res = await executeSingleQuery(db, query);
+            const res = await executeSingleQuery(mod, query);
             finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res)}`);
           } catch (queryErr) {
             finalOutputs.push(`mysql> ${query};\nERROR: ${queryErr.message}`);

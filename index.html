@@ -532,32 +532,37 @@ sys.stderr = io.StringIO()
 
       try {
         const mod = await import('https://cdn.jsdelivr.net/npm/lite4mariadb@latest/+esm');
-        
-        let client = null;
-        const candidate = mod.Lite4MariaDB || mod.MariaDB || mod.default;
 
-        if (typeof candidate === 'function') {
-          try {
-            client = new candidate();
-          } catch (err) {
-            client = await candidate();
-          }
-        } else if (candidate && typeof candidate === 'object') {
-          client = candidate;
+        // Locate the constructor class or direct instance
+        const ConstructorClass = 
+          mod.Lite4MariaDB || 
+          mod.MariaDB || 
+          (typeof mod.default === 'function' ? mod.default : mod.default?.Lite4MariaDB || mod.default?.MariaDB);
+
+        let client = null;
+
+        // If it's a class, ALWAYS construct with `new`
+        if (typeof ConstructorClass === 'function') {
+          client = new ConstructorClass();
+        } else if (typeof mod.create === 'function') {
+          client = await mod.create();
+        } else if (mod.default && typeof mod.default.create === 'function') {
+          client = await mod.default.create();
+        } else if (typeof mod.default === 'object' && mod.default !== null) {
+          client = mod.default;
+        } else {
+          client = mod;
         }
 
-        if (client) {
-          if (typeof client.init === 'function') {
-            await client.init();
-          } else if (typeof client.open === 'function') {
-            await client.open();
-          } else if (typeof client.connect === 'function') {
-            await client.connect();
-          }
+        // Initialize runtime if needed
+        if (client && typeof client.init === 'function') {
+          await client.init();
+        } else if (client && typeof client.open === 'function') {
+          await client.open();
         }
 
         if (!client) {
-          throw new Error(`Available keys: ${Object.keys(mod).join(', ')}`);
+          throw new Error('Failed to instantiate lite4mariadb client.');
         }
 
         mariadbInstance = client;

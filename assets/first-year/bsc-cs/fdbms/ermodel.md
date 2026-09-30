@@ -1,4 +1,4 @@
-# Entity Relationship Model and ER Table
+# Entity Relationship Model and ER Table &mdash; Module 1
 
 <link rel="stylesheet" href="./styles/tables.css">
 
@@ -410,4 +410,4 @@ Abstraction through which relationship (aggregation) is treated as higher level 
   </table>
 </div>
 
-*&mdash; Edited by Baibhav Bhattacharya*
+*&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

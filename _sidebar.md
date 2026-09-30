@@ -15,4 +15,4 @@
 <!-- Legal Notices -->
 * [Legal Notices & Copyright](/legal/TERMS-OF-USE.md)  
 
-
+* [Debug MySQL](/assets/mysql-template.md)

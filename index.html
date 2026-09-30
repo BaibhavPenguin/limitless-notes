@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./styles/index.css">
   <link rel="stylesheet" href="./styles/python.css">
   <link rel="stylesheet" href="./styles/rlang.css">
+  <link rel="stylesheet" href="./styles/mysql.css">
 </head>
 <body>
   <header class="site-header">
@@ -106,8 +107,11 @@
             if (window.__isWebRReady) {
               updateWebRBadges('ready');
             }
+            if (window.__isMySQLReady) {
+              updateMySQLBadges('ready');
+            }
 
-            document.querySelectorAll('.code-source textarea, .webrsource textarea, .pysource textarea').forEach(function(textarea) {
+            document.querySelectorAll('.code-source textarea, .webrsource textarea, .pysource textarea, .mysqlsource textarea').forEach(function(textarea) {
               updateCodeGutter(textarea);
             });
 
@@ -116,6 +120,9 @@
             }
             if (document.querySelector('.webr-island, .webr-status-badge')) {
               ensureWebR();
+            }
+            if (document.querySelector('.mysql-island, .mysql-status-badge')) {
+              ensureMySQL();
             }
           });
         }
@@ -151,9 +158,9 @@
 
   <script>
     function updateCodeGutter(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource') || textarea.closest('.mysqlsource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers') || container.querySelector('.mysql-gutter');
       if (!gutter) return;
 
       const lineCount = textarea.value.split('\n').length;
@@ -165,9 +172,9 @@
     }
 
     function syncCodeGutterScroll(textarea) {
-      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource');
+      const container = textarea.closest('.code-source') || textarea.closest('.webrsource') || textarea.closest('.pysource') || textarea.closest('.mysqlsource');
       if (!container) return;
-      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers');
+      const gutter = container.querySelector('.code-gutter') || container.querySelector('.webr-gutter') || container.querySelector('.py-line-numbers') || container.querySelector('.mysql-gutter');
       if (gutter) {
         gutter.scrollTop = textarea.scrollTop;
       }
@@ -237,6 +244,7 @@
     }
   </script>
 
+  <!-- Python / Pyodide -->
   <script>
     let pyodideInstance = null;
     window.__isPyodideLoading = false;
@@ -252,7 +260,7 @@
           badge.querySelector('.py-status-text').textContent = 'Initializing...';
         } else {
           badge.className = 'py-status-badge';
-          badge.querySelector('.py-status-text').textContent = 'Loading...';
+          badge.querySelector('.py-status-text').textContent = 'Waiting...';
         }
       });
     }
@@ -307,7 +315,6 @@
 
       try {
         const py = await ensurePyodide();
-
         await py.loadPackagesFromImports(sourceArea.value);
 
         outputPre.textContent = 'Executing...';
@@ -320,7 +327,6 @@
         });
 
         let code = sourceArea.value;
-
         const inputMatches = [...code.matchAll(/input\s*\(\s*(?:["'](.*?)["'])?\s*\)/g)];
         const userValues = [];
         for (const match of inputMatches) {
@@ -362,6 +368,7 @@ sys.stderr = io.StringIO()
     }
   </script>
 
+  <!-- R / WebR -->
   <script type="module">
     let webrInstance = null;
     window.__isWebRLoading = false;
@@ -377,7 +384,7 @@ sys.stderr = io.StringIO()
           badge.querySelector('.webr-status-text').textContent = 'Initializing...';
         } else {
           badge.className = 'webr-status-badge';
-          badge.querySelector('.webr-status-text').textContent = 'Loading...';
+          badge.querySelector('.webr-status-text').textContent = 'Waiting...';
         }
       });
     };
@@ -483,6 +490,146 @@ sys.stderr = io.StringIO()
       } catch (err) {
         outputPre.className = 'webr-output webr-err';
         outputPre.textContent = err.message;
+      } finally {
+        buttonEl.disabled = false;
+        buttonEl.innerHTML = originalText;
+      }
+    };
+  </script>
+
+  <!-- MySQL / lite4mariadb -->
+  <script type="module">
+    let mariadbInstance = null;
+    window.__isMySQLLoading = false;
+    window.__isMySQLReady = false;
+
+    window.updateMySQLBadges = function(status) {
+      document.querySelectorAll('.mysql-status-badge').forEach(function(badge) {
+        if (status === 'ready') {
+          badge.className = 'mysql-status-badge ready';
+          badge.querySelector('.mysql-status-text').textContent = 'MySQL Ready';
+        } else if (status === 'loading') {
+          badge.className = 'mysql-status-badge';
+          badge.querySelector('.mysql-status-text').textContent = 'Initializing...';
+        } else {
+          badge.className = 'mysql-status-badge';
+          badge.querySelector('.mysql-status-text').textContent = 'Waiting...';
+        }
+      });
+    };
+
+    window.ensureMySQL = async function() {
+      if (window.__isMySQLReady) return mariadbInstance;
+      if (window.__isMySQLLoading) {
+        while (!window.__isMySQLReady) {
+          await new Promise(r => setTimeout(r, 100));
+        }
+        return mariadbInstance;
+      }
+
+      window.__isMySQLLoading = true;
+      window.updateMySQLBadges('loading');
+
+      try {
+        const mod = await import('https://cdn.jsdelivr.net/npm/lite4mariadb@latest/+esm');
+        const MariaDB = mod.MariaDB || mod.default?.MariaDB || mod.default;
+        
+        let client;
+        if (typeof MariaDB === 'function') {
+          try {
+            client = new MariaDB();
+          } catch {
+            client = await MariaDB();
+          }
+        } else {
+          client = mod;
+        }
+
+        if (client && typeof client.init === 'function') {
+          await client.init();
+        }
+
+        mariadbInstance = client;
+        window.__isMySQLReady = true;
+        window.__isMySQLLoading = false;
+        window.updateMySQLBadges('ready');
+        return mariadbInstance;
+      } catch (err) {
+        window.__isMySQLLoading = false;
+        console.error('Failed to load lite4mariadb:', err);
+        throw err;
+      }
+    };
+
+    function formatSQLResults(res) {
+      if (!res) return 'Query OK';
+      if (typeof res === 'string') return res;
+      if (Array.isArray(res)) {
+        if (res.length === 0) return 'Empty set (0.00 sec)';
+        if (typeof res[0] === 'object' && res[0] !== null) {
+          const keys = Object.keys(res[0]);
+          const colWidths = {};
+          keys.forEach(k => {
+            colWidths[k] = Math.max(k.length, ...res.map(row => String(row[k] ?? 'NULL').length));
+          });
+
+          const separator = '+' + keys.map(k => '-'.repeat(colWidths[k] + 2)).join('+') + '+';
+          const header = '| ' + keys.map(k => k.padEnd(colWidths[k])).join(' | ') + ' |';
+          const rows = res.map(row => {
+            return '| ' + keys.map(k => String(row[k] ?? 'NULL').padEnd(colWidths[k])).join(' | ') + ' |';
+          }).join('\n');
+
+          return `${separator}\n${header}\n${separator}\n${rows}\n${separator}\n${res.length} row${res.length > 1 ? 's' : ''} in set`;
+        }
+      }
+      return JSON.stringify(res, null, 2);
+    }
+
+    window.runMySQLCode = async function(buttonEl) {
+      const island = buttonEl.closest('.mysql-island') || buttonEl.closest('.code-island');
+      if (!island) return;
+
+      const sourceArea = island.querySelector('.mysqlsource textarea') || island.querySelector('.code-source textarea');
+      const outputPre = island.querySelector('.mysqlterm pre') || island.querySelector('.code-term pre');
+      if (!sourceArea || !outputPre) return;
+
+      buttonEl.disabled = true;
+      const originalText = buttonEl.innerHTML;
+      buttonEl.innerHTML = 'Executing...';
+      outputPre.className = 'mysql-output';
+      outputPre.textContent = 'Initializing MySQL runtime...';
+
+      try {
+        const db = await window.ensureMySQL();
+        outputPre.textContent = 'Executing query...';
+
+        const rawCode = sourceArea.value.trim();
+        const queries = rawCode
+          .split(';')
+          .map(q => q.trim())
+          .filter(q => q.length > 0);
+
+        let finalOutputs = [];
+        const welcomeBanner = "Welcome to the MySQL/MariaDB monitor. Commands end with ;\\n";
+
+        for (const query of queries) {
+          let res;
+          if (typeof db.query === 'function') {
+            res = await db.query(query);
+          } else if (typeof db.exec === 'function') {
+            res = await db.exec(query);
+          } else if (typeof db.run === 'function') {
+            res = await db.run(query);
+          } else {
+            throw new Error("lite4mariadb query method not found on initialized client.");
+          }
+          finalOutputs.push(`mysql> ${query};\n${formatSQLResults(res)}`);
+        }
+
+        outputPre.textContent = welcomeBanner + '\n' + (finalOutputs.join('\n\n') || '(Query OK)');
+      } catch (err) {
+        outputPre.className = 'mysql-output mysql-err';
+        outputPre.textContent = `mysql> ERROR: ${err.message}`;
       } finally {
         buttonEl.disabled = false;
         buttonEl.innerHTML = originalText;

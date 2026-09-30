@@ -1,8 +1,6 @@
 # IPP &mdash; Odd or Even
 ---
 
-<link rel="stylesheet" , href="./styles/code-box.css">
-
 ### <u>Title</u>  
 
 Write a program in python to find whether the given number is odd or even.
@@ -13,18 +11,6 @@ Write a program in python to find whether the given number is odd or even.
 The user will enter a number **num** the program should identify whether the number is an odd or an even number using **If...Else Statements**
 
 ### <u>Program</u>
-<div class="code-container-div"><pre>
-print("Limitless Editor - Roll Number 00")
-print("Find whether number is odd or even - IPP")
-num = int(input("Enter any number : "))
-if num % 2 == 0:
-    print(num," is an even number.")
-else:
-    print(num," is an odd number.")</pre>
-</div>
-
-### <u>Try and Execute</u>
-
 <link rel="stylesheet" href="./styles/python.css">
 <div class="code-sandbox-wrapper">
   <div class="py-status-badge">

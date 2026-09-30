@@ -1,8 +1,6 @@
 # IPP &mdash; Greater Number
 ---
 
-<link rel="stylesheet" , href="./styles/code-box.css">
-
 ### <u>Title</u>  
 
 Write a program in python to find the Greater number out of the two.
@@ -14,21 +12,6 @@ The user will enter any two numbers **x** and **y**, the program should compare 
 
 
 ### <u>Program</u>
-<div class="code-container-div"><pre>
-print("Limitless Editor - Roll Number 00")<br>
-print("Find the Greater Number - IPP")<br>
-x = int(input("Enter any number : "))<br>
-y = int(input("Enter any number : "))<br>
-if x > y:<br>
-    print(x," is greater")<br>
-elif x < y:<br>
-    print(y," is greater")<br>
-else:<br>
-    print("Both numbers are equal.")</pre>
-</div>
-
-### <u>Try and Execute</u>
-
 <link rel="stylesheet" href="./styles/python.css">
 <div class="code-sandbox-wrapper">
   <div class="py-status-badge">

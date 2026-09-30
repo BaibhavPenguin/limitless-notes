@@ -2,39 +2,37 @@
 
 ## <u>Client &mdash; Server Architecture</u>
 
-Vendor-provided applications (often called tools) are applications whose basic purpose is to assist in the creation and execution of other applications.  
+A client-server architecture cleanly splits a system into two distinct roles: the **client**, which requests services or information, and the **server**, which processes those requests and manages the underlying data.
 
-**Example:** one of the vendor-provided tools will be a report writer, whose purpose is to allow end users to obtain formatted reports from the system on request.  
+Because these two roles are logically separated, they do not need to run on the same physical computer. This setup makes **distributed processing** possible, allowing multiple computers connected across a network to share the workload of a single overall task.
 
-Any given report request can be regarded as a small application program, written in a very high level report writer language.
+Because client-server architectures are reliable, scalable, and secure, almost all modern networked applications rely on them for deployment and maintenance.
 
-#### Vendor provided tools can be divided into several more or less distinct classes &mdash; 
+Vendor-provided applications (commonly called tools) are software utilities designed to help developers and end users build, query, and run other programs within this environment.
 
--  Query language processors
+**Example:** A database administration client (MySQL Commandline Client 8.0) is a typical vendor tool. A user runs queries and manages records from their local computer (the client), while the actual database engine processes transactions and stores data on a remote host (the server).
 
-- Report writers
+Any specific task run through this interface—like executing a query or creating a table—operates as a high-level instruction sent across the network for the server to carry out.
 
-- Business graphics subsystem
+#### Vendor-provided tools can be grouped into several key categories &mdash;
 
-- Spreadsheets
+- Query language processors and SQL consoles
 
-- Natural language processors
+- API testing and integration tools
 
-- Statistical packages
+- Business intelligence and reporting dashboards
 
-- Copy management or "data extract" tools
+- Data extraction, transformation, and migration utilities
 
-- Application generator (including 4 GL processors)
+- Statistical analysis and data science packages
 
-- Other application development tools including computer-aided software engineering (CASE) products.
+- Natural language interfaces
 
-- Data mining and visualization tools and many others.
- 
-Since the overall system system can be so neatly divided into two parts, server and clients, the possibility arises of running the two on different machines.  
-In other words, the potential exists for distributed processing.
-Distributed processing means that distinct machines can be connected into some kind of communication network in such a way that a single data processing task can be spread across several machines in the network.
+- Application generators and low-code platforms
 
-Since, Client&mdash;Server Architectures are convenient and secure, almost all modern applications rely on it for deployment and maintenance.
+- Software engineering and debugging suites (such as CASE tools)
+
+- Data mining, monitoring, and visualization tools
 
 ## <u>Data Models</u>
 

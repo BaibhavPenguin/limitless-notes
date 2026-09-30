@@ -1,8 +1,6 @@
 # IPP &mdash; Fibonacci Series
 ---
 
-<link rel="stylesheet" , href="./styles/code-box.css">
-
 ### <u>Title</u>  
 
 Write a program in python to print the fibonacci series up to n terms.
@@ -15,21 +13,6 @@ The user will enter the number of terms and the program should print the Fibonac
 
 
 ### <u>Program </u>
-<div class="code-container-div"><pre>
-print("Limitless Editor - Roll Number 00")
-print("Fibonacci Series - IPP")
-terms = int(input("Enter the number of terms : "))
-num1 = 0
-num2 = 1
-temp = 0
-for i in range(terms):
-    print(num1,end=" ")
-    temp = num1 + num2
-    num1 = num2
-    num2 = temp</pre>
-</div>
-
-### <u>Try and Execute</u>
 
 <link rel="stylesheet" href="./styles/python.css">
 <div class="code-sandbox-wrapper">

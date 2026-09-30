@@ -497,7 +497,7 @@ sys.stderr = io.StringIO()
     };
   </script>
 
-  <!-- MySQL / lite4mariadb -->
+  <!-- MySQL / lite4mariadb (Self-Hosted) -->
   <script type="module">
     let mariadbInstance = null;
     window.__isMySQLLoading = false;
@@ -531,16 +531,22 @@ sys.stderr = io.StringIO()
       window.updateMySQLBadges('loading');
 
       try {
-        const mod = await import('https://cdn.jsdelivr.net/npm/lite4mariadb@latest/+esm');
-        const MariaDB = mod.MariaDB || mod.default?.MariaDB || mod.default;
-        
+        // Points directly to the self-hosted distribution folder
+        const mod = await import('./vendor/lite4mariadb/lite4mariadb.js');
+        const MariaDBTarget = mod.Lite4MariaDB || mod.MariaDB || mod.default?.Lite4MariaDB || mod.default?.MariaDB || mod.default;
+
         let client;
-        if (typeof MariaDB === 'function') {
-          try {
-            client = new MariaDB();
-          } catch {
-            client = await MariaDB();
-          }
+        const options = {
+          wasmBinaryPath: './vendor/lite4mariadb/lite4mariadb.wasm',
+          workerPath: './vendor/lite4mariadb/lite4mariadb.worker.js'
+        };
+
+        if (MariaDBTarget && typeof MariaDBTarget.create === 'function') {
+          client = await MariaDBTarget.create(options);
+        } else if (typeof mod.create === 'function') {
+          client = await mod.create(options);
+        } else if (typeof MariaDBTarget === 'function') {
+          client = await MariaDBTarget.create(options);
         } else {
           client = mod;
         }
@@ -556,6 +562,7 @@ sys.stderr = io.StringIO()
         return mariadbInstance;
       } catch (err) {
         window.__isMySQLLoading = false;
+        window.updateMySQLBadges('waiting');
         console.error('Failed to load lite4mariadb:', err);
         throw err;
       }
@@ -610,7 +617,7 @@ sys.stderr = io.StringIO()
           .filter(q => q.length > 0);
 
         let finalOutputs = [];
-        const welcomeBanner = "Welcome to the MySQL/MariaDB monitor. Commands end with ;\\n";
+        const welcomeBanner = "Welcome to the MySQL/MariaDB monitor. Commands end with ;\n";
 
         for (const query of queries) {
           let res;

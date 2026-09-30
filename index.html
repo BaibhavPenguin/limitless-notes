@@ -539,7 +539,7 @@ sys.stderr = io.StringIO()
       document.querySelectorAll('.mysql-status-badge').forEach(function(badge) {
         if (status === 'ready') {
           badge.className = 'mysql-status-badge ready';
-          badge.querySelector('.mysql-status-text').textContent = 'MariaDB Ready';
+          badge.querySelector('.mysql-status-text').textContent = 'MySQL Ready';
         } else if (status === 'loading') {
           badge.className = 'mysql-status-badge';
           badge.querySelector('.mysql-status-text').textContent = 'Initializing...';

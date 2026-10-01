@@ -15,7 +15,7 @@ cultural practices that have been developed over a millennium. The Indian Knowle
 **Spiritual Wisdom:** The Indian knowledge system has a rich collection of ancient scriptures and philosophical texts.  
 **Scientific Contribution:** Ancient India made great contributions in Science and Technology and various other fields like Mathematics, Astronomy, Metallurgy, and Medicine.  
 
-The Indian Knowledge System also consists of a rich cultural history with artistic expression such as Dance, Music and Literature. It also features practices to improve mental health and overall fitness through Yoga and Meditation.
+The Indian Knowledge System also consists of a rich cultural history with artistic expression such as Dance, Music and Literature. It also features practices which improve mental health and overall fitness through Yoga and Meditation.
 
 ---
 ### <u>2 &mdash; What do you mean by Macaulay's Education Policy?</u>
@@ -127,7 +127,7 @@ A Patient today can opt for Allopathic , Ayurvedic or Homeopathic treatment for 
 ---
 ### <u>5 &mdash; Explain the term Ayurveda?</u>
 
-Ayurveda is built on the idea that everything in the universe, living or non-living, is connected.** When your mind, body, and spirit live in harmony with the world around you, you enjoy good health. If this balance is broken, illness occurs. Things that can disturb this balance include genetic conditions, birth defects, physical injuries, changes in weather or seasons, aging, and your emotions. **Ayurveda (a Sanskrit term meaning "science of life" or "knowledge of life")** is one of the world's oldest holistic healing systems, developed over 5,000 years ago in India.  
+**Ayurveda is built on the idea that everything in the universe, living or non-living, is connected.** When your mind, body, and spirit live in harmony with the world around you, you enjoy good health. If this balance is broken, illness occurs. Things that can disturb this balance include genetic conditions, birth defects, physical injuries, changes in weather or seasons, aging, and your emotions. **Ayurveda (a Sanskrit term meaning "science of life" or "knowledge of life")** is one of the world's oldest holistic healing systems, developed over 5,000 years ago in India.  
 Ayurveda teaches that health and wellness rely on a fine balance among the mind, body, spirit, and environment. **Its primary goal is to promote overall wellness and prevent disease, rather than simply fighting sickness after it begins. However, it also provides specific treatments for particular health conditions.**
 
 Ayurveda is traditionally linked to Dhanvantari, known in Hindu tradition as the physician to the gods, who received this knowledge from Brahma. Its earliest principles appeared in the Atharvaveda.

@@ -7,6 +7,7 @@ All Notes as per NEP 2020.
     * [Module 1](/assets/first-year/bsc-cs/iks/iks-m1.md)   
     * [Module 2](/assets/first-year/bsc-cs/iks/iks-m2.md)  
     * [Module 3](/assets/first-year/bsc-cs/iks/iks-m3.md) 
+    * [Question Bank (Solved)](/assets/first-year/bsc-cs/iks/iks-important.md)
 
 > **Tracked Years :** 2026-2027  
 

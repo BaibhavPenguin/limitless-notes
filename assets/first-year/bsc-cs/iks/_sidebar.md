@@ -2,4 +2,5 @@
     * [Module 1](/assets/first-year/bsc-cs/iks/iks-m1.md)   
     * [Module 2](/assets/first-year/bsc-cs/iks/iks-m2.md)  
     * [Module 3](/assets/first-year/bsc-cs/iks/iks-m3.md)  
+    * [Question Bank (Solved)](/assets/first-year/bsc-cs/iks/iks-important.md)
 * [Go Back](/assets/first-year/overview.md)

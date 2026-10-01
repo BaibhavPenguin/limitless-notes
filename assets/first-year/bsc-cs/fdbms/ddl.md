@@ -43,8 +43,7 @@ This statement is required because a DBMS like MySQL Supports running queries on
 ### Example
 `USE College`
 
-
-### Try and Execute Yourself.
+--- 
 
 <div class="code-sandbox-wrapper mysql-sandbox-wrapper">
 <div class="mysql-status-badge">
@@ -77,6 +76,7 @@ use College;</textarea>
 </div>
 </div>
 </div>
+
 
 
 

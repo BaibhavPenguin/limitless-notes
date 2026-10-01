@@ -221,5 +221,87 @@ India's geographical positioning &mdash; bounded by the Himalayan mountain range
 * **Key Export Commodities:** Ancient India was an exporter of luxury goods and staples, including woven cotton textiles, fine silk, refined cane sugar, spices (notably black pepper), iron, steel, and semi-precious and precious gemstones.
 * **Commercial Networks:** These trade networks facilitated cultural exchanges across Southeast Asia, Central Asia, the Greco-Roman Mediterranean, and the Arab world.
 
+### Historical Evolution of Trade and Commerce
 
- *&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*
+#### 1 &mdash; Ancient Period (Pre-6th Century BCE)
+* **Indus Valley Civilization (~2500 BCE – 1750 BCE)**:
+  * Carried out extensive trade with Mesopotamia (modern-day Iraq) and neighboring regions.
+  * Archaeological finds (seals, standardized weights, and measures) point to structured commerce in cotton, grains, pottery, and beads.
+* **Vedic Period (1500 BCE – 600 BCE)**:
+  * Literary evidence records both inland and maritime commerce.
+  * River systems like the Saraswati and the Ganges supported domestic routes, while coastal areas traded with Southeast Asia and beyond.
+
+#### 2 &mdash; Classical Period (6th Century BCE – 6th Century CE)
+* **Mauryan Empire (322 BCE – 185 BCE)**:
+  * Maintained a network of trade routes linking India with Central Asia and the Mediterranean.
+  * Chanakya's *Arthashastra* outlined comprehensive trade regulations, market governance, and taxation systems.
+* **Gupta Empire (320 CE – 550 CE)**:
+  * Considered a golden age marked by extensive cross-cultural and commercial exchanges.
+  * Indian textiles, spices, and luxury goods saw strong demand across the Roman Empire and Southeast Asia.
+
+#### 3 &mdash; Medieval Period (6th Century CE – 15th Century CE)
+* **Islamic Trade Networks**:
+  * Commerce expanded along the Silk Road and Indian Ocean routes.
+  * Port cities such as Calicut, Malabar, and Cambay became major hubs for merchants from the Middle East, Africa, and Southeast Asia.
+* **Regional Dynasties**:
+  * Southern dynasties (Cholas, Pallavas, Vijayanagara) and northern powers (Delhi Sultanate, Mughal Empire) expanded maritime infrastructure, developed ports, and traded with China, Persia, and Europe.
+
+#### 4 &mdash; Colonial Period (15th Century CE – 1947 CE)
+* **European Trading Enclaves**:
+  * Portuguese, Dutch, French, and British traders established coastal trading posts from the late 15th century, seeking monopolies over the spice trade.
+* **British East India Company (Formed 1600 CE)**:
+  * Established monopolies, asserted territorial and economic control, and exported raw materials and commodities (textiles, indigo, spices) to European markets.
+
+####  5 &mdash; Post-Independence (1947 CE Onwards)
+* **Modern Trade Policies (1947–1991)**:
+  * Focused on state-led industrialization, import substitution, protective tariffs, and public sector dominance.
+* **Liberalization and Globalization (1991 Onwards)**:
+  * Implementation of structural economic reforms dismantled trade barriers, invited foreign direct investment, and integrated domestic markets into global supply chains.
+  * Accelerated the growth of export industries and the services sector.
+
+---
+
+## Chronological Overview
+
+<div class="dyntable">
+<table>
+  <thead>
+    <tr>
+      <th>Period</th>
+      <th>Key Eras / Dynasties</th>
+      <th>Key Characteristics &amp; Commodities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Ancient Period</strong><br>(Pre-6th Century BCE)</td>
+      <td>Indus Valley Civilization (~2500–1750 BCE);<br>Vedic Period (1500–600 BCE)</td>
+      <td>Trade with Mesopotamia; standard weights and measures; riverine and coastal trade in cotton, grains, pottery, and beads.</td>
+    </tr>
+    <tr>
+      <td><strong>Classical Period</strong><br>(6th Century BCE – 6th Century CE)</td>
+      <td>Mauryan Empire (322–185 BCE);<br>Gupta Empire (320–550 CE)</td>
+      <td>Trade routes to Central Asia and Mediterranean; <em>Arthashastra</em> trade laws; high demand for textiles and spices in the Roman Empire.</td>
+    </tr>
+    <tr>
+      <td><strong>Medieval Period</strong><br>(6th Century CE – 15th Century CE)</td>
+      <td>Cholas, Pallavas, Vijayanagara, Delhi Sultanate, Mughal Empire</td>
+      <td>Indian Ocean networks, Silk Road connectivity; ports at Calicut and Cambay trading with China, Persia, Africa, and Europe.</td>
+    </tr>
+    <tr>
+      <td><strong>Colonial Period</strong><br>(15th Century CE – 1947 CE)</td>
+      <td>European Trading Posts; British East India Company</td>
+      <td>Spice monopolies, establishment of trade factories, export of indigo, raw materials, and textiles under colonial control.</td>
+    </tr>
+    <tr>
+      <td><strong>Post-Independence</strong><br>(1947 CE – Present)</td>
+      <td>Post-1947 Self-Sufficiency;<br>1991 Economic Liberalization</td>
+      <td>Import substitution transitioned into globalization, reduction of tariffs, foreign direct investment, and service sector growth.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+*&mdash; Edited by Baibhav Bhattacharya & Prem Vishwakarma*

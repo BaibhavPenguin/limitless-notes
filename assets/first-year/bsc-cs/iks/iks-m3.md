@@ -261,7 +261,7 @@ India's geographical positioning &mdash; bounded by the Himalayan mountain range
 
 ---
 
-## Chronological Overview
+### Chronological Overview
 
 <div class="dyntable">
 <table>

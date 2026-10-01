@@ -6,5 +6,5 @@
     * [DDL Statements](/assets/first-year/bsc-cs/fdbms/ddl.md)
     * [DML Statements](/assets/first-year/bsc-cs/fdbms/dml.md)
 
-[MySQL Command Line Client](/assets/first-year/bsc-cs/csp1/mysql.md)
+* [MySQL Command Line Client](/assets/first-year/bsc-cs/csp1/mysql.md)
 * [Go Back](/assets/first-year/bsc-cs/bsc-cs-overview.md)

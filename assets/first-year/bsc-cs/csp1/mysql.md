@@ -18,7 +18,7 @@ All databases are temporary and will be deleted forever upon refresh.
 <div class="mysql-island-body">
 <!-- Output Window (Fixed height, scrollable terminal) -->
 <div class="mysqlterm">
-<pre class="mysql-output">Welcome to the MariaDB monitor. Commands end with ;</pre>
+<pre class="mysql-output">Welcome to the MySQL monitor. Commands end with ;</pre>
 </div>
 <!-- Line Editor (Middle) -->
 <div class="mysqlsource">

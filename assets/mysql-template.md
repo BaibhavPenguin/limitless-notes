@@ -12,13 +12,11 @@
 <div class="mysql-island-body">
 <!-- Output Window (Fixed height, scrollable terminal) -->
 <div class="mysqlterm">
-<pre class="mysql-output">Welcome to the MariaDB monitor. Commands end with ;</pre>
+<pre class="mysql-output">Welcome to the MySQL monitor. Commands end with ;</pre>
 </div>
 <!-- Line Editor (Middle) -->
 <div class="mysqlsource">
-<textarea class="mysql-line-edit" rows="1" spellcheck="false" placeholder="Enter SQL statements here (e.g. SHOW DATABASES;)..." oninput="autoExpandSQLEdit(this)" onkeydown="handleSQLKeyDown(event, this)">CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(50));
-INSERT INTO users VALUES (1, 'Limitless'), (2, 'MariaDB');
-SELECT * FROM users;</textarea>
+<textarea class="mysql-line-edit" rows="1" spellcheck="false" placeholder="Enter SQL statements here (e.g. SHOW DATABASES;)..." oninput="autoExpandSQLEdit(this)" onkeydown="handleSQLKeyDown(event, this)"></textarea>
 </div>
 <!-- Bottom Actions Bar (Clean Clear & Red Enter Buttons) -->
 <div class="mysql-island-footer">

@@ -193,7 +193,7 @@ Data files represent the actual persistent storage on disk where raw records and
 Historically stored on magnetic tape and older magnetic drives, enterprise deployments now rely on Solid State Drives (SSDs) and high-throughput Storage Area Networks (SANs) for speed, concurrent throughput, and fault tolerance.
 
 #### 6 &mdash; Compiled DML
-The output of compiled DML statements is translated into efficient, low-level execution instructions. Repeated or parameterized queries (such as stored procedures and prepared statements) are cached here to reduce parsing and compilation overhead on subsequent executions. *The DBMS does not repeat the entire compilation process for `SELECT * from Table;` if it is used multiple times in a sequence, as it may already be cached for faster response times.
+The output of compiled DML statements is translated into efficient, low-level execution instructions. Repeated or parameterized queries (such as stored procedures and prepared statements) are cached here to reduce parsing and compilation overhead on subsequent executions. *The DBMS does not repeat the entire compilation process for `SELECT * from Table;` if it is used multiple times in a sequence, as it may already be cached for faster response times.*
 
 #### 7 &mdash; End Users
 End users are the people and services that interact with the database system.  

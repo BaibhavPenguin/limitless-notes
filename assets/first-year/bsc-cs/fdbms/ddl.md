@@ -217,7 +217,7 @@
       <tr>
         <td><strong>VARBINARY</strong></td>
         <td>Contains variable-length binary strings.</td>
-        <td>0 to 255 (before MySQL 5.0.3); 0 to 65,535 (MySQL 5.0.3 and later)</td>
+        <td>65535</td>
       </tr>
     </tbody>
   </table>
@@ -225,7 +225,7 @@
 
 #### <u>ENUM Types</u>
 A string object whose value is chosen from a list of values given at the time of table creation. **Example:**  
-CREATE TABLE length ( length ENUM('small', 'medium', 'large') );
+`CREATE TABLE length ( length ENUM('small', 'medium', 'large') );`
 
 #### <u>Set Types</u>
 A string object having zero or more comma separated values (maximum 64). Values are chosen from a list of values given at the time of table creation.  

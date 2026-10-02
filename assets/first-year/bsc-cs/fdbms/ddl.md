@@ -27,10 +27,10 @@
 
 
 #### <u>Datatypes</u>
-<div class="dyntable">
 
-  <h4>1. Integer Data Types</h4>
-  <p>Used to store whole numbers without decimal values. Example: 123, 78, etc.</p>
+<h4>1. Integer Data Types</h4>
+<p>Used to store whole numbers without decimal values. Example: 123, 78, etc.</p>
+<div class="dyntable">
   <table>
     <thead>
       <tr>
@@ -291,7 +291,7 @@ The table must have a unique name through which it can be referred to after its 
 `CREATE TABLE Student (INT StudentID NOT NULL);`  
 
 **UNIQUE:** UNIQUE Constraint enforces a column or set of columns to have unique values, If a column has a UNIQUE constraint, it means that a particular column cannot have duplicate values in a table.  
-`CREATE TABLE Details (INT Aadhar UNIQUE);`  s
+`CREATE TABLE Details (INT Aadhar UNIQUE);`  
 
 **CHECK:** CHECK constraint is used to restrict the value of a column between a range. It performs check on the values, before storing them into the database. Its like condition checking before saving data into a column.  
 When this constraint is being set on a column, it ensures that the specified column must have the value falling in the specified range.  
@@ -339,5 +339,5 @@ To remove a database from MySQL, we can use the `DROP DATABASE` statement.
 #### Syntax
 `DROP DATABASE <database_name>`
 
-
+*&mdash; Edited by Baibhav Bhattacharya*
 

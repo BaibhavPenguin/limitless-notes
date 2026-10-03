@@ -2,7 +2,7 @@
     * [Digital Systems & Architecture](/assets/first-year/bsc-cs/dsa/dsa-ov.md)
     * [Fundamentals of Database Management Systems](/assets/first-year/bsc-cs/fdbms/fdbms-ov.md)
     * [Introduction to Python Programming](/assets/first-year/bsc-cs/ipp/ipp-ov.md)
-    * [Statistics with R Programming]()
+    * [Statistics with R Programming](/assets/first-year/bsc-cs/stat-with-r/rlang-ov.md)
     * [Computer Science Practical 1]()
     * [Marketing Mix 1](/assets/first-year/bsc-cs/mm1/mm1-ov.md)
     * [Environmental Management & Sustainable Development](/assets/first-year/bsc-cs/emsd/emsd-ov.md)

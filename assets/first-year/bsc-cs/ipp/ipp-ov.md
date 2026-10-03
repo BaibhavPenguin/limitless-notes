@@ -19,4 +19,7 @@ All programs & notes as per NEP2020.
 * [Loops in Python](/assets/first-year/bsc-cs/ipp/ipp-ov.md)
     * [Fibonacci Series](/assets/first-year/bsc-cs/ipp/fibonacci.md)
     * [Sum of Digits](/assets/first-year/bsc-cs/ipp/sod.md)
-    
+
+## <u>Try & Execute Python Programs</u>
+
+* [Python Interpreter](/assets/first-year/bsc-cs/ipp/ipython.md)

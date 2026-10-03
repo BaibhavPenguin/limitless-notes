@@ -35,7 +35,7 @@ Naviagte to the sidebar on the left or use the table given below to directly jum
 
 <tr>
 <td>Statistics with R Programming
-<td><a href="">View Notes</a>
+<td><a href="#assets/first-year/bsc-cs/stat-with-r/rlang-ov.md">View Notes</a>
 </tr>
 
 <tr>

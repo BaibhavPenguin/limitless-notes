@@ -16,7 +16,7 @@ Latches are **Level Sensitive**, meaning their outputs are in direct corresponde
 ## <u>Definition of a Flip-Flop</u>
 ---
 A **Flip Flop** is a basic memory element used in digital systems and electronics. It is a sequential circuit which is capable of storing a single bit of data. The output of a Flip-Flop circuit depends not only on the current state of the inputs but also on the previous state of the Flip-Flop.  
-They are **Edge Triggered** circuits which update iince per clock cycle.  
+They are **Edge Triggered** circuits which update once per clock cycle.  
 
 ## <u>Clock Cycle</u>
 ---
@@ -222,5 +222,55 @@ The state of a D flip flop updates every clock clock cycle unless it is paired w
     </tbody>
   </table>
 </div>
+
+## <u>Ripple Counter</u>
+---
+A 4 Bit Ripple Counter is a Sequential Circuit which counts from `00H` to `0FH` or `0000b` to `1111b`,it is made using 4 distinct JK Flip Flops Wired Together or 4 distinct T Flip Flops.  
+It is an asynchronous counter, hence only FF0 receives the clock input and the output of the first flip flop triggers the state of the subsequent flip flops. 
+
+#### Circuit Diagram
+
+<figure align="center">
+<img src="https://i.postimg.cc/ZK8CYz0L/Ripple-Counter.png">
+<figcaption>4 Bit Ripple Up Counter</figcaption>
+</figure>
+
+#### Truth Table
+
+<div class="dyntable">
+  <table>
+    <thead>
+      <tr>
+        <th>Clock Phase</th>
+        <th>B3</th>
+        <th>B2</th>
+        <th>B1</th>
+        <th>B0</th>
+        <th>Decimal Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+      <tr><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>2</td></tr>
+      <tr><td>3</td><td>0</td><td>0</td><td>1</td><td>1</td><td>3</td></tr>
+      <tr><td>4</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>5</td><td>0</td><td>1</td><td>0</td><td>1</td><td>5</td></tr>
+      <tr><td>6</td><td>0</td><td>1</td><td>1</td><td>0</td><td>6</td></tr>
+      <tr><td>7</td><td>0</td><td>1</td><td>1</td><td>1</td><td>7</td></tr>
+      <tr><td>8</td><td>1</td><td>0</td><td>0</td><td>0</td><td>8</td></tr>
+      <tr><td>9</td><td>1</td><td>0</td><td>0</td><td>1</td><td>9</td></tr>
+      <tr><td>10</td><td>1</td><td>0</td><td>1</td><td>0</td><td>10</td></tr>
+      <tr><td>11</td><td>1</td><td>0</td><td>1</td><td>1</td><td>11</td></tr>
+      <tr><td>12</td><td>1</td><td>1</td><td>0</td><td>0</td><td>12</td></tr>
+      <tr><td>13</td><td>1</td><td>1</td><td>0</td><td>1</td><td>13</td></tr>
+      <tr><td>14</td><td>1</td><td>1</td><td>1</td><td>0</td><td>14</td></tr>
+      <tr><td>15</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
 
 *&mdash; Edited By Baibhav Bhattacharya*

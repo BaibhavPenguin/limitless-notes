@@ -8,6 +8,8 @@ At any point the output of the Multiplexer is EQUAL to the selected input. Hence
 - It is used in **Control Unit** of a CPU.   
 - It is used for designing **cpu registers**.    
 
+---
+
 ### <u>2 To 1 Multiplexer</u>
 A 2 To 1 Multiplexer performs data selection on 2 inputs using a single select line. It is the most basic form of Multiplexer.  
 
@@ -44,6 +46,8 @@ A 2 To 1 Multiplexer performs data selection on 2 inputs using a single select l
 </figure>
 
 > Y = S&#773;I<sub>0</sub> + SI<sub>1<sub>
+
+---
 
 ### <u>4 To 1 Multiplexer</u>
 A 4 To 1 Multiplexer performs data selection on 4 inputs I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> using two select lines S<sub>0</sub> and S<sub>1</sub>

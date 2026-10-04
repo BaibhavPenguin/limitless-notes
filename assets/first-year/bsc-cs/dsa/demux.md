@@ -12,6 +12,7 @@ It is constructed using `AND` and `NOT` Gates.
 - It is used in the Control Unit of CPU
 - It is used to make Register Select Circuits
 
+---
 
 ### 1 To 2 Demultiplexer
 A 1 To 2 Demultiplexer distributes a single input into 2 distinct output channels using a single select line. <code>&therefore; n = 1 , 2<sup>n</sup> = 2</code> <br>
@@ -58,6 +59,8 @@ It is the simplest form of Demultipexer.
   Y<sub>1</sub> = SI<sub>0</sub>
 </blockquote>
 
+---
+
 ### 1 To 4 Demultiplexer
 A 1 To 4 Demultiplexer distributes a single input into 4 distinct output channels using two select lines. <code>&therefore; n = 2 , 2<sup>n</sup> = 4</code> <br>
 
@@ -73,7 +76,7 @@ A 1 To 4 Demultiplexer distributes a single input into 4 distinct output channel
       <th>Y<sub>1</sub></th>
       <th>Y<sub>2</sub></th>
       <th>Y<sub>3</sub></th>
-      <th>Active Output Minterm</th>
+      <th>Minterms</th>
     </tr>
   </thead>
   <tbody>
@@ -119,7 +122,7 @@ A 1 To 4 Demultiplexer distributes a single input into 4 distinct output channel
 <br>
 <figure align="center">
 <img src="https://i.postimg.cc/5tQvpFKc/1-2-4-DEMUX.png">
-<figcaption>1 To 2 Demultiplexer Circuit Diagram</figcaption>
+<figcaption>1 To 4 Demultiplexer Circuit Diagram</figcaption>
 </figure>
 <br>
 

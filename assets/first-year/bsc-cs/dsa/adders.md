@@ -1,5 +1,10 @@
 # Half Adder & Full Adder
 
+## <u>What are Combinational Circuits</u>
+---
+<u>Combinational Circuits</u> are digital logic circuits whose outputs are depend only on the current combination (logical state) of the inputs at any given moment.  
+**Example:** Adders,Subtractors,Multiplexers,Demultiplexers.  
+
 ## <u> Definition of an Adder </u>
 ---
 An Adder is a combinational digital circuit which performs arithmetic addition on binary bits and generates sum and carry as result.
